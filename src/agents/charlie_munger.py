@@ -150,6 +150,8 @@ def charlie_munger_agent(state: AgentState, agent_id: str = "charlie_munger_agen
     
     # Add signals to the overall state
     state["data"]["analyst_signals"][agent_id] = munger_analysis
+    print(f"🎯 Charlie Munger Agent: {state['data']}")
+    
 
     return {
         "messages": [message],

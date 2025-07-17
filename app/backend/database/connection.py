@@ -2,15 +2,19 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 import os
+from dotenv import load_dotenv
 
-# Database configuration
-DATABASE_URL = "sqlite:///./hedge_fund.db"
+# Load environment variables from .env file
+load_dotenv()
+
+# Database configuration - use PostgreSQL via DATABASE_URL environment variable
+DATABASE_URL = os.getenv(
+    "DATABASE_URL", 
+    "postgresql://username:password@localhost:5432/hyperion_hedge_fund"
+)
 
 # Create SQLAlchemy engine
-engine = create_engine(
-    DATABASE_URL,
-    connect_args={"check_same_thread": False}  # Needed for SQLite
-)
+engine = create_engine(DATABASE_URL)
 
 # Create SessionLocal class
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)

@@ -16,9 +16,18 @@ from src.agents.technicals import technical_analyst_agent
 from src.agents.valuation import valuation_analyst_agent
 from src.agents.warren_buffett import warren_buffett_agent
 from src.agents.rakesh_jhunjhunwala import rakesh_jhunjhunwala_agent
+from src.agents.darius_dale_trending import darius_dale_agent
 
 # Define analyst configuration - single source of truth
 ANALYST_CONFIG = {
+    "darius_dale_trending": {
+        "display_name": "Darius Dale Trending",
+        "description": "The Macro Analyst",
+        "investing_style": "macro_global",
+        "agent_func": darius_dale_agent,
+        "type": "analyst",
+        "order": 0,
+    },
     "aswath_damodaran": {
         "display_name": "Aswath Damodaran",
         "description": "The Dean of Valuation",
