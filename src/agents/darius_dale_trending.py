@@ -47,6 +47,7 @@ def darius_dale_agent(state: AgentState, agent_id: str = "darius_dale_agent"):
 
         # Find trending tickers
         progress.update_status(agent_id, None, "Finding trending tickers")
+        # TODO: Add end date to this query
         trending_tickers = find_trending_assets(macro_tickers)
         # reduce the tickers to the top 10
         print(f"🎯 Trending tickers: {trending_tickers}")
