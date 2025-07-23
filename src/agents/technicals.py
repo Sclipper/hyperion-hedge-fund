@@ -62,7 +62,7 @@ def technical_analyst_agent(state: AgentState, agent_id: str = "technical_analys
         if not prices:
             progress.update_status(agent_id, ticker, "Failed: No price data found")
             continue
-
+            # TODO: Clone the TA agent and allow multiple technical agents to be setup and chosen
         # Convert prices to a DataFrame
         prices_df = prices_to_df(prices)
 

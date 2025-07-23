@@ -48,7 +48,7 @@ def darius_dale_agent(state: AgentState, agent_id: str = "darius_dale_agent"):
         # Find trending tickers
         progress.update_status(agent_id, None, "Finding trending tickers")
         # TODO: Add end date to this query
-        trending_tickers = find_trending_assets(macro_tickers)
+        trending_tickers = find_trending_assets(macro_tickers, end_date)
         # reduce the tickers to the top 10
         print(f"🎯 Trending tickers: {trending_tickers}")
         trending_tickers = trending_tickers[:3]
@@ -169,7 +169,7 @@ def darius_dale_agent(state: AgentState, agent_id: str = "darius_dale_agent"):
     }
 
 
-def find_trending_assets(tickers: list[str]) -> list[str]:
+def find_trending_assets(tickers: list[str], end_date: str) -> list[str]:
     """
     Find trending assets from the tickers.
     """
@@ -177,11 +177,12 @@ def find_trending_assets(tickers: list[str]) -> list[str]:
     try:
         print(f"🎯 Searching for trending assets in {len(tickers)} tickers")
         result = db.execute(text("""
-            SELECT * FROM scanner_assets
+            SELECT * FROM scanner_historical
             WHERE ticker = ANY(:tickers)
             AND confidence > 0.7
             AND market = 'trending'
-        """), {"tickers": tickers})
+            AND created_at <= :end_date
+        """), {"tickers": tickers, "end_date": end_date})
         
         trending_tickers = [dict(row._mapping) for row in result]
         trending_ticker_symbols = [ticker['ticker'] for ticker in trending_tickers]
@@ -210,7 +211,7 @@ def extract_top_markets(text: str) -> list[str]:
     match = re.search(pattern, clean, re.IGNORECASE)
     if not match:
         return []
-    
+
     # 3. Grab that body, split on commas (and optional leading "and ")
     body = match.group(1).strip()
     parts = re.split(r',\s*(?:and\s*)?', body, flags=re.IGNORECASE)
@@ -376,9 +377,11 @@ def get_tickers_that_fit_with_markets(markets: list[str]) -> list[str]:
 
 
 
+# TODO: Run backtest 4-5 years behind with MAGS
 assetBuckets = {
    'Risk Assets': [
-      'MSFT', 'NVDA', 'AAPL', 'AMZN', 'META', 'AVGO', 'GOOG', 'GOOGL', 'BRK.B', 'TSLA', 'JPM', 'WMT', 'LLY', 'ORCL', 'NFLX', 'MA', 'XOM', 'COST', 'PG', 'JNJ', 'HD', 'BAC', 'PLTR', 'ABBV', 'KO', 'PM', 'UNH', 'IBM', 'CSCO', 'CVX', 'GE', 'TMUS', 'CRM', 'WFC', 'ABT', 'LIN', 'MS', 'DIS', 'INTU', 'AXP', 'MCD', 'AMD', 'NOW', 'MRK', 'T', 'GS', 'RTX', 'ACN', 'ISRG', 'TXN', 'PEP', 'VZ', 'UBER', 'BKNG', 'CAT', 'QCOM', 'SCHW', 'ADBE', 'AMGN', 'SPGI', 'PGR', 'BLK', 'BSX', 'BA', 'TMO', 'NEE', 'C', 'HON', 'SYK', 'DE', 'DHR', 'AMAT', 'TJX', 'MU', 'PFE', 'GILD', 'GEV', 'PANW', 'UNP', 'ETN', 'CMCSA', 'COF', 'ADP', 'CRWD', 'COP', 'LOW', 'LRCX', 'KLAC', 'VRTX', 'ADI', 'ANET', 'CB', 'APH', 'MDT', 'LMT', 'KKR', 'MMC', 'BX', 'SBUX', 'ICE', 'AMT', 'MO', 'WELL', 'CME', 'SO', 'PLD', 'CEG', 'BMY', 'WM', 'INTC', 'TT', 'DASH', 'MCK', 'HCA', 'FI', 'DUK', 'CTAS', 'NKE', 'EQIX', 'MDLZ', 'ELV', 'MCO', 'CVS', 'UPS', 'CI', 'PH', 'SHW', 'ABNB', 'AJG', 'CDNS', 'TDG', 'DELL', 'RSG', 'FTNT', 'MMM', 'APO', 'AON', 'ORLY', 'COIN', 'GD', 'ECL', 'SNPS', 'RCL', 'EMR', 'WMB', 'CL', 'NOC', 'ITW', 'MAR', 'CMG', 'PNC', 'ZTS', 'HWM', 'JCI', 'EOG', 'MSI', 'USB', 'PYPL', 'BK', 'NEM', 'ADSK', 'WDAY', 'MNST', 'VST', 'APD', 'KMI', 'CSX', 'AZO', 'TRV', 'AXON', 'CARR', 'ROP', 'DLR', 'FCX', 'HLT', 'COR', 'NSC', 'AFL', 'REGN', 'PAYX', 'AEP', 'FDX', 'NXPI', 'PWR', 'MET', 'CHTR', 'TFC', 'O', 'ALL', 'MPC', 'SPG', 'PSA', 'PSX', 'OKE', 'CTVA', 'GWW', 'NDAQ', 'TEL', 'AIG', 'SRE', 'SLB', 'BDX', 'AMP', 'PCAR', 'FAST', 'LHX', 'CPRT', 'GM', 'D', 'URI', 'KDP', 'OXY', 'HES', 'VLO', 'KR', 'TTWO', 'FANG', 'EW', 'CMI', 'CCI', 'GLW', 'TGT', 'FICO', 'VRSK', 'EXC', 'KMB', 'FIS', 'MSCI', 'ROST', 'IDXX', 'F', 'AME', 'KVUE', 'PEG', 'CBRE', 'CAH', 'CTSH', 'BKR', 'YUM', 'XEL', 'GRMN', 'EA', 'OTIS', 'DHI', 'PRU', 'RMD', 'TRGP', 'MCHP', 'ED', 'ROK', 'ETR', 'SYY', 'EBAY', 'BRO', 'EQT', 'HIG', 'HSY', 'WAB', 'LYV', 'VICI', 'VMC', 'ACGL', 'CSGP', 'MPWR', 'WEC', 'ODFL', 'GEHC', 'A', 'IR', 'MLM', 'CCL', 'DXCM', 'EFX', 'EXR', 'DAL', 'PCG', 'IT', 'XYL', 'KHC', 'IRM', 'RJF', 'NRG', 'ANSS', 'LVS', 'WTW', 'AVB', 'HUM', 'MTB', 'NUE', 'GIS', 'EXE', 'STZ', 'STT', 'VTR', 'DD', 'BR', 'STX', 'WRB', 'TSCO', 'KEYS', 'AWK', 'CNC', 'LULU', 'K', 'DTE', 'LEN', 'ROL', 'EL', 'IQV', 'SMCI', 'VRSN', 'EQR', 'WBD', 'DRI', 'ADM', 'FITB', 'AEE', 'GDDY', 'PPL', 'TPL', 'DG', 'PPG', 'SBAC', 'TYL', 'IP', 'UAL', 'ATO', 'DOV', 'VLTO', 'CBOE', 'MTD', 'FTV', 'CHD', 'SYF', 'HPE', 'STE', 'CNP', 'FE', 'ES', 'HBAN', 'TDY', 'CINF', 'HPQ', 'CDW', 'CPAY', 'SW', 'JBL', 'LH', 'DVN', 'ON', 'NTRS', 'HUBB', 'ULTA', 'PODD', 'AMCR', 'INVH', 'EXPE', 'WDC', 'NTAP', 'CMS', 'CTRA', 'NVR', 'DLTR', 'TROW', 'WAT', 'DOW', 'DGX', 'PTC', 'PHM', 'RF', 'WSM', 'MKC', 'LII', 'EIX', 'TSN', 'STLD', 'IFF', 'HAL', 'LDOS', 'LYB', 'WY', 'GPN', 'BIIB', 'L', 'NI', 'ESS', 'ERIE', 'GEN', 'CFG', 'ZBH', 'LUV', 'KEY', 'TPR', 'MAA', 'TRMB', 'PFG', 'PKG', 'HRL', 'GPC', 'FFIV', 'CF', 'RL', 'FDS', 'SNA', 'MOH', 'PNR', 'WST', 'BALL', 'EXPD', 'LNT', 'FSLR', 'EVRG', 'J', 'DPZ', 'BAX', 'DECK', 'CLX', 'ZBRA', 'APTV', 'TKO', 'BBY', 'HOLX', 'KIM', 'EG', 'COO', 'TER', 'TXT', 'JBHT', 'UDR', 'AVY', 'OMC', 'IEX', 'INCY', 'JKHY', 'ALGN', 'PAYC', 'MAS', 'REG', 'SOLV', 'CPT', 'FOXA', 'ARE', 'BF.B', 'NDSN', 'JNPR', 'BEN', 'DOC', 'BLDR', 'ALLE', 'MOS', 'BG', 'BXP', 'FOX', 'AKAM', 'RVTY', 'CHRW', 'UHS', 'HST', 'SWKS', 'POOL', 'PNW', 'VTRS', 'CAG', 'DVA', 'SJM', 'SWK', 'AIZ', 'GL', 'TAP', 'WBA', 'MRNA', 'KMX', 'HAS', 'LKQ', 'CPB', 'EPAM', 'MGM', 'HII', 'NWS', 'WYNN', 'DAY', 'AOS', 'HSIC', 'EMN', 'IPG', 'MKTX', 'FRT', 'NCLH', 'PARA', 'NWSA', 'TECH', 'LW', 'AES', 'MTCH', 'GNRC', 'APA', 'CRL', 'ALB', 'IVZ', 'MHK', 'CZR', 'ENPH', 'BTC', 'ETH', 'USDT', 'XRP', 'BNB', 'SOL', 'USDC', 'TRX', 'DOGE', 'ADA', 'HYPE', 'SUI', 'BCH', 'LINK', 'LEO', 'XLM', 'AVAX', 'TON', 'SHIB', 'LTC', 'HBAR', 'XMR', 'DOT', 'USDe', 'DAI', 'BGB', 'UNI', 'PEPE', 'PI', 'AAVE', 'OKB', 'TAO', 'APT', 'CRO', 'ICP', 'NEAR', 'ETC', 'ONDO', 'USD1', 'MNT', 'POL', 'GT', 'KAS', 'TRUMP', 'VET', 'SKY', 'ENA', 'RENDER', 'FET', 'FIL'
+    'RKLB'
+    #   'MSFT', 'NVDA', 'AAPL', 'AMZN', 'META', 'AVGO', 'GOOG', 'GOOGL', 'BRK.B', 'TSLA', 'JPM', 'WMT', 'LLY', 'ORCL', 'NFLX', 'MA', 'XOM', 'COST', 'PG', 'JNJ', 'HD', 'BAC', 'PLTR', 'ABBV', 'KO', 'PM', 'UNH', 'IBM', 'CSCO', 'CVX', 'GE', 'TMUS', 'CRM', 'WFC', 'ABT', 'LIN', 'MS', 'DIS', 'INTU', 'AXP', 'MCD', 'AMD', 'NOW', 'MRK', 'T', 'GS', 'RTX', 'ACN', 'ISRG', 'TXN', 'PEP', 'VZ', 'UBER', 'BKNG', 'CAT', 'QCOM', 'SCHW', 'ADBE', 'AMGN', 'SPGI', 'PGR', 'BLK', 'BSX', 'BA', 'TMO', 'NEE', 'C', 'HON', 'SYK', 'DE', 'DHR', 'AMAT', 'TJX', 'MU', 'PFE', 'GILD', 'GEV', 'PANW', 'UNP', 'ETN', 'CMCSA', 'COF', 'ADP', 'CRWD', 'COP', 'LOW', 'LRCX', 'KLAC', 'VRTX', 'ADI', 'ANET', 'CB', 'APH', 'MDT', 'LMT', 'KKR', 'MMC', 'BX', 'SBUX', 'ICE', 'AMT', 'MO', 'WELL', 'CME', 'SO', 'PLD', 'CEG', 'BMY', 'WM', 'INTC', 'TT', 'DASH', 'MCK', 'HCA', 'FI', 'DUK', 'CTAS', 'NKE', 'EQIX', 'MDLZ', 'ELV', 'MCO', 'CVS', 'UPS', 'CI', 'PH', 'SHW', 'ABNB', 'AJG', 'CDNS', 'TDG', 'DELL', 'RSG', 'FTNT', 'MMM', 'APO', 'AON', 'ORLY', 'COIN', 'GD', 'ECL', 'SNPS', 'RCL', 'EMR', 'WMB', 'CL', 'NOC', 'ITW', 'MAR', 'CMG', 'PNC', 'ZTS', 'HWM', 'JCI', 'EOG', 'MSI', 'USB', 'PYPL', 'BK', 'NEM', 'ADSK', 'WDAY', 'MNST', 'VST', 'APD', 'KMI', 'CSX', 'AZO', 'TRV', 'AXON', 'CARR', 'ROP', 'DLR', 'FCX', 'HLT', 'COR', 'NSC', 'AFL', 'REGN', 'PAYX', 'AEP', 'FDX', 'NXPI', 'PWR', 'MET', 'CHTR', 'TFC', 'O', 'ALL', 'MPC', 'SPG', 'PSA', 'PSX', 'OKE', 'CTVA', 'GWW', 'NDAQ', 'TEL', 'AIG', 'SRE', 'SLB', 'BDX', 'AMP', 'PCAR', 'FAST', 'LHX', 'CPRT', 'GM', 'D', 'URI', 'KDP', 'OXY', 'HES', 'VLO', 'KR', 'TTWO', 'FANG', 'EW', 'CMI', 'CCI', 'GLW', 'TGT', 'FICO', 'VRSK', 'EXC', 'KMB', 'FIS', 'MSCI', 'ROST', 'IDXX', 'F', 'AME', 'KVUE', 'PEG', 'CBRE', 'CAH', 'CTSH', 'BKR', 'YUM', 'XEL', 'GRMN', 'EA', 'OTIS', 'DHI', 'PRU', 'RMD', 'TRGP', 'MCHP', 'ED', 'ROK', 'ETR', 'SYY', 'EBAY', 'BRO', 'EQT', 'HIG', 'HSY', 'WAB', 'LYV', 'VICI', 'VMC', 'ACGL', 'CSGP', 'MPWR', 'WEC', 'ODFL', 'GEHC', 'A', 'IR', 'MLM', 'CCL', 'DXCM', 'EFX', 'EXR', 'DAL', 'PCG', 'IT', 'XYL', 'KHC', 'IRM', 'RJF', 'NRG', 'ANSS', 'LVS', 'WTW', 'AVB', 'HUM', 'MTB', 'NUE', 'GIS', 'EXE', 'STZ', 'STT', 'VTR', 'DD', 'BR', 'STX', 'WRB', 'TSCO', 'KEYS', 'AWK', 'CNC', 'LULU', 'K', 'DTE', 'LEN', 'ROL', 'EL', 'IQV', 'SMCI', 'VRSN', 'EQR', 'WBD', 'DRI', 'ADM', 'FITB', 'AEE', 'GDDY', 'PPL', 'TPL', 'DG', 'PPG', 'SBAC', 'TYL', 'IP', 'UAL', 'ATO', 'DOV', 'VLTO', 'CBOE', 'MTD', 'FTV', 'CHD', 'SYF', 'HPE', 'STE', 'CNP', 'FE', 'ES', 'HBAN', 'TDY', 'CINF', 'HPQ', 'CDW', 'CPAY', 'SW', 'JBL', 'LH', 'DVN', 'ON', 'NTRS', 'HUBB', 'ULTA', 'PODD', 'AMCR', 'INVH', 'EXPE', 'WDC', 'NTAP', 'CMS', 'CTRA', 'NVR', 'DLTR', 'TROW', 'WAT', 'DOW', 'DGX', 'PTC', 'PHM', 'RF', 'WSM', 'MKC', 'LII', 'EIX', 'TSN', 'STLD', 'IFF', 'HAL', 'LDOS', 'LYB', 'WY', 'GPN', 'BIIB', 'L', 'NI', 'ESS', 'ERIE', 'GEN', 'CFG', 'ZBH', 'LUV', 'KEY', 'TPR', 'MAA', 'TRMB', 'PFG', 'PKG', 'HRL', 'GPC', 'FFIV', 'CF', 'RL', 'FDS', 'SNA', 'MOH', 'PNR', 'WST', 'BALL', 'EXPD', 'LNT', 'FSLR', 'EVRG', 'J', 'DPZ', 'BAX', 'DECK', 'CLX', 'ZBRA', 'APTV', 'TKO', 'BBY', 'HOLX', 'KIM', 'EG', 'COO', 'TER', 'TXT', 'JBHT', 'UDR', 'AVY', 'OMC', 'IEX', 'INCY', 'JKHY', 'ALGN', 'PAYC', 'MAS', 'REG', 'SOLV', 'CPT', 'FOXA', 'ARE', 'BF.B', 'NDSN', 'JNPR', 'BEN', 'DOC', 'BLDR', 'ALLE', 'MOS', 'BG', 'BXP', 'FOX', 'AKAM', 'RVTY', 'CHRW', 'UHS', 'HST', 'SWKS', 'POOL', 'PNW', 'VTRS', 'CAG', 'DVA', 'SJM', 'SWK', 'AIZ', 'GL', 'TAP', 'WBA', 'MRNA', 'KMX', 'HAS', 'LKQ', 'CPB', 'EPAM', 'MGM', 'HII', 'NWS', 'WYNN', 'DAY', 'AOS', 'HSIC', 'EMN', 'IPG', 'MKTX', 'FRT', 'NCLH', 'PARA', 'NWSA', 'TECH', 'LW', 'AES', 'MTCH', 'GNRC', 'APA', 'CRL', 'ALB', 'IVZ', 'MHK', 'CZR', 'ENPH', 'BTC', 'ETH', 'USDT', 'XRP', 'BNB', 'SOL', 'USDC', 'TRX', 'DOGE', 'ADA', 'HYPE', 'SUI', 'BCH', 'LINK', 'LEO', 'XLM', 'AVAX', 'TON', 'SHIB', 'LTC', 'HBAR', 'XMR', 'DOT', 'USDe', 'DAI', 'BGB', 'UNI', 'PEPE', 'PI', 'AAVE', 'OKB', 'TAO', 'APT', 'CRO', 'ICP', 'NEAR', 'ETC', 'ONDO', 'USD1', 'MNT', 'POL', 'GT', 'KAS', 'TRUMP', 'VET', 'SKY', 'ENA', 'RENDER', 'FET', 'FIL'
    ],
    'Defensive Assets': ['AGG', 'BND', 'XLP', 'XLU'],
    'High Beta': ['SPHB', 'HIBL', 'SSO',
