@@ -217,18 +217,18 @@ class PositionManager:
                 combined_score = technical_score
             else:
                 # Both scores available, use configured weights
-                effective_technical_weight = self.technical_weight
-                effective_fundamental_weight = self.fundamental_weight
+            effective_technical_weight = self.technical_weight
+            effective_fundamental_weight = self.fundamental_weight
                 # Normalize weights to sum to 1.0
                 total_weight = effective_technical_weight + effective_fundamental_weight
                 if total_weight > 0:
                     effective_technical_weight /= total_weight
                     effective_fundamental_weight /= total_weight
-                
-                combined_score = (
-                    technical_score * effective_technical_weight + 
-                    fundamental_score * effective_fundamental_weight
-                )
+        
+        combined_score = (
+            technical_score * effective_technical_weight + 
+            fundamental_score * effective_fundamental_weight
+        )
         
         # Determine position size
         position_size_category, position_size_percentage = self._determine_position_size(
