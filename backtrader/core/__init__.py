@@ -23,6 +23,27 @@ from .bucket_manager import BucketManager
 from .bucket_limits_enforcer import BucketLimitsEnforcer, BucketLimitsConfig
 from .dynamic_position_sizer import DynamicPositionSizer, SizingMode, PositionSizeCategory
 from .two_stage_position_sizer import TwoStagePositionSizer, ResidualStrategy, TwoStageSizingResult
+from .grace_period_manager import GracePeriodManager, GracePosition, GraceAction
+from .holding_period_manager import (
+    HoldingPeriodManager, 
+    RegimeAwareHoldingPeriodManager,
+    PositionAge,
+    RegimeContext,
+    AdjustmentType
+)
+from .position_lifecycle_tracker import (
+    PositionLifecycleTracker,
+    PositionState,
+    LifecycleEvent,
+    PositionSummary,
+    LifecycleStage,
+    HealthStatus
+)
+from .whipsaw_protection_manager import (
+    WhipsawProtectionManager,
+    PositionEvent,
+    WhipsawCycle
+)
 from .rebalancer_engine import CoreRebalancerEngine
 
 __all__ = [
@@ -43,5 +64,22 @@ __all__ = [
     'TwoStagePositionSizer',
     'ResidualStrategy',
     'TwoStageSizingResult',
+    'GracePeriodManager',
+    'GracePosition',
+    'GraceAction',
+    'HoldingPeriodManager',
+    'RegimeAwareHoldingPeriodManager',
+    'PositionAge',
+    'RegimeContext',
+    'AdjustmentType',
+    'PositionLifecycleTracker',
+    'PositionState',
+    'LifecycleEvent',
+    'PositionSummary',
+    'LifecycleStage',
+    'HealthStatus',
+    'WhipsawProtectionManager',
+    'PositionEvent',
+    'WhipsawCycle',
     'CoreRebalancerEngine'
 ] 

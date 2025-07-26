@@ -91,6 +91,23 @@ class RebalancingLimits:
     residual_strategy: str = 'safe_top_slice'  # 'safe_top_slice', 'proportional', 'cash_bucket'
     max_residual_per_asset: float = 0.05
     max_residual_multiple: float = 0.5
+    
+    # Grace & Holding Period Management (Module 4)
+    enable_grace_periods: bool = True
+    grace_period_days: int = 5
+    grace_decay_rate: float = 0.8
+    min_decay_factor: float = 0.1
+    
+    min_holding_period_days: int = 3
+    max_holding_period_days: int = 90
+    enable_regime_overrides: bool = True
+    regime_override_cooldown_days: int = 30
+    regime_severity_threshold: str = 'high'  # 'normal', 'high', 'critical'
+    
+    enable_whipsaw_protection: bool = True
+    max_cycles_per_protection_period: int = 1
+    whipsaw_protection_days: int = 14
+    min_position_duration_hours: int = 4
 
 @dataclass
 class RebalancingTarget:
