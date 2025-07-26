@@ -15,7 +15,9 @@ from utils.results import save_results, compare_results
 
 def run_regime_backtest(start_date, end_date, strategy_class=None, cash=100000, commission=0.001, 
                        bucket_names=None, max_assets_per_period=5, rebalance_frequency='monthly',
-                       min_score_threshold=0.6, timeframes=['1d', '4h', '1h']):
+                       min_score_threshold=0.6, timeframes=['1d', '4h', '1h'],
+                       enable_technical_analysis=True, enable_fundamental_analysis=True,
+                       technical_weight=0.6, fundamental_weight=0.4, min_trending_confidence=0.7):
     cerebro = bt.Cerebro()
     
     strategy_class = strategy_class or RegimeStrategy
@@ -35,7 +37,12 @@ def run_regime_backtest(start_date, end_date, strategy_class=None, cash=100000, 
         bucket_names=bucket_names,
         rebalance_frequency=rebalance_frequency,
         position_min_score=min_score_threshold,
-        timeframes=timeframes
+        timeframes=timeframes,
+        enable_technical_analysis=enable_technical_analysis,
+        enable_fundamental_analysis=enable_fundamental_analysis,
+        technical_weight=technical_weight,
+        fundamental_weight=fundamental_weight,
+        min_trending_confidence=min_trending_confidence
     )
     
     for ticker in all_possible_assets:
@@ -121,6 +128,16 @@ def main():
                               help='Minimum position score threshold')
     regime_parser.add_argument('--timeframes', type=str, default='1d,4h,1h',
                               help='Comma-separated timeframes for technical analysis')
+    regime_parser.add_argument('--disable-technical', action='store_true',
+                              help='Disable technical analysis (use fundamental only)')
+    regime_parser.add_argument('--disable-fundamental', action='store_true',
+                              help='Disable fundamental analysis (use technical only)')
+    regime_parser.add_argument('--technical-weight', type=float, default=0.6,
+                              help='Weight for technical analysis (0.0-1.0)')
+    regime_parser.add_argument('--fundamental-weight', type=float, default=0.4,
+                              help='Weight for fundamental analysis (0.0-1.0)')
+    regime_parser.add_argument('--min-trending-confidence', type=float, default=0.7,
+                              help='Minimum confidence score for trending assets (0.0-1.0)')
     
     # Compare results command
     compare_parser = subparsers.add_parser('compare', help='Compare backtest results')
@@ -164,6 +181,43 @@ def main():
         bucket_names = [bucket.strip() for bucket in args.buckets.split(',')]
         timeframes = [tf.strip() for tf in args.timeframes.split(',')]
         
+        # Process analysis configuration
+        enable_technical = not args.disable_technical
+        enable_fundamental = not args.disable_fundamental
+        
+        # Validate configuration
+        if not enable_technical and not enable_fundamental:
+            print("ERROR: Cannot disable both technical and fundamental analysis.")
+            print("Please specify only one of --disable-technical or --disable-fundamental")
+            return
+        
+        # Validate weights
+        if args.technical_weight < 0 or args.technical_weight > 1:
+            print("ERROR: Technical weight must be between 0.0 and 1.0")
+            return
+        
+        if args.fundamental_weight < 0 or args.fundamental_weight > 1:
+            print("ERROR: Fundamental weight must be between 0.0 and 1.0")
+            return
+        
+        if args.min_trending_confidence < 0 or args.min_trending_confidence > 1:
+            print("ERROR: Minimum trending confidence must be between 0.0 and 1.0")
+            return
+        
+        # Warn about weight normalization
+        total_weight = args.technical_weight + args.fundamental_weight
+        if abs(total_weight - 1.0) > 0.01:
+            print(f"INFO: Weights sum to {total_weight:.2f}, will be normalized to 1.0")
+        
+        # Log configuration
+        analysis_config = []
+        if enable_technical:
+            analysis_config.append(f"Technical ({args.technical_weight:.1%})")
+        if enable_fundamental:
+            analysis_config.append(f"Fundamental ({args.fundamental_weight:.1%})")
+        print(f"Analysis Configuration: {', '.join(analysis_config)}")
+        print(f"Trending Assets: Min confidence {args.min_trending_confidence:.1%}")
+        
         results = run_regime_backtest(
             start_date=start_date,
             end_date=end_date,
@@ -173,7 +227,12 @@ def main():
             commission=args.commission,
             rebalance_frequency=args.rebalance_freq,
             min_score_threshold=args.min_score,
-            timeframes=timeframes
+            timeframes=timeframes,
+            enable_technical_analysis=enable_technical,
+            enable_fundamental_analysis=enable_fundamental,
+            technical_weight=args.technical_weight,
+            fundamental_weight=args.fundamental_weight,
+            min_trending_confidence=args.min_trending_confidence
         )
     elif args.mode == 'compare':
         # Compare results mode

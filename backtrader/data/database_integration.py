@@ -81,11 +81,11 @@ class DatabaseIntegration:
         finally:
             db.close()
     
-    def get_trending_assets(self, tickers: List[str], end_date: str, limit: int = 10) -> List[str]:
+    def get_trending_assets(self, tickers: List[str], end_date: str, limit: int = 10, min_confidence: float = 0.7) -> List[str]:
         if not self.database_available:
             return tickers[:limit]
         
-        cache_key = f"trending_{end_date}_{len(tickers)}_{limit}"
+        cache_key = f"trending_{end_date}_{len(tickers)}_{limit}_{min_confidence}"
         if cache_key in self.cache:
             return self.cache[cache_key]
         
@@ -94,12 +94,12 @@ class DatabaseIntegration:
             result = db.execute(text("""
                 SELECT * FROM scanner_historical
                 WHERE ticker = ANY(:tickers)
-                AND confidence > 0.7
+                AND confidence >= :min_confidence
                 AND market = 'trending'
                 AND date <= :end_date
                 ORDER BY confidence DESC, date DESC
                 LIMIT :limit
-            """), {"tickers": tickers, "end_date": end_date, "limit": limit})
+            """), {"tickers": tickers, "end_date": end_date, "limit": limit, "min_confidence": min_confidence})
             
             trending_data = [dict(row._mapping) for row in result]
             trending_tickers = [item['ticker'] for item in trending_data]

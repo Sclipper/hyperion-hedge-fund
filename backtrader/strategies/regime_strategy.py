@@ -26,6 +26,11 @@ class RegimeStrategy(bt.Strategy):
         ('bucket_names', None),
         ('position_min_score', 0.6),  # Minimum position score threshold
         ('timeframes', ['1d', '4h', '1h']),  # Timeframes for technical analysis
+        ('enable_technical_analysis', True),  # Enable/disable technical analysis
+        ('enable_fundamental_analysis', True),  # Enable/disable fundamental analysis
+        ('technical_weight', 0.6),  # Weight for technical analysis
+        ('fundamental_weight', 0.4),  # Weight for fundamental analysis
+        ('min_trending_confidence', 0.7),  # Minimum confidence for trending assets
     )
     
     def __init__(self):
@@ -51,7 +56,11 @@ class RegimeStrategy(bt.Strategy):
             rebalance_frequency=self.params.rebalance_frequency,
             max_positions=self.params.max_assets_per_period,
             min_score_threshold=self.params.position_min_score,
-            timeframes=self.params.timeframes
+            timeframes=self.params.timeframes,
+            enable_technical_analysis=self.params.enable_technical_analysis,
+            enable_fundamental_analysis=self.params.enable_fundamental_analysis,
+            technical_weight=self.params.technical_weight,
+            fundamental_weight=self.params.fundamental_weight
         )
         
         self.current_regime = None
@@ -158,7 +167,8 @@ class RegimeStrategy(bt.Strategy):
         
         # Get trending assets from database if available
         trending_assets = self.regime_detector.get_trending_assets(
-            current_date, available_assets, len(available_assets)  # Get all for scoring
+            current_date, available_assets, len(available_assets),  # Get all for scoring
+            min_confidence=self.params.min_trending_confidence
         )
         
         # Use position manager to analyze and score assets

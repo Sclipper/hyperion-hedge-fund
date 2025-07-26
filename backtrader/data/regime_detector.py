@@ -122,7 +122,7 @@ class RegimeDetector:
         return pd.DataFrame(regime_data)
     
     def get_trending_assets(self, date: datetime, asset_universe: List[str], 
-                           limit: int = 10) -> List[str]:
+                           limit: int = 10, min_confidence: float = 0.7) -> List[str]:
         if not self.use_database:
             return asset_universe[:limit]
         
@@ -132,19 +132,26 @@ class RegimeDetector:
             result = db.execute(text("""
                 SELECT * FROM scanner_historical
                 WHERE ticker = ANY(:tickers)
-                AND confidence > 0.7
+                AND confidence >= :min_confidence
                 AND market = 'trending'
                 AND date <= :date
                 ORDER BY confidence DESC, date DESC
                 LIMIT :limit
-            """), {"tickers": asset_universe, "date": date_str, "limit": limit})
+            """), {"tickers": asset_universe, "date": date_str, "limit": limit, "min_confidence": min_confidence})
             
             trending_assets = [dict(row._mapping) for row in result]
             trending_tickers = [asset['ticker'] for asset in trending_assets]
             
+            # Log trending asset filtering results
+            print(f"Trending Assets Filter: Found {len(trending_tickers)} assets with confidence >= {min_confidence:.1%}")
+            if trending_assets:
+                avg_confidence = sum(asset['confidence'] for asset in trending_assets) / len(trending_assets)
+                print(f"Average trending confidence: {avg_confidence:.2f}")
+            
             if trending_tickers:
                 return trending_tickers
             else:
+                print(f"No trending assets found with confidence >= {min_confidence:.1%}, using all available assets")
                 return asset_universe[:limit]
                 
         except Exception as e:

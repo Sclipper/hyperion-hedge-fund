@@ -62,7 +62,11 @@ class PositionManager:
                  max_positions=10,
                  position_sizing_method='kelly',  # 'equal', 'kelly', 'risk_parity'
                  min_score_threshold=0.6,
-                 timeframes=['1d', '4h', '1h']):
+                 timeframes=['1d', '4h', '1h'],
+                 enable_technical_analysis=True,
+                 enable_fundamental_analysis=True,
+                 technical_weight=0.6,
+                 fundamental_weight=0.4):
         
         self.technical_analyzer = technical_analyzer
         self.fundamental_analyzer = fundamental_analyzer
@@ -73,18 +77,49 @@ class PositionManager:
         self.min_score_threshold = min_score_threshold
         self.timeframes = timeframes
         
+        # Analysis enable/disable flags
+        self.enable_technical_analysis = enable_technical_analysis
+        self.enable_fundamental_analysis = enable_fundamental_analysis
+        
+        # Position sizing weights (will be adjusted based on enabled analysis)
+        self.technical_weight = technical_weight
+        self.fundamental_weight = fundamental_weight
+        
+        # Validate configuration
+        self._validate_analysis_configuration()
+        
         # Track position scores over time
         self.position_history: Dict[str, List[PositionScore]] = {}
         self.current_positions: Dict[str, PositionScore] = {}
         self.last_rebalance_date: Optional[datetime] = None
         
-        # Position sizing weights
-        self.technical_weight = 0.6
-        self.fundamental_weight = 0.4
-        
         # Risk management parameters
         self.max_position_size = 0.2  # 20% max per position
         self.min_position_size = 0.01  # 1% min per position
+    
+    def _validate_analysis_configuration(self):
+        """Validate analysis configuration to ensure at least one type is enabled"""
+        if not self.enable_technical_analysis and not self.enable_fundamental_analysis:
+            raise ValueError(
+                "At least one analysis type must be enabled. "
+                "Cannot disable both technical and fundamental analysis."
+            )
+        
+        # Warn about analyzer availability
+        if self.enable_technical_analysis and self.technical_analyzer is None:
+            print("WARNING: Technical analysis enabled but no technical analyzer provided")
+        
+        if self.enable_fundamental_analysis and self.fundamental_analyzer is None:
+            print("WARNING: Fundamental analysis enabled but no fundamental analyzer provided")
+        
+        # Log configuration
+        analysis_types = []
+        if self.enable_technical_analysis:
+            analysis_types.append(f"Technical ({self.technical_weight:.1%})")
+        if self.enable_fundamental_analysis:
+            analysis_types.append(f"Fundamental ({self.fundamental_weight:.1%})")
+        
+        print(f"Position Manager Analysis Configuration: {', '.join(analysis_types)}")
         
     def should_rebalance(self, current_date: datetime) -> bool:
         """Determine if we should rebalance based on configured frequency"""
@@ -144,7 +179,7 @@ class PositionManager:
         
         # Technical analysis across timeframes
         technical_score = 0.0
-        if self.technical_analyzer and timeframe_data:
+        if self.enable_technical_analysis and self.technical_analyzer and timeframe_data:
             try:
                 technical_score = self.technical_analyzer.analyze_multi_timeframe(
                     timeframe_data, asset, current_date
@@ -152,28 +187,48 @@ class PositionManager:
             except Exception as e:
                 print(f"Technical analysis failed for {asset}: {e}")
                 technical_score = 0.5  # Default to neutral if technical analysis fails
+        elif self.enable_technical_analysis and not timeframe_data:
+            technical_score = 0.5  # Neutral score if no data available
         
         # Fundamental analysis
         fundamental_score = 0.0
-        if self.fundamental_analyzer:
+        if self.enable_fundamental_analysis and self.fundamental_analyzer:
             fundamental_score = self.fundamental_analyzer.analyze_asset(
                 asset, current_date, regime
             )
         
-        # Handle missing fundamental data gracefully (especially for crypto)
-        if fundamental_score == 0.0:
-            # If no fundamental score available, increase technical weight
-            effective_technical_weight = 0.9
-            effective_fundamental_weight = 0.1
+        # Determine effective weights based on configuration and data availability
+        if not self.enable_technical_analysis:
+            # Fundamental only
+            effective_technical_weight = 0.0
+            effective_fundamental_weight = 1.0
+            combined_score = fundamental_score
+        elif not self.enable_fundamental_analysis:
+            # Technical only
+            effective_technical_weight = 1.0
+            effective_fundamental_weight = 0.0
+            combined_score = technical_score
         else:
-            effective_technical_weight = self.technical_weight
-            effective_fundamental_weight = self.fundamental_weight
-        
-        # Combine scores with adjusted weights
-        combined_score = (
-            technical_score * effective_technical_weight + 
-            fundamental_score * effective_fundamental_weight
-        )
+            # Both enabled - handle missing data gracefully
+            if fundamental_score == 0.0:
+                # If no fundamental score available, use technical only
+                effective_technical_weight = 1.0
+                effective_fundamental_weight = 0.0
+                combined_score = technical_score
+            else:
+                # Both scores available, use configured weights
+                effective_technical_weight = self.technical_weight
+                effective_fundamental_weight = self.fundamental_weight
+                # Normalize weights to sum to 1.0
+                total_weight = effective_technical_weight + effective_fundamental_weight
+                if total_weight > 0:
+                    effective_technical_weight /= total_weight
+                    effective_fundamental_weight /= total_weight
+                
+                combined_score = (
+                    technical_score * effective_technical_weight + 
+                    fundamental_score * effective_fundamental_weight
+                )
         
         # Determine position size
         position_size_category, position_size_percentage = self._determine_position_size(
@@ -408,3 +463,28 @@ class PositionManager:
         
         with open(filepath, 'w') as f:
             json.dump(history_data, f, indent=2)
+    
+    def get_configuration_summary(self) -> Dict:
+        """Get summary of current position manager configuration"""
+        return {
+            'analysis_configuration': {
+                'technical_enabled': self.enable_technical_analysis,
+                'fundamental_enabled': self.enable_fundamental_analysis,
+                'technical_weight': self.technical_weight,
+                'fundamental_weight': self.fundamental_weight
+            },
+            'position_settings': {
+                'rebalance_frequency': self.rebalance_frequency,
+                'max_positions': self.max_positions,
+                'min_score_threshold': self.min_score_threshold,
+                'max_position_size': self.max_position_size,
+                'min_position_size': self.min_position_size
+            },
+            'technical_settings': {
+                'timeframes': self.timeframes,
+                'analyzer_available': self.technical_analyzer is not None
+            },
+            'fundamental_settings': {
+                'analyzer_available': self.fundamental_analyzer is not None
+            }
+        }

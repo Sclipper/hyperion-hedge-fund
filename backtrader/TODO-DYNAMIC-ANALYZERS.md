@@ -3,7 +3,7 @@
 ## Add Analysis Disable Functionality
 
 **Priority: High**  
-**Status: Pending**  
+**Status: ✅ COMPLETED**  
 **Estimated Effort: Medium**
 
 ### Objective
@@ -76,4 +76,52 @@ Add functionality to the Position Manager to allow disabling technical analysis,
 - Maintain backward compatibility with existing configurations
 - Ensure proper error handling and user feedback
 - Consider adding analysis type indicators to output/logs
-- May want to add weight validation (sum to 1.0) in future iterations 
+- May want to add weight validation (sum to 1.0) in future iterations
+
+---
+
+## ✅ IMPLEMENTATION COMPLETED
+
+### What Was Implemented
+
+#### 1. Position Manager Enhancements (`position/position_manager.py`)
+- ✅ Added configuration parameters: `enable_technical_analysis`, `enable_fundamental_analysis`
+- ✅ Added configurable weights: `technical_weight`, `fundamental_weight`
+- ✅ Added validation method `_validate_analysis_configuration()`
+- ✅ Updated scoring logic in `_score_single_asset()` to handle all configurations
+- ✅ Added `get_configuration_summary()` method for debugging
+
+#### 2. Strategy Integration (`strategies/regime_strategy.py`)
+- ✅ Added new strategy parameters for analysis configuration
+- ✅ Updated Position Manager initialization to pass through all new options
+
+#### 3. CLI Interface (`main.py`)
+- ✅ Added `--disable-technical` flag
+- ✅ Added `--disable-fundamental` flag  
+- ✅ Added `--technical-weight` and `--fundamental-weight` options
+- ✅ Added configuration validation and error handling
+- ✅ Added informative logging of analysis configuration
+
+### Usage Examples
+
+```bash
+# Technical analysis only (good for crypto portfolios)
+python main.py regime --buckets "High Beta,Gold" --disable-fundamental
+
+# Fundamental analysis only (pure value investing)
+python main.py regime --buckets "Value,Defensive Assets" --disable-technical
+
+# Custom weights (70% technical, 30% fundamental)
+python main.py regime --buckets "Risk Assets,Growth" --technical-weight 0.7 --fundamental-weight 0.3
+
+# Default behavior (both enabled with 60/40 weights)
+python main.py regime --buckets "Risk Assets,Defensives"
+```
+
+### Features
+- ✅ **Flexible Configuration**: Independently enable/disable analysis types
+- ✅ **Weight Customization**: Configurable analysis weights with automatic normalization
+- ✅ **Error Validation**: Prevents invalid configurations with helpful error messages
+- ✅ **Backward Compatibility**: Existing code continues to work unchanged
+- ✅ **Crypto Support**: Better support for crypto assets via technical-only mode
+- ✅ **Debugging**: Configuration summary method for troubleshooting 
