@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import datetime
 from typing import List, Set, Optional, Dict
 from enum import Enum
@@ -8,6 +8,20 @@ class AssetPriority(Enum):
     TRENDING = "trending"        # New trending opportunities  
     REGIME = "regime"           # Regime-appropriate assets
     FALLBACK = "fallback"       # Backup assets
+
+@dataclass
+class CoreAssetInfo:
+    """Core asset tracking and lifecycle management"""
+    asset: str
+    designation_date: datetime
+    expiry_date: datetime
+    reason: str
+    bucket: str
+    extension_count: int = 0
+    performance_warnings: List[str] = field(default_factory=list)
+    last_performance_check: Optional[datetime] = None
+    designation_score: Optional[float] = None
+    bucket_average_at_designation: Optional[float] = None
 
 @dataclass
 class RebalancingUniverse:
@@ -108,6 +122,16 @@ class RebalancingLimits:
     max_cycles_per_protection_period: int = 1
     whipsaw_protection_days: int = 14
     min_position_duration_hours: int = 4
+    
+    # Core Asset Management (Module 5)
+    enable_core_asset_management: bool = True
+    core_asset_override_threshold: float = 0.95
+    core_asset_expiry_days: int = 90
+    core_asset_underperformance_threshold: float = 0.15
+    core_asset_underperformance_period: int = 30
+    max_core_assets: int = 3
+    core_asset_extension_limit: int = 2
+    core_asset_performance_check_frequency: int = 7  # Days between checks
 
 @dataclass
 class RebalancingTarget:

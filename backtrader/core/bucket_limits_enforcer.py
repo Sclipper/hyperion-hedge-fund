@@ -30,19 +30,22 @@ class BucketEnforcementResult:
     violations_fixed: List[str]
 
 class BucketLimitsEnforcer:
-    """Enforces bucket-based portfolio diversification constraints"""
+    """Enforces bucket-based portfolio diversification constraints (Phase 3 Enhanced)"""
     
-    def __init__(self, bucket_manager: BucketManager = None):
+    def __init__(self, bucket_manager: BucketManager = None, core_asset_manager=None):
         self.bucket_manager = bucket_manager or BucketManager()
+        self.core_asset_manager = core_asset_manager  # Phase 3: Core asset integration
     
     def apply_bucket_limits(self, scored_assets: List[AssetScore], 
-                          config: BucketLimitsConfig) -> BucketEnforcementResult:
+                          config: BucketLimitsConfig,
+                          current_date: Optional[datetime] = None) -> BucketEnforcementResult:
         """
-        Apply bucket limits to a list of scored assets
+        Apply bucket limits to a list of scored assets (Phase 3 Enhanced)
         
         Args:
             scored_assets: List of asset scores to filter
             config: Bucket limits configuration
+            current_date: Current date for core asset override checks (Phase 3)
             
         Returns:
             BucketEnforcementResult with selected/rejected assets and metadata
@@ -57,7 +60,7 @@ class BucketLimitsEnforcer:
                 violations_fixed=[]
             )
         
-        print(f"\n🏛️ Applying Bucket Limits")
+        print(f"\n🏛️ Applying Bucket Limits (Phase 3: Core Asset Override Support)")
         print(f"   Config: max_positions={config.max_positions_per_bucket}, "
               f"max_allocation={config.max_allocation_per_bucket:.1%}, "
               f"min_buckets={config.min_buckets_represented}")
@@ -65,21 +68,32 @@ class BucketLimitsEnforcer:
         enforcement_actions = []
         violations_fixed = []
         
+        # Phase 3: Identify core assets for override capabilities
+        core_assets = set()
+        if self.core_asset_manager and current_date:
+            for asset_score in scored_assets:
+                if self.core_asset_manager.is_core_asset(asset_score.asset, current_date):
+                    core_assets.add(asset_score.asset)
+            
+            if core_assets:
+                print(f"   🌟 Core Assets Detected: {len(core_assets)} assets with bucket override capability")
+                enforcement_actions.append(f"Identified {len(core_assets)} core assets with override capability")
+        
         # Step 1: Group assets by bucket and priority
         bucket_groups = self._group_by_bucket_and_priority(scored_assets)
         
-        # Step 2: Apply position limits per bucket
+        # Step 2: Apply position limits per bucket (with core asset overrides)
         if config.enforce_position_limits:
             bucket_groups, actions, violations = self._apply_position_limits(
-                bucket_groups, config.max_positions_per_bucket, config.allow_bucket_overflow
+                bucket_groups, config.max_positions_per_bucket, config.allow_bucket_overflow, core_assets
             )
             enforcement_actions.extend(actions)
             violations_fixed.extend(violations)
         
-        # Step 3: Apply allocation limits per bucket  
+        # Step 3: Apply allocation limits per bucket (with core asset overrides)
         if config.enforce_allocation_limits:
             bucket_groups, actions, violations = self._apply_allocation_limits(
-                bucket_groups, config.max_allocation_per_bucket
+                bucket_groups, config.max_allocation_per_bucket, core_assets
             )
             enforcement_actions.extend(actions)
             violations_fixed.extend(violations)
@@ -144,12 +158,14 @@ class BucketLimitsEnforcer:
         return dict(bucket_groups)
     
     def _apply_position_limits(self, bucket_groups: Dict[str, List[AssetScore]], 
-                             max_positions: int, allow_overflow: bool = False) -> tuple:
+                             max_positions: int, allow_overflow: bool = False, 
+                             core_assets: Set[str] = None) -> tuple:
         """
-        Apply maximum positions per bucket constraint
+        Apply maximum positions per bucket constraint (Phase 3: Core Asset Override Support)
         """
         actions = []
         violations = []
+        core_assets = core_assets or set()
         
         for bucket_name, assets in bucket_groups.items():
             if len(assets) <= max_positions:
@@ -158,29 +174,45 @@ class BucketLimitsEnforcer:
                     asset._bucket_selected = True
                 continue
             
-            # Over limit - need to select top assets
+            # Over limit - need to select top assets with core asset override logic
             portfolio_assets = [a for a in assets if a.priority == AssetPriority.PORTFOLIO]
-            other_assets = [a for a in assets if a.priority != AssetPriority.PORTFOLIO]
+            core_asset_objects = [a for a in assets if a.asset in core_assets]
+            other_assets = [a for a in assets if a.priority != AssetPriority.PORTFOLIO and a.asset not in core_assets]
             
             selected_count = 0
+            
+            # Phase 3: Always include core assets (they can override bucket limits)
+            for asset in core_asset_objects:
+                asset._bucket_selected = True
+                asset.bucket_selection_reason = f"CORE ASSET OVERRIDE: Bucket limit bypassed"
+                selected_count += 1
+                if asset.asset in core_assets:
+                    actions.append(f"Core asset '{asset.asset}' granted bucket override in '{bucket_name}'")
             
             # Always include portfolio assets if allow_overflow is True
             if allow_overflow:
                 for asset in portfolio_assets:
-                    asset._bucket_selected = True
-                    asset.bucket_selection_reason = f"Portfolio asset (overflow allowed)"
-                    selected_count += 1
+                    if asset.asset not in core_assets:  # Don't double-count core assets
+                        asset._bucket_selected = True
+                        asset.bucket_selection_reason = f"Portfolio asset (overflow allowed)"
+                        selected_count += 1
                 
                 if selected_count > max_positions:
-                    actions.append(f"Bucket '{bucket_name}': Allowed {selected_count} portfolio assets (overflow)")
+                    override_count = len([a for a in core_asset_objects])
+                    if override_count > 0:
+                        actions.append(f"Bucket '{bucket_name}': Allowed {selected_count} assets "
+                                     f"({override_count} core overrides + {selected_count - override_count} portfolio)")
+                    else:
+                        actions.append(f"Bucket '{bucket_name}': Allowed {selected_count} portfolio assets (overflow)")
             else:
-                # Strict enforcement - portfolio assets compete for slots
-                all_assets_by_priority = portfolio_assets + other_assets
-                selected_assets = all_assets_by_priority[:max_positions]
+                # Strict enforcement - but core assets are exempt
+                remaining_slots = max(0, max_positions - len(core_asset_objects))
+                eligible_assets = [a for a in (portfolio_assets + other_assets) if a.asset not in core_assets]
+                selected_non_core = eligible_assets[:remaining_slots]
                 
-                for asset in selected_assets:
+                for asset in selected_non_core:
                     asset._bucket_selected = True
-                    asset.bucket_selection_reason = f"Top {max_positions} in bucket '{bucket_name}'"
+                    asset.bucket_selection_reason = f"Top {remaining_slots} non-core assets in bucket '{bucket_name}'"
                     selected_count += 1
             
             # Handle remaining slots for non-portfolio assets
@@ -209,12 +241,13 @@ class BucketLimitsEnforcer:
         return bucket_groups, actions, violations
     
     def _apply_allocation_limits(self, bucket_groups: Dict[str, List[AssetScore]], 
-                               max_allocation: float) -> tuple:
+                               max_allocation: float, core_assets: Set[str] = None) -> tuple:
         """
-        Apply maximum allocation per bucket constraint
+        Apply maximum allocation per bucket constraint (Phase 3: Core Asset Override Support)
         """
         actions = []
         violations = []
+        core_assets = core_assets or set()
         
         for bucket_name, assets in bucket_groups.items():
             # Only consider assets that passed position limits
@@ -230,18 +263,45 @@ class BucketLimitsEnforcer:
                 # Within limit
                 continue
             
-            # Over allocation limit - need to scale down
-            scale_factor = max_allocation / current_allocation
+            # Phase 3: Separate core assets from regular assets for allocation limits
+            core_asset_objects = [a for a in selected_assets if a.asset in core_assets]
+            regular_assets = [a for a in selected_assets if a.asset not in core_assets]
             
-            for asset in selected_assets:
-                original_size = getattr(asset, 'position_size_percentage', 0.0)
-                if original_size > 0:
-                    asset.position_size_percentage = original_size * scale_factor
-                    asset.bucket_scaling_applied = True
-                    asset.bucket_scale_factor = scale_factor
+            # Calculate allocations
+            core_allocation = sum(getattr(a, 'position_size_percentage', 0.0) for a in core_asset_objects)
+            regular_allocation = sum(getattr(a, 'position_size_percentage', 0.0) for a in regular_assets)
             
-            actions.append(f"Bucket '{bucket_name}': Scaled allocation from {current_allocation:.1%} to {max_allocation:.1%}")
-            violations.append(f"Bucket '{bucket_name}': Applied {scale_factor:.3f} scaling due to allocation limit")
+            # Core assets can exceed bucket allocation limits
+            if core_asset_objects:
+                actions.append(f"Core assets in '{bucket_name}': {core_allocation:.1%} allocation "
+                             f"(exempt from {max_allocation:.1%} bucket limit)")
+            
+            # Only scale down regular assets if total exceeds limit
+            if current_allocation > max_allocation and regular_assets:
+                # Calculate how much to scale down regular assets
+                available_for_regular = max(0, max_allocation - core_allocation)
+                
+                if available_for_regular > 0 and regular_allocation > 0:
+                    scale_factor = available_for_regular / regular_allocation
+                    
+                    for asset in regular_assets:
+                        original_size = getattr(asset, 'position_size_percentage', 0.0)
+                        if original_size > 0:
+                            asset.position_size_percentage = original_size * scale_factor
+                            asset.bucket_scaling_applied = True
+                            asset.bucket_scale_factor = scale_factor
+                    
+                    actions.append(f"Bucket '{bucket_name}': Scaled regular assets from {regular_allocation:.1%} to {available_for_regular:.1%}")
+                    violations.append(f"Bucket '{bucket_name}': Applied {scale_factor:.3f} scaling to non-core assets due to allocation limit")
+                else:
+                    # Core assets use up all allocation - regular assets get zero
+                    for asset in regular_assets:
+                        asset.position_size_percentage = 0.0
+                        asset._bucket_selected = False
+                        asset.bucket_rejection_reason = f"Core assets exceeded bucket allocation limit in '{bucket_name}'"
+                    
+                    actions.append(f"Bucket '{bucket_name}': Regular assets removed - core assets exceed allocation limit")
+                    violations.append(f"Bucket '{bucket_name}': Regular assets rejected due to core asset allocation")
         
         return bucket_groups, actions, violations
     

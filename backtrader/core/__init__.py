@@ -11,6 +11,7 @@ This module provides the foundational components for portfolio rebalancing:
 
 from .models import (
     AssetPriority,
+    CoreAssetInfo,
     RebalancingUniverse,
     AssetScore,
     RebalancingLimits,
@@ -44,10 +45,13 @@ from .whipsaw_protection_manager import (
     PositionEvent,
     WhipsawCycle
 )
+from .core_asset_manager import CoreAssetManager
+from .smart_diversification_manager import SmartDiversificationManager
 from .rebalancer_engine import CoreRebalancerEngine
 
 __all__ = [
     'AssetPriority',
+    'CoreAssetInfo',
     'RebalancingUniverse',
     'AssetScore',
     'RebalancingLimits',
@@ -81,5 +85,7 @@ __all__ = [
     'WhipsawProtectionManager',
     'PositionEvent',
     'WhipsawCycle',
+    'CoreAssetManager',
+    'SmartDiversificationManager',
     'CoreRebalancerEngine'
 ] 

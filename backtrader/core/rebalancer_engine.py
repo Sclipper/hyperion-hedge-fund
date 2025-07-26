@@ -10,17 +10,20 @@ from .grace_period_manager import GracePeriodManager
 from .holding_period_manager import RegimeAwareHoldingPeriodManager
 from .position_lifecycle_tracker import PositionLifecycleTracker
 from .whipsaw_protection_manager import WhipsawProtectionManager
+from .core_asset_manager import CoreAssetManager
+from .smart_diversification_manager import SmartDiversificationManager
 from .models import RebalancingLimits, RebalancingTarget
 
 class CoreRebalancerEngine:
     """
     Enhanced main engine for portfolio rebalancing with comprehensive lifecycle management.
     
-    Integrates all Module 1-4 components:
+    Integrates all Module 1-5 components:
     - Universe building and asset scoring (Module 1)
     - Bucket diversification (Module 2) 
     - Dynamic position sizing (Module 3)
     - Grace periods, holding periods, lifecycle tracking, and whipsaw protection (Module 4)
+    - Core asset management with smart diversification (Module 5)
     """
     
     def __init__(self, regime_detector: Any, asset_manager: Any, 
@@ -37,10 +40,23 @@ class CoreRebalancerEngine:
         
         # Module 2: Bucket diversification components
         self.bucket_manager = BucketManager(asset_manager)
-        self.bucket_enforcer = BucketLimitsEnforcer(self.bucket_manager)
         
-        # Module 4: Initialize lifecycle management components
-        self.grace_period_manager = GracePeriodManager()
+        # Module 5: Core asset management (Phase 4 Integration)
+        self.core_asset_manager = CoreAssetManager(bucket_manager=self.bucket_manager)
+        self.smart_diversification_manager = SmartDiversificationManager(
+            core_asset_manager=self.core_asset_manager
+        )
+        
+        # Enhanced bucket enforcer with core asset support
+        self.bucket_enforcer = BucketLimitsEnforcer(
+            bucket_manager=self.bucket_manager,
+            core_asset_manager=self.core_asset_manager
+        )
+        
+        # Module 4: Initialize lifecycle management components with core asset support
+        self.grace_period_manager = GracePeriodManager(
+            core_asset_manager=self.core_asset_manager
+        )
         self.holding_period_manager = RegimeAwareHoldingPeriodManager()
         self.lifecycle_tracker = PositionLifecycleTracker()
         self.whipsaw_protection = WhipsawProtectionManager()
@@ -125,7 +141,9 @@ class CoreRebalancerEngine:
                 allow_bucket_overflow=limits.allow_bucket_overflow
             )
             
-            bucket_result = self.bucket_enforcer.apply_bucket_limits(scored_assets, bucket_config)
+            bucket_result = self.bucket_enforcer.apply_bucket_limits(
+                scored_assets, bucket_config, current_date=rebalance_date
+            )
             scored_assets = bucket_result.selected_assets
             
             print(f"   Bucket enforcement: {len(bucket_result.selected_assets)} selected, "
@@ -135,6 +153,39 @@ class CoreRebalancerEngine:
         # Step 3.5: Generate regime context for lifecycle management
         print(f"\n🌡️ Step 3.5: Generating Regime Context")
         regime_context = self._get_regime_context(rebalance_date)
+        
+        # Step 3.6: Core Asset Lifecycle Management (Module 5)
+        if limits.enable_core_asset_management and self.core_asset_manager:
+            print(f"\n🌟 Step 3.6: Core Asset Lifecycle Management")
+            lifecycle_actions = self.core_asset_manager.perform_lifecycle_check(rebalance_date)
+            for asset, action in lifecycle_actions.items():
+                if action.startswith("AUTO_REVOKED"):
+                    print(f"   ⚠️  {asset}: {action}")
+                elif "RETAINED" in action and "RECOMMEND_REVOKE" in action:
+                    print(f"   ⚠️  {asset}: {action}")
+                else:
+                    print(f"   ✅ {asset}: {action}")
+        
+        # Step 3.7: Smart Diversification with Core Asset Auto-Marking (Module 5)
+        if limits.enable_core_asset_management and self.smart_diversification_manager:
+            print(f"\n🎯 Step 3.7: Smart Diversification (Core Asset Auto-Marking)")
+            bucket_limits_dict = {
+                bucket: limits.max_positions_per_bucket 
+                for bucket in self.bucket_manager.get_all_buckets()
+            }
+            
+            # Apply smart diversification with auto core asset marking
+            scored_assets = self.smart_diversification_manager.apply_smart_diversification(
+                scored_assets=scored_assets,
+                bucket_limits=bucket_limits_dict,
+                current_date=rebalance_date
+            )
+            
+            # Report smart diversification statistics
+            smart_stats = self.smart_diversification_manager.get_override_statistics(rebalance_date)
+            print(f"   Assets processed: {len(scored_assets)}")
+            print(f"   Overrides granted: {smart_stats['overrides_this_cycle']}")
+            print(f"   Total core assets: {smart_stats['total_core_assets']}")
         
         # Step 4: Select assets with lifecycle management
         print(f"\n🎯 Step {'4' if limits.enable_bucket_diversification else '3'}: Selecting Portfolio (with Lifecycle Management)")
@@ -215,7 +266,17 @@ class CoreRebalancerEngine:
         return json.dumps(output, indent=2)
     
     def _update_lifecycle_manager_configs(self, limits: RebalancingLimits):
-        """Update lifecycle manager configurations from limits."""
+        """Update lifecycle manager configurations from limits (Phase 4 Enhanced)."""
+        
+        # Module 5: Update core asset manager configuration
+        if self.core_asset_manager:
+            self.core_asset_manager.update_config(limits)
+            print(f"   🌟 Core Asset Management: {'ENABLED' if limits.enable_core_asset_management else 'DISABLED'}")
+            if limits.enable_core_asset_management:
+                print(f"      Max core assets: {limits.max_core_assets}")
+                print(f"      Override threshold: {limits.core_asset_override_threshold:.1%}")
+                print(f"      Expiry days: {limits.core_asset_expiry_days}")
+        
         if limits.enable_grace_periods and self.grace_period_manager:
             # Recreate with new config if parameters changed
             if (self.grace_period_manager.grace_period_days != limits.grace_period_days or
@@ -225,7 +286,8 @@ class CoreRebalancerEngine:
                 self.grace_period_manager = GracePeriodManager(
                     grace_period_days=limits.grace_period_days,
                     decay_rate=limits.grace_decay_rate,
-                    min_decay_factor=limits.min_decay_factor
+                    min_decay_factor=limits.min_decay_factor,
+                    core_asset_manager=self.core_asset_manager
                 )
         
         if self.holding_period_manager:
@@ -407,6 +469,18 @@ class CoreRebalancerEngine:
             if self.holding_period_manager:
                 holding_status = self.holding_period_manager.get_all_holding_status(current_date)
                 report['holding_period_status'] = holding_status
+            
+            # Module 5: Get core asset status (Phase 4 Enhancement)
+            if self.core_asset_manager:
+                core_status_report = self.core_asset_manager.get_core_status_report(current_date)
+                report['core_asset_status'] = core_status_report
+                report['summary']['core_assets'] = core_status_report['total_core_assets']
+                
+                # Include core asset alerts in summary
+                if core_status_report['lifecycle_summary']['expiring_soon']:
+                    report['summary']['core_assets_expiring_soon'] = len(core_status_report['lifecycle_summary']['expiring_soon'])
+                if core_status_report['lifecycle_summary']['underperforming']:
+                    report['summary']['core_assets_underperforming'] = len(core_status_report['lifecycle_summary']['underperforming'])
             
         except Exception as e:
             print(f"⚠️ Error generating lifecycle report: {e}")

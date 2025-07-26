@@ -17,7 +17,12 @@ def run_regime_backtest(start_date, end_date, strategy_class=None, cash=100000, 
                        bucket_names=None, max_assets_per_period=5, rebalance_frequency='monthly',
                        min_score_threshold=0.6, timeframes=['1d', '4h', '1h'],
                        enable_technical_analysis=True, enable_fundamental_analysis=True,
-                       technical_weight=0.6, fundamental_weight=0.4, min_trending_confidence=0.7):
+                       technical_weight=0.6, fundamental_weight=0.4, min_trending_confidence=0.7,
+                       # Core Asset Management Parameters (Module 5)
+                       enable_core_assets=False, max_core_assets=3, core_override_threshold=0.95,
+                       core_expiry_days=90, core_underperformance_threshold=0.15, 
+                       core_underperformance_period=30, core_extension_limit=2, 
+                       core_performance_check_frequency=7, smart_diversification_overrides=2):
     cerebro = bt.Cerebro()
     
     strategy_class = strategy_class or RegimeStrategy
@@ -42,7 +47,17 @@ def run_regime_backtest(start_date, end_date, strategy_class=None, cash=100000, 
         enable_fundamental_analysis=enable_fundamental_analysis,
         technical_weight=technical_weight,
         fundamental_weight=fundamental_weight,
-        min_trending_confidence=min_trending_confidence
+        min_trending_confidence=min_trending_confidence,
+        # Core Asset Management Parameters (Module 5)
+        enable_core_assets=enable_core_assets,
+        max_core_assets=max_core_assets,
+        core_override_threshold=core_override_threshold,
+        core_expiry_days=core_expiry_days,
+        core_underperformance_threshold=core_underperformance_threshold,
+        core_underperformance_period=core_underperformance_period,
+        core_extension_limit=core_extension_limit,
+        core_performance_check_frequency=core_performance_check_frequency,
+        smart_diversification_overrides=smart_diversification_overrides
     )
     
     for ticker in all_possible_assets:
@@ -139,6 +154,26 @@ def main():
     regime_parser.add_argument('--min-trending-confidence', type=float, default=0.7,
                               help='Minimum confidence score for trending assets (0.0-1.0)')
     
+    # Core Asset Management Parameters (Module 5)
+    regime_parser.add_argument('--enable-core-assets', action='store_true',
+                              help='Enable core asset management system')
+    regime_parser.add_argument('--max-core-assets', type=int, default=3,
+                              help='Maximum number of core assets allowed')
+    regime_parser.add_argument('--core-override-threshold', type=float, default=0.95,
+                              help='Score threshold for bucket override eligibility (0.0-1.0)')
+    regime_parser.add_argument('--core-expiry-days', type=int, default=90,
+                              help='Days before core asset designation expires')
+    regime_parser.add_argument('--core-underperformance-threshold', type=float, default=0.15,
+                              help='Underperformance threshold for auto-revocation (0.0-1.0)')
+    regime_parser.add_argument('--core-underperformance-period', type=int, default=30,
+                              help='Days to measure underperformance over')
+    regime_parser.add_argument('--core-extension-limit', type=int, default=2,
+                              help='Maximum number of extensions allowed per core asset')
+    regime_parser.add_argument('--core-performance-check-frequency', type=int, default=7,
+                              help='Days between performance checks for core assets')
+    regime_parser.add_argument('--smart-diversification-overrides', type=int, default=2,
+                              help='Maximum bucket overrides per rebalancing cycle')
+    
     # Compare results command
     compare_parser = subparsers.add_parser('compare', help='Compare backtest results')
     compare_parser.add_argument('--files', type=str, required=True,
@@ -204,6 +239,21 @@ def main():
             print("ERROR: Minimum trending confidence must be between 0.0 and 1.0")
             return
         
+        # Validate core asset management parameters
+        if args.enable_core_assets:
+            if args.core_override_threshold < 0 or args.core_override_threshold > 1:
+                print("ERROR: Core override threshold must be between 0.0 and 1.0")
+                return
+            if args.core_underperformance_threshold < 0 or args.core_underperformance_threshold > 1:
+                print("ERROR: Core underperformance threshold must be between 0.0 and 1.0")
+                return
+            if args.max_core_assets < 1:
+                print("ERROR: Max core assets must be at least 1")
+                return
+            if args.core_expiry_days < 1:
+                print("ERROR: Core expiry days must be at least 1")
+                return
+        
         # Warn about weight normalization
         total_weight = args.technical_weight + args.fundamental_weight
         if abs(total_weight - 1.0) > 0.01:
@@ -217,6 +267,16 @@ def main():
             analysis_config.append(f"Fundamental ({args.fundamental_weight:.1%})")
         print(f"Analysis Configuration: {', '.join(analysis_config)}")
         print(f"Trending Assets: Min confidence {args.min_trending_confidence:.1%}")
+        
+        # Log core asset management configuration
+        if args.enable_core_assets:
+            print(f"🌟 Core Asset Management: ENABLED")
+            print(f"   Max core assets: {args.max_core_assets}")
+            print(f"   Override threshold: {args.core_override_threshold:.1%}")
+            print(f"   Expiry days: {args.core_expiry_days}")
+            print(f"   Max overrides per cycle: {args.smart_diversification_overrides}")
+        else:
+            print(f"🌟 Core Asset Management: DISABLED")
         
         results = run_regime_backtest(
             start_date=start_date,
@@ -232,7 +292,17 @@ def main():
             enable_fundamental_analysis=enable_fundamental,
             technical_weight=args.technical_weight,
             fundamental_weight=args.fundamental_weight,
-            min_trending_confidence=args.min_trending_confidence
+            min_trending_confidence=args.min_trending_confidence,
+            # Core Asset Management Parameters (Module 5)
+            enable_core_assets=args.enable_core_assets,
+            max_core_assets=args.max_core_assets,
+            core_override_threshold=args.core_override_threshold,
+            core_expiry_days=args.core_expiry_days,
+            core_underperformance_threshold=args.core_underperformance_threshold,
+            core_underperformance_period=args.core_underperformance_period,
+            core_extension_limit=args.core_extension_limit,
+            core_performance_check_frequency=args.core_performance_check_frequency,
+            smart_diversification_overrides=args.smart_diversification_overrides
         )
     elif args.mode == 'compare':
         # Compare results mode

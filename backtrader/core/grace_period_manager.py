@@ -53,7 +53,8 @@ class GracePeriodManager:
     def __init__(self, 
                  grace_period_days: int = 5, 
                  decay_rate: float = 0.8, 
-                 min_decay_factor: float = 0.1):
+                 min_decay_factor: float = 0.1,
+                 core_asset_manager=None):
         """
         Initialize grace period manager.
         
@@ -61,10 +62,12 @@ class GracePeriodManager:
             grace_period_days: Maximum days a position can remain in grace period
             decay_rate: Daily decay rate for position size (0.8 = 20% decay per day)
             min_decay_factor: Minimum size factor (0.1 = position can't go below 10% of original)
+            core_asset_manager: CoreAssetManager instance for exemption checks (Phase 3)
         """
         self.grace_period_days = grace_period_days
         self.decay_rate = decay_rate
         self.min_decay_factor = min_decay_factor
+        self.core_asset_manager = core_asset_manager
         self.grace_positions: Dict[str, GracePosition] = {}
         
         # Validation
@@ -82,7 +85,7 @@ class GracePeriodManager:
                                       min_threshold: float,
                                       current_date: datetime) -> GraceAction:
         """
-        Handle positions that fall below threshold with grace period logic.
+        Handle positions that fall below threshold with grace period logic (Phase 3 Enhanced).
         
         Args:
             asset: Asset symbol
@@ -94,6 +97,16 @@ class GracePeriodManager:
         Returns:
             GraceAction: Action to take based on grace period analysis
         """
+        # PHASE 3: Check for core asset exemption FIRST
+        if self.should_exempt_from_grace_period(asset, current_score, min_threshold, current_date):
+            # Core assets are exempt from grace periods
+            exemption_reason = self._get_exemption_reason(asset, current_date)
+            return GraceAction(
+                action='hold',
+                new_size=current_size,
+                reason=f'CORE ASSET EXEMPTION: {exemption_reason}'
+            )
+        
         # Check if score is above threshold (no grace period needed)
         if current_score >= min_threshold:
             if asset in self.grace_positions:
@@ -376,5 +389,74 @@ class GracePeriodManager:
             'min_decay_factor': self.min_decay_factor,
             'active_grace_positions': len(self.grace_positions),
             'decay_formula': f'size * ({self.decay_rate} ^ days_in_grace)',
-            'minimum_size_floor': f'{self.min_decay_factor * 100}% of original size'
-        } 
+            'minimum_size_floor': f'{self.min_decay_factor * 100}% of original size',
+            'core_asset_manager_enabled': self.core_asset_manager is not None
+        }
+    
+    # Phase 3: Core Asset Integration Methods
+    
+    def should_exempt_from_grace_period(self, asset: str, current_score: float, 
+                                       min_threshold: float, current_date: datetime) -> bool:
+        """
+        Check if asset should be exempt from grace periods (Phase 3)
+        
+        Args:
+            asset: Asset symbol
+            current_score: Current score
+            min_threshold: Minimum threshold
+            current_date: Current date
+            
+        Returns:
+            bool: True if asset should be exempt from grace periods
+        """
+        if not self.core_asset_manager:
+            return False
+        
+        # Core assets are exempt from grace periods
+        return self.core_asset_manager.should_exempt_from_grace(asset, current_date)
+    
+    def _get_exemption_reason(self, asset: str, current_date: datetime) -> str:
+        """
+        Get reason for core asset exemption
+        
+        Args:
+            asset: Asset symbol
+            current_date: Current date
+            
+        Returns:
+            str: Reason for exemption
+        """
+        if not self.core_asset_manager:
+            return "No core asset manager"
+        
+        if self.core_asset_manager.is_core_asset(asset, current_date):
+            core_info = self.core_asset_manager.core_assets.get(asset)
+            if core_info:
+                days_as_core = (current_date - core_info.designation_date).days
+                return (f"Core asset immunity (designated {days_as_core} days ago: "
+                       f"{core_info.reason})")
+        
+        return "Unknown exemption reason"
+    
+    def get_exemption_status(self, assets: list, current_date: datetime) -> Dict[str, Dict]:
+        """
+        Get exemption status for multiple assets
+        
+        Args:
+            assets: List of asset symbols
+            current_date: Current date
+            
+        Returns:
+            Dict[str, Dict]: Asset -> exemption status details
+        """
+        status = {}
+        
+        for asset in assets:
+            is_exempt = self.should_exempt_from_grace_period(asset, 0.0, 0.6, current_date)
+            status[asset] = {
+                'is_exempt': is_exempt,
+                'reason': self._get_exemption_reason(asset, current_date) if is_exempt else "Not exempt",
+                'is_core_asset': self.core_asset_manager.is_core_asset(asset, current_date) if self.core_asset_manager else False
+            }
+        
+        return status 
