@@ -11,6 +11,7 @@ from datetime import datetime, timedelta
 from .providers.registry import ProviderRegistry
 from .providers.yahoo_finance.provider import YahooFinanceProvider
 from .providers.alpha_vantage.provider import AlphaVantageProvider
+from .timeframe_manager import TimeframeManager
 
 logger = logging.getLogger(__name__)
 
@@ -43,6 +44,9 @@ class DataManager:
         self.cache_dir = Path(cache_dir)
         self.cache_dir.mkdir(parents=True, exist_ok=True)
         self.data_cache: Dict[str, Any] = {}
+        
+        # Initialize TimeframeManager for multi-timeframe operations
+        self.timeframe_manager = TimeframeManager(data_manager=self, cache_dir=str(self.cache_dir), provider_name=provider)
     
     def _get_cache_filename(self, ticker: str, start_date: datetime, end_date: datetime, 
                            timeframe: str = '1d') -> Path:

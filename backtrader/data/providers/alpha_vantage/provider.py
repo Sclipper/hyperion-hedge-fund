@@ -41,6 +41,11 @@ class AlphaVantageProvider(DataProvider):
         from ...asset_buckets import AssetBucketManager
         self.asset_manager = AssetBucketManager()
         
+        # Components will be initialized on demand
+        self._bulk_fetcher = None
+        self._data_validator = None
+        self._error_handler = None
+        
         logger.info("AlphaVantageProvider initialized with rate limit: 75 req/min")
     
     @property
@@ -91,40 +96,33 @@ class AlphaVantageProvider(DataProvider):
             time.sleep(sleep_time)
         self.last_request_time = time.time()
     
-    def _make_request(self, params: Dict, max_retries: int = 3) -> Dict:
-        """Make API request with rate limiting and retries"""
+    def _make_request(self, params: Dict, ticker: str = "unknown", timeframe: str = "unknown") -> Dict:
+        """Make API request with advanced error handling"""
         self._rate_limit()
         
-        for attempt in range(max_retries):
-            try:
-                response = self.session.get(self.base_url, params=params, timeout=30)
-                response.raise_for_status()
-                
-                data = response.json()
-                
-                # Check for API errors
-                if 'Error Message' in data:
-                    raise Exception(f"Alpha Vantage API Error: {data['Error Message']}")
-                
-                if 'Note' in data:
-                    if 'call frequency' in data['Note']:
-                        logger.warning("Alpha Vantage rate limit hit, waiting...")
-                        time.sleep(60)  # Wait 1 minute
-                        continue
-                    else:
-                        logger.warning(f"Alpha Vantage Note: {data['Note']}")
-                
-                return data
-                
-            except requests.exceptions.RequestException as e:
-                logger.warning(f"Request attempt {attempt + 1} failed: {e}")
-                if attempt < max_retries - 1:
-                    wait_time = 2 ** attempt  # Exponential backoff
-                    time.sleep(wait_time)
+        def _execute_request():
+            response = self.session.get(self.base_url, params=params, timeout=30)
+            response.raise_for_status()
+            
+            data = response.json()
+            
+            # Check for API errors
+            if 'Error Message' in data:
+                raise Exception(f"Alpha Vantage API Error: {data['Error Message']}")
+            
+            if 'Note' in data:
+                if 'call frequency' in data['Note']:
+                    # This will be handled by error handler as rate limit
+                    raise Exception(f"Rate limit hit: {data['Note']}")
                 else:
-                    raise
-                    
-        raise Exception("Max retries exceeded")
+                    logger.warning(f"Alpha Vantage Note: {data['Note']}")
+            
+            return data
+        
+        # Use error handler for intelligent retry
+        return self.get_error_handler().execute_with_retry(
+            _execute_request, ticker, timeframe
+        )
     
     def _convert_timeframe(self, timeframe: str) -> str:
         """Convert our timeframe format to Alpha Vantage format"""
@@ -136,8 +134,9 @@ class AlphaVantageProvider(DataProvider):
         return mapping.get(timeframe, 'daily')
     
     def fetch_data(self, ticker: str, timeframe: str, 
-                  start_date: datetime, end_date: datetime) -> pd.DataFrame:
-        """Fetch data from Alpha Vantage"""
+                  start_date: datetime, end_date: datetime, 
+                  validate_data: bool = True) -> pd.DataFrame:
+        """Fetch data from Alpha Vantage with optional validation"""
         
         if not self.validate_ticker(ticker):
             logger.error(f"Invalid ticker: {ticker}")
@@ -148,16 +147,38 @@ class AlphaVantageProvider(DataProvider):
             return pd.DataFrame()
         
         try:
+            # Fetch data
             if self._is_crypto_symbol(ticker):
                 if timeframe == '1d':
-                    return self._fetch_crypto_daily_data(ticker, start_date, end_date)
+                    df = self._fetch_crypto_daily_data(ticker, start_date, end_date)
                 else:
-                    return self._fetch_crypto_intraday_data(ticker, timeframe, start_date, end_date)
+                    df = self._fetch_crypto_intraday_data(ticker, timeframe, start_date, end_date)
             else:
                 if timeframe == '1d':
-                    return self._fetch_daily_data(ticker, start_date, end_date)
+                    df = self._fetch_daily_data(ticker, start_date, end_date)
                 else:
-                    return self._fetch_intraday_data(ticker, timeframe, start_date, end_date)
+                    df = self._fetch_intraday_data(ticker, timeframe, start_date, end_date)
+            
+            # Validate data if requested and data exists
+            if validate_data and not df.empty:
+                asset_type = 'crypto' if self._is_crypto_symbol(ticker) else 'stock'
+                validation_result = self.get_data_validator().validate_dataframe(
+                    df, ticker, timeframe, asset_type
+                )
+                
+                if not validation_result.is_valid:
+                    logger.warning(f"Data validation failed for {ticker} {timeframe}: "
+                                 f"{len(validation_result.errors)} errors")
+                    # Attempt repair
+                    df = self.get_data_validator().repair_data(df, validation_result)
+                    logger.info(f"Applied data repairs for {ticker} {timeframe}")
+                
+                # Add validation metadata
+                df.attrs['validation_passed'] = validation_result.is_valid
+                df.attrs['validation_errors'] = len(validation_result.errors)
+                df.attrs['validation_warnings'] = len(validation_result.warnings)
+            
+            return df
                 
         except Exception as e:
             logger.error(f"Error fetching {ticker} data: {e}")
@@ -172,7 +193,7 @@ class AlphaVantageProvider(DataProvider):
             'outputsize': 'full'
         }
         
-        data = self._make_request(params)
+        data = self._make_request(params, ticker, timeframe)
         
         if 'Time Series (Daily)' not in data:
             logger.warning(f"No daily data found for {ticker}")
@@ -219,7 +240,7 @@ class AlphaVantageProvider(DataProvider):
             'outputsize': 'full'
         }
         
-        data = self._make_request(params)
+        data = self._make_request(params, ticker, timeframe)
         
         time_series_key = f'Time Series ({av_interval})'
         if time_series_key not in data:
@@ -284,7 +305,7 @@ class AlphaVantageProvider(DataProvider):
             'apikey': self.api_key
         }
         
-        data = self._make_request(params)
+        data = self._make_request(params, ticker, timeframe)
         
         if 'Time Series (Digital Currency Daily)' not in data:
             logger.warning(f"No crypto daily data found for {ticker}")
@@ -333,7 +354,7 @@ class AlphaVantageProvider(DataProvider):
             'apikey': self.api_key
         }
         
-        data = self._make_request(params)
+        data = self._make_request(params, ticker, timeframe)
         
         time_series_key = f'Time Series Crypto ({av_interval})'
         if time_series_key not in data:
@@ -364,3 +385,30 @@ class AlphaVantageProvider(DataProvider):
         
         logger.info(f"Fetched {len(df)} crypto {timeframe} records for {ticker}")
         return df
+    
+    def get_bulk_fetcher(self):
+        """Get bulk fetcher instance (lazy initialization)"""
+        if self._bulk_fetcher is None:
+            from .client import AlphaVantageClient
+            from .bulk_fetcher import BulkDataFetcher
+            
+            client = AlphaVantageClient()
+            self._bulk_fetcher = BulkDataFetcher(client)
+        
+        return self._bulk_fetcher
+    
+    def get_data_validator(self):
+        """Get data validator instance (lazy initialization)"""
+        if self._data_validator is None:
+            from .data_validator import DataValidator
+            self._data_validator = DataValidator()
+        
+        return self._data_validator
+    
+    def get_error_handler(self):
+        """Get error handler instance (lazy initialization)"""
+        if self._error_handler is None:
+            from .error_handler import ErrorRecoveryStrategy
+            self._error_handler = ErrorRecoveryStrategy(max_retries=3)
+        
+        return self._error_handler

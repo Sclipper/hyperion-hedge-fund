@@ -167,12 +167,41 @@ class PositionManager:
                            data_manager) -> Optional[PositionScore]:
         """Score a single asset using technical and fundamental analysis"""
         
-        # Get multi-timeframe data
+        # Get multi-timeframe data using new provider system
         timeframe_data = {}
-        for timeframe in self.timeframes:
-            data = self._get_timeframe_data(asset, current_date, timeframe, data_manager)
-            if data is not None and not data.empty:
-                timeframe_data[timeframe] = data
+        
+        # Check if data_manager supports multi-timeframe fetching
+        if hasattr(data_manager, 'timeframe_manager'):
+            # Use new TimeframeManager for multi-timeframe data
+            try:
+                # Calculate date range for analysis (typically last 100 trading days)
+                end_date = current_date
+                start_date = current_date - timedelta(days=200)  # ~100 trading days
+                
+                timeframe_data = data_manager.timeframe_manager.get_multi_timeframe_data(
+                    ticker=asset,
+                    timeframes=self.timeframes,
+                    start_date=start_date,
+                    end_date=end_date
+                )
+                
+                # Filter out empty datasets
+                timeframe_data = {tf: data for tf, data in timeframe_data.items() 
+                                if data is not None and not data.empty}
+                
+            except Exception as e:
+                print(f"Error fetching multi-timeframe data for {asset}: {e}")
+                # Fallback to legacy method
+                for timeframe in self.timeframes:
+                    data = self._get_timeframe_data(asset, current_date, timeframe, data_manager)
+                    if data is not None and not data.empty:
+                        timeframe_data[timeframe] = data
+        else:
+            # Legacy single-timeframe approach
+            for timeframe in self.timeframes:
+                data = self._get_timeframe_data(asset, current_date, timeframe, data_manager)
+                if data is not None and not data.empty:
+                    timeframe_data[timeframe] = data
         
         if not timeframe_data:
             return None

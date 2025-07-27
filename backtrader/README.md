@@ -2,6 +2,29 @@
 
 A sophisticated, institutional-grade backtesting and trading framework built on backtrader with advanced regime-aware portfolio management, comprehensive risk protection systems, and complete audit trails.
 
+---
+
+## 🚀 Quick Start
+
+For detailed configuration options, templates, and setup instructions, see **[CONFIGURATION.md](CONFIGURATION.md)**.
+
+### **Installation**
+```bash
+pip install -r requirements.txt
+```
+
+### **Basic Usage**
+```bash
+# Simple backtest with regime-based asset selection
+python main.py basic --start-date 2021-01-01 --cash 100000
+
+# Advanced professional setup
+python main.py advanced --start-date 2021-01-01 --cash 500000 \
+  --enable-core-assets --enable-grace-periods
+```
+
+---
+
 ## 🏗️ System Architecture
 
 The system consists of 11 integrated modules providing professional-grade portfolio management:
@@ -34,60 +57,6 @@ The system consists of 11 integrated modules providing professional-grade portfo
 - ✅ **Module 9**: Monitoring & Event Logging
 - ✅ **Module 11**: CLI & Configuration Management
 - ✅ **Module 12**: Enhanced Asset Scanner (Real Data Integration)
-
----
-
-## 🚀 Quick Start
-
-### **Installation & Setup**
-```bash
-# Install dependencies
-pip install -r requirements.txt
-
-# Optional: Set up PostgreSQL database for enhanced functionality
-# See Database Configuration section below
-```
-
-### **Professional Regime-Based Trading**
-```bash
-# Basic regime-based backtest with risk management
-python main.py regime --buckets "Risk Assets,Defensive Assets" \
-  --start-date 2021-01-01 \
-  --enable-core-assets \
-  --rebalance-freq daily
-
-# Advanced configuration with all protection systems
-python main.py regime --buckets "Risk Assets,Defensive Assets,International" \
-  --start-date 2021-01-01 \
-  --enable-core-assets \
-  --max-assets 8 \
-  --min-score 0.65 \
-  --core-override-threshold 0.95 \
-  --rebalance-freq daily \
-  --technical-weight 0.7
-```
-
-### **Configuration-Driven Strategy Testing**
-```bash
-# Using the advanced configuration system (Module 11)
-python -m config.cli_parser \
-  --tier intermediate \
-  --export-config my_strategy.yaml
-
-# Run with custom configuration
-python main.py regime --config my_strategy.yaml
-```
-
-### **Event Monitoring and Analysis**
-```bash
-# View real-time event monitoring
-python -c "
-from monitoring.event_store import EventStore
-store = EventStore()
-events = store.query_recent_events(hours=24)
-print(f'Recent events: {len(events)}')
-"
-```
 
 ---
 
@@ -210,62 +179,23 @@ event_writer.log_position_event(
 
 ---
 
-## 📋 Command Line Interface
+## 🎯 Regime-Based Asset Selection
 
-### **Basic Commands**
-```bash
-# Regime-based backtesting (recommended)
-python main.py regime --buckets "Risk Assets,Defensive Assets"
+**Important**: The system uses **dynamic regime-based asset selection** - assets are automatically chosen based on detected market conditions, not manually specified. The `--buckets` parameter defines which asset categories the system can select from.
 
-# Static backtesting (original functionality)  
-python main.py static --tickers AAPL,MSFT,NVDA
+### **How It Works**
+1. **Regime Detection**: System automatically detects current market regime (Goldilocks, Deflation, Inflation, Reflation)
+2. **Dynamic Bucket Selection**: Based on regime, appropriate asset buckets are activated
+3. **Asset Universe Construction**: Trending assets are identified within active buckets
+4. **Portfolio Construction**: Multi-dimensional scoring selects optimal positions
 
-# Compare backtest results
-python main.py compare --files "result1.json,result2.json"
-```
-
-### **Advanced Configuration Options**
-
-#### **Portfolio Management**
-```bash
---buckets "Risk Assets,Defensives"     # Asset bucket selection
---max-assets 8                         # Maximum portfolio positions
---rebalance-freq daily                 # daily|weekly|monthly
---min-score 0.65                       # Minimum position score threshold
---technical-weight 0.7                 # Technical analysis weight (0.0-1.0)
---fundamental-weight 0.3               # Fundamental analysis weight (0.0-1.0)
-```
-
-#### **Risk Management & Protection**
-```bash
---enable-core-assets                   # Enable core asset management
---max-core-assets 3                    # Maximum core asset positions
---core-override-threshold 0.95         # Score threshold for core asset status
---core-expiry-days 90                  # Core asset status expiry period
---smart-diversification-overrides 2    # Max bucket overrides per cycle
-```
-
-#### **Timing & Performance**
-```bash
---start-date 2021-01-01                # Backtest start date
---end-date 2024-01-01                  # Backtest end date (default: yesterday)
---cash 100000                          # Starting capital
---commission 0.001                     # Transaction cost (0.1% default)
-```
-
-### **Configuration Presets**
-```bash
-# Conservative preset
-python main.py regime --preset conservative \
-  --buckets "Defensive Assets,International"
-
-# Aggressive growth preset  
-python main.py regime --preset aggressive \
-  --buckets "Risk Assets,High Beta"
-
-# Balanced institutional preset
-python main.py regime --preset institutional \
-  --buckets "Risk Assets,Defensive Assets,International,Commodities"
+### **Example Regime Mapping**
+```python
+# Automatically detected by the system
+'Goldilocks' → ['Risk Assets', 'Growth Assets']
+'Deflation' → ['Defensive Assets', 'Treasuries', 'Gold'] 
+'Inflation' → ['Commodities', 'Energy', 'Value Assets']
+'Reflation' → ['Cyclicals', 'International']
 ```
 
 ---
@@ -328,48 +258,6 @@ SELECT regime, COUNT(*) as transitions,
 FROM portfolio_events 
 WHERE event_type = 'regime_transition'
 ORDER BY timestamp DESC;
-```
-
----
-
-## ⚙️ Configuration System (Module 11)
-
-### **Tiered Parameter Disclosure**
-```bash
-# Basic tier (10 essential parameters)
-python -m config.cli_parser --tier basic
-
-# Intermediate tier (25 parameters)  
-python -m config.cli_parser --tier intermediate
-
-# Advanced tier (40+ parameters)
-python -m config.cli_parser --tier advanced
-
-# Expert tier (all 50+ parameters)
-python -m config.cli_parser --tier expert
-```
-
-### **Configuration File Management**
-```bash
-# Export current configuration
-python -m config.cli_parser --export my_config.yaml
-
-# Import and validate configuration
-python -m config.cli_parser --import my_config.yaml --validate
-
-# Run with configuration file
-python main.py regime --config my_config.yaml
-```
-
-### **Strategy Presets**
-```python
-# Built-in professional presets
-from config.presets import StrategyPresets
-
-conservative = StrategyPresets.conservative()    # Low risk, stable returns
-aggressive = StrategyPresets.aggressive()       # High risk, maximum alpha
-adaptive = StrategyPresets.adaptive()           # Dynamic risk adjustment
-institutional = StrategyPresets.institutional() # Professional hedge fund
 ```
 
 ---
