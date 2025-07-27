@@ -178,6 +178,24 @@ def print_analysis(strategy):
         if 'lost' in trades and 'pnl' in trades['lost']:
             avg_loss = trades['lost']['pnl']['average']
             print(f'Average Loss: ${avg_loss:.2f}')
+        
+        # Additional trade metrics
+        if total_trades > 0:
+            win_rate = won_trades / total_trades
+            
+            # Profit factor calculation (if both wins and losses exist)
+            if 'won' in trades and 'lost' in trades and 'pnl' in trades['won'] and 'pnl' in trades['lost']:
+                total_wins = trades['won']['pnl']['total'] if trades['won']['pnl']['total'] > 0 else 0
+                total_losses = abs(trades['lost']['pnl']['total']) if trades['lost']['pnl']['total'] < 0 else 0
+                profit_factor = total_wins / total_losses if total_losses > 0 else float('inf') if total_wins > 0 else 0
+                print(f'Profit Factor: {profit_factor:.3f}')
+            
+            # Win/Loss ratio
+            if 'won' in trades and 'lost' in trades and 'pnl' in trades['won'] and 'pnl' in trades['lost']:
+                avg_win = trades['won']['pnl']['average'] if trades['won']['pnl']['average'] > 0 else 0
+                avg_loss = abs(trades['lost']['pnl']['average']) if trades['lost']['pnl']['average'] < 0 else 1
+                win_loss_ratio = avg_win / avg_loss if avg_loss > 0 else 0
+                print(f'Win/Loss Ratio: {win_loss_ratio:.3f}')
     
     print(f'SQN (System Quality Number): {sqn.get("sqn", 0):.3f}')
     print(f'VWR (Variability-Weighted Return): {vwr.get("vwr", 0):.3f}')

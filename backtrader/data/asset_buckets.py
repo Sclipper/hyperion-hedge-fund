@@ -5,24 +5,21 @@ class AssetBucketManager:
     def __init__(self):
         self.asset_buckets = {
             'Risk Assets': [
-                'RKLB', 'MSFT', 'NVDA', 'AAPL', 'AMZN', 'META', 'AVGO', 'GOOG', 'GOOGL', 'BRK.B', 'TSLA', 
-                'JPM', 'WMT', 'LLY', 'ORCL', 'NFLX', 'MA', 'XOM', 'COST', 'PG', 'JNJ', 'HD', 'BAC', 'PLTR', 
-                'ABBV', 'KO', 'PM', 'UNH', 'IBM', 'CSCO', 'CVX', 'GE', 'TMUS', 'CRM', 'WFC', 'ABT', 'LIN', 
-                'MS', 'DIS', 'INTU', 'AXP', 'MCD', 'AMD', 'NOW', 'MRK', 'T', 'GS', 'RTX', 'ACN', 'ISRG', 
-                'TXN', 'PEP', 'VZ', 'UBER', 'BKNG', 'CAT', 'QCOM', 'SCHW', 'ADBE', 'AMGN', 'SPGI', 'PGR', 
-                'BLK', 'BSX', 'BA', 'TMO', 'NEE', 'C', 'HON', 'SYK', 'DE', 'DHR', 'AMAT', 'TJX', 'MU', 
-                'PFE', 'GILD', 'GEV', 'PANW', 'UNP', 'ETN', 'CMCSA', 'COF', 'ADP', 'CRWD', 'COP', 'LOW', 
-                'LRCX', 'KLAC', 'VRTX', 'ADI', 'ANET', 'CB', 'APH', 'MDT', 'LMT', 'KKR', 'MMC', 'BX', 
+                'RKLB', 'MSFT', 'NVDA', 'AAPL', 'AMZN', 'META', 'AVGO', 'GOOG', 'GOOGL', 'BRK.B', 'TSLA',
+                'JPM', 'WMT', 'LLY', 'ORCL', 'NFLX', 'MA', 'XOM', 'COST', 'PG', 'JNJ', 'HD', 'BAC', 'PLTR',
+                'ABBV', 'KO', 'PM', 'UNH', 'IBM', 'CSCO', 'CVX', 'GE', 'TMUS', 'CRM', 'WFC', 'ABT', 'LIN',
+                'MS', 'DIS', 'INTU', 'AXP', 'MCD', 'AMD', 'NOW', 'MRK', 'T', 'GS', 'RTX', 'ACN', 'ISRG',
+                'TXN', 'PEP', 'VZ', 'UBER', 'BKNG', 'CAT', 'QCOM', 'SCHW', 'ADBE', 'AMGN', 'SPGI', 'PGR',
+                'BLK', 'BSX', 'BA', 'TMO', 'NEE', 'C', 'HON', 'SYK', 'DE', 'DHR', 'AMAT', 'TJX', 'MU',
+                'PFE', 'GILD', 'PANW', 'UNP', 'ETN', 'CMCSA', 'COF', 'ADP', 'CRWD', 'COP', 'LOW',
+                'LRCX', 'KLAC', 'VRTX', 'ADI', 'ANET', 'CB', 'APH', 'MDT', 'LMT', 'KKR', 'MMC', 'BX',
                 'SBUX', 'ICE', 'AMT', 'MO', 'WELL', 'CME', 'SO', 'PLD', 'CEG', 'BMY', 'WM', 'INTC'
             ],
             'Defensive Assets': ['AGG', 'BND', 'XLP', 'XLU'],
             'High Beta': [
                 'SPHB', 'HIBL', 'SSO',
-                'BTC', 'ETH', 'USDT', 'XRP', 'BNB', 'SOL', 'USDC', 'TRX', 'DOGE', 'ADA', 'HYPE', 'SUI', 
-                'BCH', 'LINK', 'LEO', 'XLM', 'AVAX', 'TON', 'SHIB', 'LTC', 'HBAR', 'XMR', 'DOT', 'USDe', 
-                'DAI', 'BGB', 'UNI', 'PEPE', 'PI', 'AAVE', 'OKB', 'TAO', 'APT', 'CRO', 'ICP', 'NEAR', 
-                'ETC', 'ONDO', 'USD1', 'MNT', 'POL', 'GT', 'KAS', 'TRUMP', 'VET', 'SKY', 'ENA', 'RENDER', 
-                'FET', 'FIL'
+                'BTC', 'ETH', 'USDT', 'XRP', 'SOL', 'DOGE', 'ADA', 'BCH', 'LINK', 'AVAX',
+                'SHIB', 'LTC', 'DOT', 'DAI', 'AAVE'
             ],
             'Low Beta': ['USMV', 'SPLV'],
             'Cyclicals': ['XLY', 'XLI', 'XLB', 'XLF'],
@@ -49,7 +46,7 @@ class AssetBucketManager:
             'FX': ['FXE', 'FXY', 'FXB', 'FXF'],
             'USD': ['UUP', 'CYB']
         }
-    
+
     def get_bucket_assets(self, bucket_name: str) -> List[str]:
         return self.asset_buckets.get(bucket_name, [])
     
@@ -110,11 +107,9 @@ class AssetBucketManager:
     
     def filter_assets_by_type(self, assets: List[str], asset_type: str) -> List[str]:
         crypto_assets = {
-            'BTC', 'ETH', 'USDT', 'XRP', 'BNB', 'SOL', 'USDC', 'TRX', 'DOGE', 'ADA', 'HYPE', 'SUI',
-            'BCH', 'LINK', 'LEO', 'XLM', 'AVAX', 'TON', 'SHIB', 'LTC', 'HBAR', 'XMR', 'DOT', 'USDe',
-            'DAI', 'BGB', 'UNI', 'PEPE', 'PI', 'AAVE', 'OKB', 'TAO', 'APT', 'CRO', 'ICP', 'NEAR',
-            'ETC', 'ONDO', 'USD1', 'MNT', 'POL', 'GT', 'KAS', 'TRUMP', 'VET', 'SKY', 'ENA', 'RENDER',
-            'FET', 'FIL'
+            'BTC', 'ETH', 'USDT', 'XRP', 'BNB', 'SOL', 'USDC', 'TRX', 'DOGE', 'ADA',
+            'BCH', 'LINK','AVAX', 'TON', 'SHIB', 'LTC', 'DOT',
+            'DAI', 'AAVE'
         }
         
         etf_prefixes = ['SPY', 'QQQ', 'IWF', 'VUG', 'SPYG', 'IWD', 'VTV', 'SPYV', 'XL', 'AGG', 'BND']

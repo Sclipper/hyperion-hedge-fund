@@ -86,27 +86,19 @@ class FundamentalAnalyzer:
             print(f"Error in fundamental analysis for {asset}: {e}")
             return 0.5
 
-    # TODO: should utilize the asset_buckets crypto filtration function
     def _is_crypto_asset(self, asset: str) -> bool:
-        """Detect if asset is cryptocurrency"""
-        crypto_indicators = ['BTC', 'ETH', 'ADA', 'SOL', 'DOGE', 'XRP', 'LTC', 'DOT', 'LINK', 'UNI', 'AVAX', 'MATIC', 'ATOM', 'FTM', 'NEAR']
-        crypto_suffixes = ['-USD', 'USDT', 'BUSD']
+        """Detect if asset is cryptocurrency using centralized asset bucket manager"""
+        # Import here to avoid circular imports
+        parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        if parent_dir not in sys.path:
+            sys.path.append(parent_dir)
         
-        asset_upper = asset.upper()
+        from data.asset_buckets import AssetBucketManager
         
-        # Check direct crypto symbols
-        if asset_upper in crypto_indicators:
-            return True
-            
-        # Check for crypto trading pairs
-        if any(suffix in asset_upper for suffix in crypto_suffixes):
-            return True
-            
-        # Check if it starts with common crypto symbols
-        if any(asset_upper.startswith(crypto) for crypto in crypto_indicators):
-            return True
-            
-        return False
+        # Use centralized crypto detection
+        asset_manager = AssetBucketManager()
+        crypto_assets = asset_manager.filter_assets_by_type([asset], 'crypto')
+        return len(crypto_assets) > 0
     
     def _get_asset_type_weights(self, is_crypto: bool) -> Dict[str, float]:
         """Get factor weights appropriate for asset type"""

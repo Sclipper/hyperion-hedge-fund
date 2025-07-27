@@ -63,7 +63,11 @@ class RegimeStrategy(bt.Strategy):
             print("Warning: Technical analyzer not available. Using simplified scoring.")
             self.technical_analyzer = None
         
-        self.fundamental_analyzer = FundamentalAnalyzer()
+        # Initialize fundamental analyzer only if enabled
+        if self.params.enable_fundamental_analysis:
+            self.fundamental_analyzer = FundamentalAnalyzer()
+        else:
+            self.fundamental_analyzer = None
         
         self.position_manager = PositionManager(
             technical_analyzer=self.technical_analyzer,

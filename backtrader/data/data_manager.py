@@ -63,14 +63,15 @@ class DataManager:
     
     def _load_from_cache(self, ticker: str, start_date: datetime, end_date: datetime, 
                         timeframe: str = '1d') -> Optional[pd.DataFrame]:
-        """Load data from provider-specific cache"""
+        """Load data from provider-specific cache with smart matching"""
+        # First try exact match
         cache_file = self._get_cache_filename(ticker, start_date, end_date, timeframe)
         if cache_file.exists():
             try:
                 with open(cache_file, 'rb') as f:
                     data = pickle.load(f)
                     
-                # Verify provider attribution to ensure cache isolation
+                # Verify provider attribution
                 provider_name = self.registry.get_active_name()
                 if hasattr(data, 'attrs') and 'provider_source' in data.attrs:
                     if data.attrs['provider_source'] != provider_name:
@@ -78,10 +79,60 @@ class DataManager:
                                      f"found {data.attrs['provider_source']}. Ignoring cache.")
                         return None
                         
-                logger.debug(f"Loaded {ticker} from {provider_name} cache")
+                print(f"Loaded {ticker} from {provider_name} cache (exact match)")
                 return data
             except Exception as e:
-                logger.error(f"Error loading cache for {ticker}: {e}")
+                logger.error(f"Error loading exact cache for {ticker}: {e}")
+        
+        # Try smart matching - find cached files that contain the requested range
+        return self._load_from_cache_smart_match(ticker, start_date, end_date, timeframe)
+    
+    def _load_from_cache_smart_match(self, ticker: str, start_date: datetime, end_date: datetime, 
+                                   timeframe: str = '1d') -> Optional[pd.DataFrame]:
+        """Smart cache matching - find cached files that contain the requested range"""
+        provider_name = self.registry.get_active_name()
+        cache_base_dir = Path(self.cache_dir) / provider_name / ticker / timeframe
+        
+        if not cache_base_dir.exists():
+            return None
+        
+        # Look for cached files that might contain our date range
+        for cache_file in cache_base_dir.glob(f"{ticker}_{timeframe}_*.pkl"):
+            try:
+                # Parse filename to extract date range
+                filename = cache_file.stem
+                parts = filename.split('_')
+                if len(parts) >= 4:
+                    cached_start_str = parts[-2]
+                    cached_end_str = parts[-1]
+                    
+                    # Parse cached date range
+                    cached_start = datetime.strptime(cached_start_str, '%Y%m%d')
+                    cached_end = datetime.strptime(cached_end_str, '%Y%m%d')
+                    
+                    # Check if cached range contains our requested range
+                    if cached_start <= start_date and cached_end >= end_date:
+                        # Load and filter the cached data
+                        with open(cache_file, 'rb') as f:
+                            data = pickle.load(f)
+                        
+                        # Verify provider attribution
+                        if hasattr(data, 'attrs') and 'provider_source' in data.attrs:
+                            if data.attrs['provider_source'] != provider_name:
+                                continue
+                        
+                        # Filter to requested date range
+                        filtered_data = data[(data.index >= pd.Timestamp(start_date)) & 
+                                           (data.index <= pd.Timestamp(end_date))]
+                        
+                        if not filtered_data.empty:
+                            print(f"Loaded {ticker} from {provider_name} cache (smart match: {cached_start_str}-{cached_end_str})")
+                            return filtered_data
+                        
+            except Exception as e:
+                logger.debug(f"Error parsing cache file {cache_file}: {e}")
+                continue
+        
         return None
     
     def _save_to_cache(self, ticker: str, start_date: datetime, end_date: datetime, 
