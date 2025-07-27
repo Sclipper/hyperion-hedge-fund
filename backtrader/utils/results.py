@@ -61,6 +61,16 @@ def save_results(strategy, tickers, start_date, end_date, results_dir="results",
         except Exception as e:
             print(f"Warning: Enhanced export failed: {e}")
     
+    # Position history export (strategy-specific data)
+    if hasattr(strategy, 'position_manager'):
+        try:
+            position_history_file = results_path / f"{filename}_position_history.json"
+            strategy.position_manager.export_position_history(str(position_history_file))
+            print(f"  position_history: {position_history_file.name}")
+            saved_files.append(str(position_history_file))
+        except Exception as e:
+            print(f"Warning: Position history export failed: {e}")
+    
     # Portfolio visualizations (new functionality) 
     visualization_files = {}
     if enable_visualization and export_format in ['charts', 'all']:

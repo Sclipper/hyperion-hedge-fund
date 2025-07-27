@@ -87,6 +87,7 @@ class RegimeStrategy(bt.Strategy):
         self.orders = {}
         self.buy_prices = {}
         self.position_scores = {}  # Track current position scores
+        self.asset_bucket_mapping = {}  # Maps assets to their buckets for analytics
         
     def log(self, txt, dt=None):
         dt = dt or self.datas[0].datetime.date(0)
@@ -170,8 +171,16 @@ class RegimeStrategy(bt.Strategy):
         if self.params.bucket_names:
             regime_buckets = [bucket for bucket in regime_buckets if bucket in self.params.bucket_names]
         
-        # Get assets from regime buckets
+        # Get assets from regime buckets and create bucket mapping
         candidate_assets = self.asset_manager.get_assets_from_buckets(regime_buckets)
+        
+        # Create asset to bucket mapping for analytics
+        self.asset_bucket_mapping = {}
+        for bucket in regime_buckets:
+            bucket_assets = self.asset_manager.get_bucket_assets(bucket)
+            for asset in bucket_assets:
+                if asset in candidate_assets:
+                    self.asset_bucket_mapping[asset] = bucket
         
         # Filter to assets we have data for
         available_assets = [asset for asset in candidate_assets 
@@ -218,6 +227,10 @@ class RegimeStrategy(bt.Strategy):
         # Update our internal tracking
         self.position_scores = {score.asset: score for score in position_scores}
         
+        # Set regime bucket information for analytics export
+        regime_bucket_list = ','.join(regime_buckets) if regime_buckets else 'Unknown'
+        setattr(self, f'{regime}_buckets', regime_bucket_list)
+        
         # Record regime and position data
         self.regime_history.append({
             'date': current_date,
@@ -241,6 +254,19 @@ class RegimeStrategy(bt.Strategy):
             size_change = change.size_change
             
             self.log(f'POSITION CHANGE: {asset} - {action} - size change: {size_change:.3f} - {change.reason}')
+            
+            # Set analytics attributes for the analyzer to access
+            bucket = self.asset_bucket_mapping.get(asset, 'Unknown')
+            setattr(self, f'{asset}_bucket', bucket)
+            setattr(self, f'{asset}_reason', change.reason)
+            if change.previous_score:
+                setattr(self, f'{asset}_score_before', change.previous_score.combined_score)
+            else:
+                setattr(self, f'{asset}_score_before', 0.0)
+            if change.current_score:
+                setattr(self, f'{asset}_score_after', change.current_score.combined_score)
+            else:
+                setattr(self, f'{asset}_score_after', 0.0)
             
             # Find the data feed for this asset
             data_feed = None
@@ -321,17 +347,5 @@ class RegimeStrategy(bt.Strategy):
             regimes_used = set(entry['regime'] for entry in self.regime_history)
             self.log(f'Regimes Used: {list(regimes_used)}')
         
-        # Export position history
-        try:
-            import os
-            results_dir = os.path.join(os.path.dirname(__file__), '..', 'results')
-            os.makedirs(results_dir, exist_ok=True)
-            
-            timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
-            history_file = os.path.join(results_dir, f'position_history_{timestamp}.json')
-            
-            self.position_manager.export_position_history(history_file)
-            self.log(f'Position history exported to: {history_file}')
-            
-        except Exception as e:
-            self.log(f'Error exporting position history: {e}')
+        # Position history export is now handled by save_results() function
+        # to ensure it goes to the correct run folder with proper naming
