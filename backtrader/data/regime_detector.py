@@ -2,15 +2,35 @@ import pandas as pd
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Tuple
 from .database_manager import get_database_manager, execute_query
-from .asset_scanner import get_asset_scanner
+
+# Import the enhanced asset scanner from Module 12
+try:
+    from ..core.enhanced_asset_scanner import get_enhanced_asset_scanner
+except ImportError:
+    # Fallback for relative import issues
+    import sys
+    import os
+    sys.path.append(os.path.join(os.path.dirname(__file__), '../'))
+    from core.enhanced_asset_scanner import get_enhanced_asset_scanner
 
 
 class RegimeDetector:
-    def __init__(self, use_database=True):
+    def __init__(self, use_database=True, use_enhanced_scanner=True):
         self.db_manager = get_database_manager()
         self.use_database = use_database and self.db_manager.is_connected
         self.cache = {}
-        self.asset_scanner = get_asset_scanner()
+        self.use_enhanced_scanner = use_enhanced_scanner
+        
+        # Initialize the enhanced asset scanner from Module 12
+        if use_enhanced_scanner:
+            self.asset_scanner = get_enhanced_asset_scanner(
+                enable_database=use_database,
+                fallback_enabled=True
+            )
+        else:
+            # Fallback to old scanner for backward compatibility
+            from .asset_scanner import get_asset_scanner
+            self.asset_scanner = get_asset_scanner()
         
         if not self.db_manager.is_connected and use_database:
             print("Warning: Database connection not available. Using mock regime data.")
@@ -95,19 +115,69 @@ class RegimeDetector:
         
         return pd.DataFrame(regime_data)
     
+    def get_price_data(self, ticker: str, start_date: datetime, end_date: datetime, timeframe: str = '1d'):
+        """
+        Get price data for technical analysis - interface for enhanced asset scanner
+        
+        Args:
+            ticker: Asset ticker
+            start_date: Start date for data
+            end_date: End date for data  
+            timeframe: Data timeframe ('1d', '4h', '1h')
+            
+        Returns:
+            DataFrame with OHLCV data or None if unavailable
+        """
+        # Import data manager to get real price data
+        from .data_manager import DataManager
+        
+        try:
+            data_manager = DataManager()
+            
+            # For now, we only support daily data from Yahoo Finance
+            # Multi-timeframe support would require additional data sources
+            if timeframe != '1d':
+                print(f"Warning: Only daily data available. Requested timeframe {timeframe} not supported.")
+                return None
+            
+            # Get pandas DataFrame with OHLCV data
+            df = data_manager.download_data(ticker, start_date, end_date)
+            
+            if df is None or df.empty:
+                return None
+            
+            # Ensure consistent column names (Yahoo Finance uses title case)
+            df.columns = [col.lower() for col in df.columns]
+            
+            return df
+            
+        except Exception as e:
+            print(f"Error getting price data for {ticker}: {e}")
+            return None
+    
     def get_trending_assets(self, date: datetime, asset_universe: List[str], 
                            limit: int = 10, min_confidence: float = 0.7) -> List[str]:
         """
         Get trending assets using the enhanced asset scanner.
         Maintains backward compatibility while leveraging improved scanner capabilities.
         """
-        if not self.use_database:
-            return asset_universe[:limit]
+        if not asset_universe:
+            return []
         
-        # Use enhanced asset scanner for improved functionality
-        trending_tickers = self.asset_scanner.get_trending_assets(
-            asset_universe, date, min_confidence, limit
-        )
+        if self.use_enhanced_scanner:
+            # Use the Module 12 enhanced asset scanner with technical analysis
+            trending_tickers = self.asset_scanner.get_trending_assets(
+                tickers=asset_universe, 
+                date=date, 
+                min_confidence=min_confidence, 
+                limit=limit,
+                data_manager=self  # Pass self as data manager for timeframe data
+            )
+        else:
+            # Use old scanner API for backward compatibility
+            trending_tickers = self.asset_scanner.get_trending_assets(
+                asset_universe, date, min_confidence, limit
+            )
         
         if trending_tickers:
             return trending_tickers
@@ -121,13 +191,23 @@ class RegimeDetector:
         Get ranging/mean-reverting assets using the enhanced asset scanner.
         Useful for mean reversion strategies or defensive positioning.
         """
-        if not self.use_database:
+        if not asset_universe:
             return []
         
-        # Use enhanced asset scanner for ranging assets
-        ranging_tickers = self.asset_scanner.get_ranging_assets(
-            asset_universe, date, min_confidence, limit
-        )
+        if self.use_enhanced_scanner:
+            # Use the Module 12 enhanced asset scanner with technical analysis
+            ranging_tickers = self.asset_scanner.get_ranging_assets(
+                tickers=asset_universe, 
+                date=date, 
+                min_confidence=min_confidence, 
+                limit=limit,
+                data_manager=self  # Pass self as data manager for timeframe data
+            )
+        else:
+            # Use old scanner API for backward compatibility
+            ranging_tickers = self.asset_scanner.get_ranging_assets(
+                asset_universe, date, min_confidence, limit
+            )
         
         return ranging_tickers
     

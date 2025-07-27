@@ -217,8 +217,8 @@ class PositionManager:
                 combined_score = technical_score
             else:
                 # Both scores available, use configured weights
-            effective_technical_weight = self.technical_weight
-            effective_fundamental_weight = self.fundamental_weight
+                effective_technical_weight = self.technical_weight
+                effective_fundamental_weight = self.fundamental_weight
                 # Normalize weights to sum to 1.0
                 total_weight = effective_technical_weight + effective_fundamental_weight
                 if total_weight > 0:

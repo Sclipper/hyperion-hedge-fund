@@ -72,15 +72,16 @@ class EnhancedAssetScanner:
             min_confidence_threshold: Minimum confidence for results
         """
         self.enable_database = enable_database
-        self.timeframes = timeframes or ['1d', '4h', '1h']
+        # For now, only daily data is available from Yahoo Finance
+        # TODO: Add multi-timeframe support when intraday data sources available
+        self.timeframes = ['1d']  # timeframes or ['1d', '4h', '1h']
         self.fallback_enabled = fallback_enabled
         self.min_confidence_threshold = min_confidence_threshold
         
         # Timeframe confidence weights (must sum to 1.0)
+        # For now, only daily data available
         self.confidence_weights = confidence_weights or {
-            '1d': 0.5,    # Daily primary weight
-            '4h': 0.3,    # 4-hour intermediate
-            '1h': 0.2     # Hourly short-term
+            '1d': 1.0     # Daily only until multi-timeframe data available
         }
         
         # Database manager
@@ -366,6 +367,9 @@ class EnhancedAssetScanner:
                 if price_data is None or len(price_data) < 20:
                     continue
                 
+                # Ensure proper column names for technical analysis
+                price_data = self._standardize_columns(price_data)
+                
                 # Calculate technical indicators
                 tech_result = self.technical_calculator.calculate_all_indicators(price_data, timeframe)
                 
@@ -421,34 +425,34 @@ class EnhancedAssetScanner:
                        timeframe: str, 
                        data_manager) -> Optional[pd.DataFrame]:
         """
-        Get price data for technical analysis
+        Get price data for technical analysis using real data manager
         
         Args:
             ticker: Asset ticker
-            date: Analysis date
+            date: Analysis date (end date)
             timeframe: Timeframe ('1d', '4h', '1h')
             data_manager: Data manager for price data access
             
         Returns:
             DataFrame with OHLCV data or None if unavailable
         """
+        if not data_manager:
+            print(f"ERROR: No data manager provided for {ticker} price data")
+            return None
+        
         try:
-            # Determine how much historical data we need
+            # Determine how much historical data we need for technical analysis
             periods_needed = {
-                '1d': 60,    # 60 days
-                '4h': 240,   # 40 days of 4h bars
-                '1h': 240    # 10 days of 1h bars
+                '1d': 100,   # 100 days for proper indicator calculation
+                '4h': 400,   # More 4h periods for same historical depth
+                '1h': 800    # More 1h periods for same historical depth
             }
             
-            periods = periods_needed.get(timeframe, 60)
+            periods = periods_needed.get(timeframe, 100)
             
-            # Calculate start date
-            if timeframe == '1d':
-                start_date = date - timedelta(days=periods)
-            elif timeframe == '4h':
-                start_date = date - timedelta(days=periods // 6)  # ~6 4h bars per day
-            else:  # 1h
-                start_date = date - timedelta(days=periods // 24)  # 24 1h bars per day
+            # Calculate start date with sufficient lookback
+            lookback_days = periods if timeframe == '1d' else periods // 6  # Assume ~6 bars per day for intraday
+            start_date = date - timedelta(days=lookback_days)
             
             # Try to get data from data manager
             if hasattr(data_manager, 'get_price_data') and callable(getattr(data_manager, 'get_price_data')):
@@ -460,79 +464,93 @@ class EnhancedAssetScanner:
                         timeframe=timeframe
                     )
                     
-                    # Check if we got real DataFrame data (not Mock)
-                    if (price_data is not None and 
-                        hasattr(price_data, 'columns') and 
-                        hasattr(price_data, '__len__') and 
-                        len(price_data) > 10):
-                        # Ensure required columns exist
-                        required_cols = ['open', 'high', 'low', 'close']
-                        if all(col in price_data.columns for col in required_cols):
-                            return price_data
-                except (AttributeError, TypeError):
-                    # Data manager doesn't provide real data, continue to fallback
-                    pass
+                    # Validate the data
+                    if self._validate_price_data(price_data, ticker):
+                        return price_data
+                        
+                except Exception as e:
+                    print(f"Error getting price data for {ticker}: {e}")
             
-            # Fallback: Create mock data for testing
-            return self._create_mock_price_data(ticker, start_date, date, timeframe, periods)
+            # No real data available
+            print(f"ERROR: No real price data available for {ticker} timeframe {timeframe}")
+            return None
             
         except Exception as e:
+            print(f"Error in _get_price_data for {ticker}: {e}")
             return None
     
-    def _create_mock_price_data(self, 
-                               ticker: str, 
-                               start_date: datetime, 
-                               end_date: datetime,
-                               timeframe: str, 
-                               periods: int) -> pd.DataFrame:
-        """Create mock price data for testing when real data unavailable"""
+    def _validate_price_data(self, price_data: pd.DataFrame, ticker: str) -> bool:
+        """
+        Validate price data for technical analysis
         
-        # Generate dates based on timeframe
-        if timeframe == '1d':
-            date_range = pd.date_range(start=start_date, end=end_date, freq='D')
-        elif timeframe == '4h':
-            date_range = pd.date_range(start=start_date, end=end_date, freq='4h')
-        else:  # 1h
-            date_range = pd.date_range(start=start_date, end=end_date, freq='1h')
-        
-        # Limit to requested periods
-        if len(date_range) > periods:
-            date_range = date_range[-periods:]
-        
-        # Create mock price data with some realistic patterns
-        import hashlib
-        hash_input = f"{ticker}_{timeframe}"
-        seed = int(hashlib.md5(hash_input.encode()).hexdigest()[:8], 16) % 1000
-        np.random.seed(seed)
-        
-        base_price = 100 + (seed % 100)
-        returns = np.random.normal(0, 0.02, len(date_range))  # 2% daily volatility
-        prices = [base_price]
-        
-        for ret in returns[1:]:
-            prices.append(prices[-1] * (1 + ret))
-        
-        # Create OHLCV data
-        data = []
-        for i, (date, price) in enumerate(zip(date_range, prices)):
-            daily_range = price * 0.03  # 3% daily range
-            high = price + np.random.uniform(0, daily_range)
-            low = price - np.random.uniform(0, daily_range)
-            open_price = low + np.random.uniform(0, high - low)
-            close_price = low + np.random.uniform(0, high - low)
-            volume = np.random.uniform(100000, 1000000)
+        Args:
+            price_data: DataFrame with price data
+            ticker: Asset ticker for error messages
             
-            data.append({
-                'date': date,
-                'open': open_price,
-                'high': high,
-                'low': low,
-                'close': close_price,
-                'volume': volume
-            })
+        Returns:
+            True if data is valid, False otherwise
+        """
+        if price_data is None:
+            return False
         
-        df = pd.DataFrame(data)
-        df.set_index('date', inplace=True)
+        # Check if it's a real DataFrame (not Mock object)
+        if not hasattr(price_data, 'columns') or not hasattr(price_data, '__len__'):
+            print(f"Invalid data type for {ticker}: {type(price_data)}")
+            return False
+        
+        # Check minimum data length for technical analysis
+        if len(price_data) < 20:
+            print(f"Insufficient data for {ticker}: {len(price_data)} periods (minimum 20)")
+            return False
+        
+        # Check required columns exist (case insensitive)
+        columns_lower = [col.lower() for col in price_data.columns]
+        required_cols = ['open', 'high', 'low', 'close']
+        
+        missing_cols = [col for col in required_cols if col not in columns_lower]
+        if missing_cols:
+            print(f"Missing required columns for {ticker}: {missing_cols}")
+            return False
+        
+        # Check for excessive NaN values
+        for col in required_cols:
+            col_data = price_data[col] if col in price_data.columns else price_data[col.title()]
+            nan_pct = col_data.isna().sum() / len(col_data)
+            if nan_pct > 0.1:  # More than 10% NaN
+                print(f"Too many NaN values in {col} for {ticker}: {nan_pct:.1%}")
+                return False
+        
+        return True
+    
+    def _standardize_columns(self, price_data: pd.DataFrame) -> pd.DataFrame:
+        """
+        Standardize column names for technical analysis
+        
+        Args:
+            price_data: DataFrame with OHLCV data
+            
+        Returns:
+            DataFrame with standardized column names
+        """
+        # Create a copy to avoid modifying original data
+        df = price_data.copy()
+        
+        # Standard column mapping (from various sources to our expected format)
+        column_mapping = {
+            'Open': 'open',
+            'High': 'high', 
+            'Low': 'low',
+            'Close': 'close',
+            'Volume': 'volume',
+            'Adj Close': 'adj_close'
+        }
+        
+        # Apply column mapping
+        df = df.rename(columns=column_mapping)
+        
+        # Ensure lowercase column names
+        df.columns = [col.lower() for col in df.columns]
+        
         return df
     
     def _determine_market_condition(self, tech_result) -> Tuple[MarketCondition, float]:

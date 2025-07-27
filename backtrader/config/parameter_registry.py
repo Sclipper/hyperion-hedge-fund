@@ -807,3 +807,51 @@ class ParameterRegistry:
                 )
             ]
         )) 
+        
+        # Module 12 Phase 3: Regime Detector Integration
+        self.register_parameter(ParameterDefinition(
+            name='regime_detector_use_enhanced_scanner',
+            type=bool,
+            default_value=True,
+            description='Use Module 12 enhanced asset scanner in regime detector',
+            tier_level=ParameterTier.INTERMEDIATE,
+            module='Enhanced Asset Scanner',
+            cli_name='use-enhanced-scanner',
+            help_text='When enabled, regime detector uses sophisticated technical analysis for asset scanning'
+        ))
+        
+        self.register_parameter(ParameterDefinition(
+            name='asset_scanner_integration_mode',
+            type=str,
+            default_value='hybrid',
+            description='Integration mode for asset scanner',
+            tier_level=ParameterTier.ADVANCED,
+            module='Enhanced Asset Scanner',
+            cli_name='scanner-integration-mode',
+            help_text='hybrid: database+fallback, database_only: database only, fallback_only: technical analysis only',
+            choices=['hybrid', 'database_only', 'fallback_only']
+        ))
+        
+        self.register_parameter(ParameterDefinition(
+            name='asset_scanner_trending_confidence_override',
+            type=float,
+            default_value=None,
+            description='Override confidence threshold for trending asset detection',
+            tier_level=ParameterTier.EXPERT,
+            module='Enhanced Asset Scanner',
+            cli_name='trending-confidence-override',
+            help_text='Override default confidence for trending detection in regime detector',
+            min_value=0.0,
+            max_value=1.0
+        ))
+        
+        self.register_parameter(ParameterDefinition(
+            name='asset_scanner_performance_monitoring',
+            type=bool,
+            default_value=True,
+            description='Enable performance monitoring for asset scanner operations',
+            tier_level=ParameterTier.INTERMEDIATE,
+            module='Enhanced Asset Scanner',
+            cli_name='enable-scanner-monitoring',
+            help_text='Logs scanner performance metrics and timing information'
+        )) 
