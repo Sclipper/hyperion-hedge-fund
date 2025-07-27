@@ -27,7 +27,7 @@ import argparse
 import os
 import sys
 from datetime import datetime, timedelta
-from typing import List, Optional
+from typing import List, Optional, Tuple
 import signal
 from pathlib import Path
 
@@ -97,6 +97,9 @@ class DataPreloader:
         provider_info = self.timeframe_manager.get_provider_info()
         print(f"   ✅ Supported timeframes: {provider_info['supported_timeframes']}")
         print(f"   ✅ Rate limits: {provider_info['rate_limits']['requests_per_minute']} req/min")
+        
+        # Cache optimization: flag to skip bulk infrastructure for cached data
+        self.optimize_cached_data = True
     
     def _signal_handler(self, signum, frame):
         """Handle interruption signals gracefully"""
@@ -131,6 +134,29 @@ class DataPreloader:
             raise ValueError(f"Invalid period format: {period_str}. Use format like '1y', '6m', '30d'")
         
         return start_date, end_date
+    
+    def _is_data_cached(self, ticker: str, timeframe: str, start_date: datetime, end_date: datetime) -> bool:
+        """Check if data is already cached for the given parameters"""
+        try:
+            cached_data = self.data_manager._load_from_cache(ticker, start_date, end_date, timeframe)
+            return cached_data is not None and not cached_data.empty
+        except Exception:
+            return False
+    
+    def _fast_cached_retrieval(self, tickers: List[str], timeframes: List[str], 
+                              start_date: datetime, end_date: datetime) -> Tuple[List[Tuple[str, str]], List[Tuple[str, str]]]:
+        """Separate cached vs uncached data for optimization"""
+        cached_items = []
+        uncached_items = []
+        
+        for ticker in tickers:
+            for timeframe in timeframes:
+                if self._is_data_cached(ticker, timeframe, start_date, end_date):
+                    cached_items.append((ticker, timeframe))
+                else:
+                    uncached_items.append((ticker, timeframe))
+        
+        return cached_items, uncached_items
     
     def expand_tickers(self, tickers: List[str], bucket: Optional[str] = None) -> List[str]:
         """
@@ -184,40 +210,69 @@ class DataPreloader:
         print(f"\n📥 INDIVIDUAL DOWNLOAD MODE")
         print(f"   Provider: {self.provider_name}")
         
-        total_operations = len(tickers) * len(timeframes)
-        completed = 0
+        # Cache optimization: separate cached from uncached data
+        if self.optimize_cached_data:
+            cached_items, uncached_items = self._fast_cached_retrieval(tickers, timeframes, start_date, end_date)
+            print(f"   🚀 Cache optimization: {len(cached_items)} cached, {len(uncached_items)} need download")
+            
+            # Process cached items instantly
+            if cached_items:
+                print(f"   ⚡ Processing {len(cached_items)} cached items...")
+                for ticker, timeframe in cached_items:
+                    try:
+                        data = self.data_manager.download_data(
+                            ticker=ticker,
+                            start_date=start_date,
+                            end_date=end_date,
+                            interval=timeframe,
+                            use_cache=True
+                        )
+                        if data is not None and not data.empty:
+                            print(f"      ✅ {ticker} {timeframe}: {len(data)} records (cached)")
+                    except Exception as e:
+                        print(f"      ❌ {ticker} {timeframe}: {e}")
+            
+            # Use traditional approach only for uncached items
+            process_items = [(ticker, timeframe) for ticker, timeframe in uncached_items]
+        else:
+            # Traditional approach: process all items
+            process_items = [(ticker, timeframe) for ticker in tickers for timeframe in timeframes]
+        
+        total_operations = len(process_items)
+        completed = len(cached_items) if self.optimize_cached_data and cached_items else 0
         failed = 0
         
-        for i, ticker in enumerate(tickers):
-            print(f"\n📊 [{i+1}/{len(tickers)}] Processing {ticker}")
-            
-            for j, timeframe in enumerate(timeframes):
-                try:
-                    operation_num = i * len(timeframes) + j + 1
-                    print(f"   🕐 [{operation_num}/{total_operations}] Downloading {ticker} {timeframe}...")
-                    
-                    data = self.data_manager.download_data(
-                        ticker=ticker,
-                        start_date=start_date,
-                        end_date=end_date,
-                        interval=timeframe,
-                        use_cache=True
-                    )
-                    
-                    if data is not None and not data.empty:
-                        print(f"      ✅ Success: {len(data)} records")
-                        completed += 1
-                    else:
-                        print(f"      ❌ No data returned")
-                        failed += 1
-                        
-                except Exception as e:
-                    print(f"      ❌ Error: {e}")
+        # Process only uncached items
+        for i, (ticker, timeframe) in enumerate(process_items):
+            try:
+                operation_num = i + 1
+                print(f"   🕐 [{operation_num}/{total_operations}] Downloading {ticker} {timeframe}...")
+                
+                data = self.data_manager.download_data(
+                    ticker=ticker,
+                    start_date=start_date,
+                    end_date=end_date,
+                    interval=timeframe,
+                    use_cache=True
+                )
+                
+                if data is not None and not data.empty:
+                    print(f"      ✅ Success: {len(data)} records")
+                    completed += 1
+                else:
+                    print(f"      ❌ No data returned")
                     failed += 1
+                    
+            except Exception as e:
+                print(f"      ❌ Error: {e}")
+                failed += 1
+        
+        # Calculate true totals
+        total_operations_actual = len(tickers) * len(timeframes)
         
         print(f"\n📊 INDIVIDUAL DOWNLOAD COMPLETE")
-        print(f"   ✅ Successful: {completed}/{total_operations}")
-        print(f"   ❌ Failed: {failed}/{total_operations}")
+        print(f"   ✅ Successful: {completed}/{total_operations_actual}")
+        print(f"   ❌ Failed: {failed}/{total_operations_actual}")
         
         return failed == 0
     
@@ -499,8 +554,26 @@ def main():
                 print("❌ Download cancelled")
                 return
         
-        # Execute download
+        # Execute download with cache optimization
+        use_bulk_mode = False
+        
         if preloader.supports_bulk and len(tickers) > 1:
+            # Check cache status to decide bulk vs individual
+            if preloader.optimize_cached_data:
+                cached_items, uncached_items = preloader._fast_cached_retrieval(tickers, timeframes, start_date, end_date)
+                cached_percentage = len(cached_items) / (len(cached_items) + len(uncached_items)) if (cached_items or uncached_items) else 0
+                
+                # Use individual mode if >50% is cached to avoid bulk overhead
+                if cached_percentage > 0.5:
+                    print(f"🚀 Cache optimization: {cached_percentage:.1%} cached, using individual mode")
+                    use_bulk_mode = False
+                else:
+                    print(f"📦 Using bulk mode: {cached_percentage:.1%} cached")
+                    use_bulk_mode = True
+            else:
+                use_bulk_mode = True
+        
+        if use_bulk_mode:
             success = preloader.download_bulk(tickers, timeframes, start_date, end_date)
         else:
             success = preloader.download_individual(tickers, timeframes, start_date, end_date)

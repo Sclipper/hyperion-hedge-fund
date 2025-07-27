@@ -1,0 +1,13 @@
+{
+  "sharpe_ratio": -17.236981390323475,
+  "total_return_pct": -0.05696216035861459,
+  "avg_return_pct": -0.018987386786204864,
+  "max_drawdown_pct": 0.05694594000001962,
+  "max_drawdown_duration": 2,
+  "sqn": 0,
+  "vwr": -4.021411080301921,
+  "total_trades": 3,
+  "won_trades": 0,
+  "lost_trades": 0,
+  "win_rate_pct": 0.0
+}

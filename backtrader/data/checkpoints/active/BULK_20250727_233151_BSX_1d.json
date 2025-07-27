@@ -1,0 +1,24 @@
+{
+  "plan_id": "BULK_20250727_233151_BSX_1d",
+  "ticker": "BSX",
+  "timeframe": "1d",
+  "start_date": "2024-07-27T23:31:51.396538",
+  "end_date": "2025-07-27T23:31:51.396538",
+  "total_chunks": 1,
+  "completed_chunks": 0,
+  "failed_chunks": 0,
+  "chunk_states": [
+    {
+      "start_date": "2024-07-27T23:31:51.396538",
+      "end_date": "2025-07-27T23:31:51.396538",
+      "timeframe": "1d",
+      "ticker": "BSX",
+      "status": "pending",
+      "error": null,
+      "attempt": 0,
+      "max_attempts": 3
+    }
+  ],
+  "created_at": "2025-07-27T23:31:51.412622",
+  "last_updated": "2025-07-27T23:31:51.412623"
+}

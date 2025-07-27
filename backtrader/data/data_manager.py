@@ -157,7 +157,16 @@ class DataManager:
                      use_cache: bool = True, interval: str = '1d') -> Optional[pd.DataFrame]:
         """
         Download data using the active provider. Maintains backward compatibility.
+        Cache optimized: skips provider infrastructure for cached data.
         """
+        # Fast path: Check cache first and return immediately if found
+        if use_cache:
+            cached_data = self._load_from_cache(ticker, start_date, end_date, interval)
+            if cached_data is not None:
+                # Fast cache hit - skip all provider initialization overhead
+                return cached_data
+        
+        # Slow path: Cache miss - initialize provider and fetch
         provider = self.registry.get_active()
         
         # Check if provider supports requested timeframe
@@ -167,12 +176,6 @@ class DataManager:
                 f"Available: {provider.get_supported_timeframes()}. Using daily data."
             )
             interval = '1d'
-        
-        if use_cache:
-            cached_data = self._load_from_cache(ticker, start_date, end_date, interval)
-            if cached_data is not None:
-                print(f"Loaded {ticker} from {provider.name} cache")
-                return cached_data
         
         try:
             # Handle both datetime and date objects
@@ -228,7 +231,50 @@ class DataManager:
     
     def get_multiple_data(self, tickers: list, start_date: datetime, end_date: datetime,
                          use_cache: bool = True) -> Dict[str, bt.feeds.PandasData]:
+        """
+        Load multiple tickers with cache optimization.
+        Separates cached vs uncached tickers for faster processing.
+        """
+        if not use_cache:
+            # If cache is disabled, use standard approach
+            return self._get_multiple_data_standard(tickers, start_date, end_date, use_cache)
         
+        # Cache optimization: separate cached vs uncached tickers
+        cached_tickers = []
+        uncached_tickers = []
+        
+        for ticker in tickers:
+            if self._is_data_cached(ticker, start_date, end_date, '1d'):
+                cached_tickers.append(ticker)
+            else:
+                uncached_tickers.append(ticker)
+        
+        if cached_tickers:
+            print(f"🚀 Cache optimization: {len(cached_tickers)} cached, {len(uncached_tickers)} need download")
+        
+        data_feeds = {}
+        
+        # Process cached tickers fast (no provider overhead)
+        for ticker in cached_tickers:
+            data = self.get_data(ticker, start_date, end_date, use_cache)
+            if data is not None:
+                data_feeds[ticker] = data
+            else:
+                print(f"Failed to load cached data for {ticker}")
+        
+        # Process uncached tickers with provider
+        for ticker in uncached_tickers:
+            data = self.get_data(ticker, start_date, end_date, use_cache)
+            if data is not None:
+                data_feeds[ticker] = data
+            else:
+                print(f"Failed to download data for {ticker}")
+        
+        return data_feeds
+    
+    def _get_multiple_data_standard(self, tickers: list, start_date: datetime, end_date: datetime,
+                                   use_cache: bool = True) -> Dict[str, bt.feeds.PandasData]:
+        """Standard approach for loading multiple tickers (fallback)"""
         data_feeds = {}
         
         for ticker in tickers:
@@ -239,6 +285,15 @@ class DataManager:
                 print(f"Failed to load data for {ticker}")
         
         return data_feeds
+    
+    def _is_data_cached(self, ticker: str, start_date: datetime, end_date: datetime, 
+                       timeframe: str = '1d') -> bool:
+        """Check if data is already cached for the given parameters"""
+        try:
+            cached_data = self._load_from_cache(ticker, start_date, end_date, timeframe)
+            return cached_data is not None and not cached_data.empty
+        except Exception:
+            return False
     
     def clear_cache(self, ticker: str = None, provider: str = None):
         """Clear cache files for specific ticker/provider or all"""

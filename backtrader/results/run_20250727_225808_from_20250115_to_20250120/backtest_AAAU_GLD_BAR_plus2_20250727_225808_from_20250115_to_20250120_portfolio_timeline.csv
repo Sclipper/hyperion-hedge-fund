@@ -1,0 +1,4 @@
+date,portfolio_value,cash,total_positions,daily_return,cumulative_return,drawdown_pct,sharpe_30d,regime,regime_confidence
+2025-01-15,100000.0,100000.0,0,0.0,0.0,0.0,0.0,REFLATION,0.0
+2025-01-16,99983.24,84989.14414,5,-0.0002,-0.0002,-0.0168,0.0,REFLATION,0.0
+2025-01-17,99904.56,84989.14414,5,-0.0008,-0.001,-0.0954,0.0,REFLATION,0.0

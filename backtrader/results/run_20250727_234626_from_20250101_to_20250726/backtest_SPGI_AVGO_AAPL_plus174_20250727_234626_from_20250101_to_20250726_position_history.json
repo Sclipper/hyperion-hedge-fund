@@ -1,0 +1,892 @@
+{
+  "USMV": [
+    {
+      "asset": "USMV",
+      "date": "2025-02-20T00:00:00",
+      "technical_score": 0.6204166666666667,
+      "fundamental_score": 0.0,
+      "combined_score": 0.6204166666666667,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.05,
+      "confidence": 0.6897916666666666,
+      "regime": "DEFLATION",
+      "timeframes_analyzed": [
+        "1d"
+      ]
+    },
+    {
+      "asset": "USMV",
+      "date": "2025-03-24T00:00:00",
+      "technical_score": 0.5479166666666666,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5479166666666666,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7260416666666667,
+      "regime": "DEFLATION",
+      "timeframes_analyzed": [
+        "1d"
+      ]
+    },
+    {
+      "asset": "USMV",
+      "date": "2025-04-23T00:00:00",
+      "technical_score": 0.5204166666666667,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5204166666666667,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7397916666666666,
+      "regime": "DEFLATION",
+      "timeframes_analyzed": [
+        "1d"
+      ]
+    },
+    {
+      "asset": "USMV",
+      "date": "2025-05-23T00:00:00",
+      "technical_score": 0.47208333333333335,
+      "fundamental_score": 0.0,
+      "combined_score": 0.47208333333333335,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.020000000000000004,
+      "confidence": 0.7639583333333333,
+      "regime": "DEFLATION",
+      "timeframes_analyzed": [
+        "1d"
+      ]
+    }
+  ],
+  "XLP": [
+    {
+      "asset": "XLP",
+      "date": "2025-02-20T00:00:00",
+      "technical_score": 0.5779166666666666,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5779166666666666,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7110416666666667,
+      "regime": "DEFLATION",
+      "timeframes_analyzed": [
+        "1d"
+      ]
+    },
+    {
+      "asset": "XLP",
+      "date": "2025-03-24T00:00:00",
+      "technical_score": 0.49375,
+      "fundamental_score": 0.0,
+      "combined_score": 0.49375,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.020000000000000004,
+      "confidence": 0.753125,
+      "regime": "DEFLATION",
+      "timeframes_analyzed": [
+        "1d"
+      ]
+    },
+    {
+      "asset": "XLP",
+      "date": "2025-04-23T00:00:00",
+      "technical_score": 0.5279166666666667,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5279166666666667,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7360416666666667,
+      "regime": "DEFLATION",
+      "timeframes_analyzed": [
+        "1d"
+      ]
+    },
+    {
+      "asset": "XLP",
+      "date": "2025-05-23T00:00:00",
+      "technical_score": 0.55875,
+      "fundamental_score": 0.0,
+      "combined_score": 0.55875,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7206250000000001,
+      "regime": "DEFLATION",
+      "timeframes_analyzed": [
+        "1d"
+      ]
+    }
+  ],
+  "SPLV": [
+    {
+      "asset": "SPLV",
+      "date": "2025-02-20T00:00:00",
+      "technical_score": 0.5779166666666666,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5779166666666666,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7110416666666667,
+      "regime": "DEFLATION",
+      "timeframes_analyzed": [
+        "1d"
+      ]
+    },
+    {
+      "asset": "SPLV",
+      "date": "2025-03-24T00:00:00",
+      "technical_score": 0.4954166666666666,
+      "fundamental_score": 0.0,
+      "combined_score": 0.4954166666666666,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.020000000000000004,
+      "confidence": 0.7522916666666667,
+      "regime": "DEFLATION",
+      "timeframes_analyzed": [
+        "1d"
+      ]
+    },
+    {
+      "asset": "SPLV",
+      "date": "2025-04-23T00:00:00",
+      "technical_score": 0.46625,
+      "fundamental_score": 0.0,
+      "combined_score": 0.46625,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.020000000000000004,
+      "confidence": 0.766875,
+      "regime": "DEFLATION",
+      "timeframes_analyzed": [
+        "1d"
+      ]
+    },
+    {
+      "asset": "SPLV",
+      "date": "2025-05-23T00:00:00",
+      "technical_score": 0.4970833333333333,
+      "fundamental_score": 0.0,
+      "combined_score": 0.4970833333333333,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.020000000000000004,
+      "confidence": 0.7514583333333333,
+      "regime": "DEFLATION",
+      "timeframes_analyzed": [
+        "1d"
+      ]
+    }
+  ],
+  "XLU": [
+    {
+      "asset": "XLU",
+      "date": "2025-02-20T00:00:00",
+      "technical_score": 0.5545833333333333,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5545833333333333,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7227083333333333,
+      "regime": "DEFLATION",
+      "timeframes_analyzed": [
+        "1d"
+      ]
+    },
+    {
+      "asset": "XLU",
+      "date": "2025-03-24T00:00:00",
+      "technical_score": 0.4170833333333333,
+      "fundamental_score": 0.0,
+      "combined_score": 0.4170833333333333,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.020000000000000004,
+      "confidence": 0.7914583333333334,
+      "regime": "DEFLATION",
+      "timeframes_analyzed": [
+        "1d"
+      ]
+    },
+    {
+      "asset": "XLU",
+      "date": "2025-04-23T00:00:00",
+      "technical_score": 0.4970833333333333,
+      "fundamental_score": 0.0,
+      "combined_score": 0.4970833333333333,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.020000000000000004,
+      "confidence": 0.7514583333333333,
+      "regime": "DEFLATION",
+      "timeframes_analyzed": [
+        "1d"
+      ]
+    },
+    {
+      "asset": "XLU",
+      "date": "2025-05-23T00:00:00",
+      "technical_score": 0.57375,
+      "fundamental_score": 0.0,
+      "combined_score": 0.57375,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.713125,
+      "regime": "DEFLATION",
+      "timeframes_analyzed": [
+        "1d"
+      ]
+    }
+  ],
+  "BND": [
+    {
+      "asset": "BND",
+      "date": "2025-02-20T00:00:00",
+      "technical_score": 0.50875,
+      "fundamental_score": 0.0,
+      "combined_score": 0.50875,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.745625,
+      "regime": "DEFLATION",
+      "timeframes_analyzed": [
+        "1d"
+      ]
+    },
+    {
+      "asset": "BND",
+      "date": "2025-03-24T00:00:00",
+      "technical_score": 0.4954166666666666,
+      "fundamental_score": 0.0,
+      "combined_score": 0.4954166666666666,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.020000000000000004,
+      "confidence": 0.7522916666666667,
+      "regime": "DEFLATION",
+      "timeframes_analyzed": [
+        "1d"
+      ]
+    },
+    {
+      "asset": "BND",
+      "date": "2025-04-23T00:00:00",
+      "technical_score": 0.5170833333333333,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5170833333333333,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7414583333333333,
+      "regime": "DEFLATION",
+      "timeframes_analyzed": [
+        "1d"
+      ]
+    },
+    {
+      "asset": "BND",
+      "date": "2025-05-23T00:00:00",
+      "technical_score": 0.42541666666666667,
+      "fundamental_score": 0.0,
+      "combined_score": 0.42541666666666667,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.020000000000000004,
+      "confidence": 0.7872916666666667,
+      "regime": "DEFLATION",
+      "timeframes_analyzed": [
+        "1d"
+      ]
+    }
+  ],
+  "AGG": [
+    {
+      "asset": "AGG",
+      "date": "2025-02-20T00:00:00",
+      "technical_score": 0.50875,
+      "fundamental_score": 0.0,
+      "combined_score": 0.50875,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.745625,
+      "regime": "DEFLATION",
+      "timeframes_analyzed": [
+        "1d"
+      ]
+    },
+    {
+      "asset": "AGG",
+      "date": "2025-03-24T00:00:00",
+      "technical_score": 0.47208333333333335,
+      "fundamental_score": 0.0,
+      "combined_score": 0.47208333333333335,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.020000000000000004,
+      "confidence": 0.7639583333333333,
+      "regime": "DEFLATION",
+      "timeframes_analyzed": [
+        "1d"
+      ]
+    },
+    {
+      "asset": "AGG",
+      "date": "2025-04-23T00:00:00",
+      "technical_score": 0.5170833333333333,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5170833333333333,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7414583333333333,
+      "regime": "DEFLATION",
+      "timeframes_analyzed": [
+        "1d"
+      ]
+    },
+    {
+      "asset": "AGG",
+      "date": "2025-05-23T00:00:00",
+      "technical_score": 0.42541666666666667,
+      "fundamental_score": 0.0,
+      "combined_score": 0.42541666666666667,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.020000000000000004,
+      "confidence": 0.7872916666666667,
+      "regime": "DEFLATION",
+      "timeframes_analyzed": [
+        "1d"
+      ]
+    }
+  ],
+  "KLAC": [
+    {
+      "asset": "KLAC",
+      "date": "2025-06-04T00:00:00",
+      "technical_score": 0.6179166666666667,
+      "fundamental_score": 0.0,
+      "combined_score": 0.6179166666666667,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.05,
+      "confidence": 0.6910416666666667,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d"
+      ]
+    }
+  ],
+  "CSCO": [
+    {
+      "asset": "CSCO",
+      "date": "2025-06-04T00:00:00",
+      "technical_score": 0.6154166666666667,
+      "fundamental_score": 0.0,
+      "combined_score": 0.6154166666666667,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.05,
+      "confidence": 0.6922916666666666,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d"
+      ]
+    }
+  ],
+  "HON": [
+    {
+      "asset": "HON",
+      "date": "2025-06-04T00:00:00",
+      "technical_score": 0.6104166666666667,
+      "fundamental_score": 0.0,
+      "combined_score": 0.6104166666666667,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.05,
+      "confidence": 0.6947916666666667,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d"
+      ]
+    }
+  ],
+  "ADBE": [
+    {
+      "asset": "ADBE",
+      "date": "2025-06-04T00:00:00",
+      "technical_score": 0.6029166666666668,
+      "fundamental_score": 0.0,
+      "combined_score": 0.6029166666666668,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.05,
+      "confidence": 0.6985416666666666,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d"
+      ]
+    }
+  ],
+  "DE": [
+    {
+      "asset": "DE",
+      "date": "2025-06-04T00:00:00",
+      "technical_score": 0.6029166666666668,
+      "fundamental_score": 0.0,
+      "combined_score": 0.6029166666666668,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.05,
+      "confidence": 0.6985416666666666,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d"
+      ]
+    }
+  ],
+  "DIS": [
+    {
+      "asset": "DIS",
+      "date": "2025-06-04T00:00:00",
+      "technical_score": 0.6029166666666668,
+      "fundamental_score": 0.0,
+      "combined_score": 0.6029166666666668,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.05,
+      "confidence": 0.6985416666666666,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d"
+      ]
+    }
+  ],
+  "AAVE": [
+    {
+      "asset": "AAVE",
+      "date": "2025-06-04T00:00:00",
+      "technical_score": 0.5954166666666667,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5954166666666667,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7022916666666666,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d"
+      ]
+    }
+  ],
+  "ETH": [
+    {
+      "asset": "ETH",
+      "date": "2025-06-04T00:00:00",
+      "technical_score": 0.5954166666666667,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5954166666666667,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7022916666666666,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d"
+      ]
+    }
+  ],
+  "LRCX": [
+    {
+      "asset": "LRCX",
+      "date": "2025-06-04T00:00:00",
+      "technical_score": 0.5945833333333334,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5945833333333334,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7027083333333333,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d"
+      ]
+    }
+  ],
+  "PLTR": [
+    {
+      "asset": "PLTR",
+      "date": "2025-06-04T00:00:00",
+      "technical_score": 0.5945833333333334,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5945833333333334,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7027083333333333,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d"
+      ]
+    }
+  ],
+  "LIN": [
+    {
+      "asset": "LIN",
+      "date": "2025-06-04T00:00:00",
+      "technical_score": 0.5920833333333333,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5920833333333333,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7039583333333334,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d"
+      ]
+    }
+  ],
+  "MO": [
+    {
+      "asset": "MO",
+      "date": "2025-06-04T00:00:00",
+      "technical_score": 0.58875,
+      "fundamental_score": 0.0,
+      "combined_score": 0.58875,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.705625,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d"
+      ]
+    }
+  ],
+  "CB": [
+    {
+      "asset": "CB",
+      "date": "2025-06-04T00:00:00",
+      "technical_score": 0.58875,
+      "fundamental_score": 0.0,
+      "combined_score": 0.58875,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.705625,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d"
+      ]
+    }
+  ],
+  "CEG": [
+    {
+      "asset": "CEG",
+      "date": "2025-06-04T00:00:00",
+      "technical_score": 0.5879166666666668,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5879166666666668,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7060416666666667,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d"
+      ]
+    }
+  ],
+  "XLY": [
+    {
+      "asset": "XLY",
+      "date": "2025-06-04T00:00:00",
+      "technical_score": 0.5870833333333334,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5870833333333334,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7064583333333333,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d"
+      ]
+    }
+  ],
+  "JPM": [
+    {
+      "asset": "JPM",
+      "date": "2025-06-04T00:00:00",
+      "technical_score": 0.5870833333333334,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5870833333333334,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7064583333333333,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d"
+      ]
+    },
+    {
+      "asset": "JPM",
+      "date": "2025-07-07T00:00:00",
+      "technical_score": 0.5591666666666667,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5591666666666667,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7204166666666667,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d"
+      ]
+    }
+  ],
+  "AMGN": [
+    {
+      "asset": "AMGN",
+      "date": "2025-06-04T00:00:00",
+      "technical_score": 0.5845833333333333,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5845833333333333,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7077083333333334,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d"
+      ]
+    }
+  ],
+  "WM": [
+    {
+      "asset": "WM",
+      "date": "2025-06-04T00:00:00",
+      "technical_score": 0.5820833333333333,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5820833333333333,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7089583333333334,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d"
+      ]
+    }
+  ],
+  "WELL": [
+    {
+      "asset": "WELL",
+      "date": "2025-06-04T00:00:00",
+      "technical_score": 0.58125,
+      "fundamental_score": 0.0,
+      "combined_score": 0.58125,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.709375,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d"
+      ]
+    }
+  ],
+  "SCHW": [
+    {
+      "asset": "SCHW",
+      "date": "2025-06-04T00:00:00",
+      "technical_score": 0.5804166666666667,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5804166666666667,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7097916666666666,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d"
+      ]
+    }
+  ],
+  "GOOG": [
+    {
+      "asset": "GOOG",
+      "date": "2025-07-07T00:00:00",
+      "technical_score": 0.6045833333333334,
+      "fundamental_score": 0.0,
+      "combined_score": 0.6045833333333334,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.05,
+      "confidence": 0.6977083333333334,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d"
+      ]
+    }
+  ],
+  "NFLX": [
+    {
+      "asset": "NFLX",
+      "date": "2025-07-07T00:00:00",
+      "technical_score": 0.5729166666666667,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5729166666666667,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7135416666666666,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d"
+      ]
+    }
+  ],
+  "AMZN": [
+    {
+      "asset": "AMZN",
+      "date": "2025-07-07T00:00:00",
+      "technical_score": 0.5704166666666667,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5704166666666667,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7147916666666667,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d"
+      ]
+    }
+  ],
+  "BAC": [
+    {
+      "asset": "BAC",
+      "date": "2025-07-07T00:00:00",
+      "technical_score": 0.5591666666666667,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5591666666666667,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7204166666666667,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d"
+      ]
+    }
+  ],
+  "ORCL": [
+    {
+      "asset": "ORCL",
+      "date": "2025-07-07T00:00:00",
+      "technical_score": 0.5516666666666667,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5516666666666667,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7241666666666666,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d"
+      ]
+    }
+  ],
+  "AVGO": [
+    {
+      "asset": "AVGO",
+      "date": "2025-07-07T00:00:00",
+      "technical_score": 0.5404166666666667,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5404166666666667,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7297916666666666,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d"
+      ]
+    }
+  ],
+  "XLM": [
+    {
+      "asset": "XLM",
+      "date": "2025-07-07T00:00:00",
+      "technical_score": 0.5304166666666666,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5304166666666666,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7347916666666667,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d"
+      ]
+    }
+  ],
+  "SHIB": [
+    {
+      "asset": "SHIB",
+      "date": "2025-07-07T00:00:00",
+      "technical_score": 0.5270833333333333,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5270833333333333,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7364583333333333,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d"
+      ]
+    }
+  ],
+  "SUI": [
+    {
+      "asset": "SUI",
+      "date": "2025-07-07T00:00:00",
+      "technical_score": 0.5270833333333333,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5270833333333333,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7364583333333333,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d"
+      ]
+    }
+  ],
+  "MSFT": [
+    {
+      "asset": "MSFT",
+      "date": "2025-07-07T00:00:00",
+      "technical_score": 0.5241666666666667,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5241666666666667,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7379166666666667,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d"
+      ]
+    }
+  ],
+  "ADA": [
+    {
+      "asset": "ADA",
+      "date": "2025-07-07T00:00:00",
+      "technical_score": 0.4970833333333333,
+      "fundamental_score": 0.0,
+      "combined_score": 0.4970833333333333,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.020000000000000004,
+      "confidence": 0.7514583333333333,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d"
+      ]
+    }
+  ],
+  "AVAX": [
+    {
+      "asset": "AVAX",
+      "date": "2025-07-07T00:00:00",
+      "technical_score": 0.4970833333333333,
+      "fundamental_score": 0.0,
+      "combined_score": 0.4970833333333333,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.020000000000000004,
+      "confidence": 0.7514583333333333,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d"
+      ]
+    }
+  ],
+  "TSLA": [
+    {
+      "asset": "TSLA",
+      "date": "2025-07-07T00:00:00",
+      "technical_score": 0.49375,
+      "fundamental_score": 0.0,
+      "combined_score": 0.49375,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.020000000000000004,
+      "confidence": 0.753125,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d"
+      ]
+    }
+  ]
+}

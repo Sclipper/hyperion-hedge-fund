@@ -1,0 +1,7 @@
+date,asset,shares,price,market_value,weight_pct,score,bucket,days_held,is_core_asset
+2025-01-16,GLD,12,250.56,3007.2,3.0075,0.0,Gold,1,false
+2025-01-16,SGOL,116,25.92,3006.72,3.007,0.0,Gold,1,false
+2025-01-16,IAU,58,51.25,2972.5,2.9728,0.0,Gold,1,false
+2025-01-17,GLD,12,250.56,2991.24,2.9929,0.0,Gold,1,false
+2025-01-17,SGOL,116,25.92,2989.32,2.991,0.0,Gold,1,false
+2025-01-17,IAU,58,51.25,2957.42,2.9591,0.0,Gold,1,false

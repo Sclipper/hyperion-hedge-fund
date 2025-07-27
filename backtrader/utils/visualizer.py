@@ -163,7 +163,27 @@ class PortfolioVisualizer:
         fig.update_yaxes(title_text="Portfolio Value ($)", row=1, col=1)
         fig.update_yaxes(title_text="Daily Return (%)", row=2, col=1)
         fig.update_yaxes(title_text="Drawdown (%)", row=3, col=1)
-        fig.update_xaxes(title_text="Date", row=3, col=1)
+        
+        # Format X-axes with proper date formatting
+        fig.update_xaxes(
+            title_text="Date", 
+            row=3, col=1,
+            type='date',
+            tickformat='%Y-%m-%d',
+            dtick="D1" if len(portfolio_data) <= 30 else "M1"
+        )
+        fig.update_xaxes(
+            type='date',
+            tickformat='%Y-%m-%d',
+            dtick="D1" if len(portfolio_data) <= 30 else "M1",
+            row=1, col=1
+        )
+        fig.update_xaxes(
+            type='date',
+            tickformat='%Y-%m-%d', 
+            dtick="D1" if len(portfolio_data) <= 30 else "M1",
+            row=2, col=1
+        )
         
         return fig
     
@@ -388,6 +408,99 @@ class PortfolioVisualizer:
         
         return fig
     
+    def create_performance_metrics_chart(self, performance_metrics: dict) -> go.Figure:
+        """
+        Create performance metrics visualization chart
+        
+        Args:
+            performance_metrics: Dictionary with performance metrics
+            
+        Returns:
+            Plotly figure with metrics visualization
+        """
+        # Prepare metrics for visualization
+        metrics_data = {
+            'Risk Metrics': {
+                'Sharpe Ratio': performance_metrics.get('sharpe_ratio', 0),
+                'Max Drawdown (%)': performance_metrics.get('max_drawdown_pct', 0),
+                'Volatility (%)': performance_metrics.get('volatility_pct', 0)
+            },
+            'Return Metrics': {
+                'Total Return (%)': performance_metrics.get('total_return_pct', 0),
+                'Average Return (%)': performance_metrics.get('avg_return_pct', 0),
+                'Win Rate (%)': performance_metrics.get('win_rate_pct', 0)
+            },
+            'Trade Metrics': {
+                'Profit Factor': performance_metrics.get('profit_factor', 0),
+                'Win/Loss Ratio': performance_metrics.get('win_loss_ratio', 0),
+                'SQN': performance_metrics.get('sqn', 0),
+                'VWR': performance_metrics.get('vwr', 0)
+            }
+        }
+        
+        # Create subplots for each category
+        fig = make_subplots(
+            rows=2, cols=2,
+            subplot_titles=list(metrics_data.keys()) + ['Key Performance Summary'],
+            specs=[[{"type": "bar"}, {"type": "bar"}],
+                   [{"type": "bar"}, {"type": "indicator"}]]
+        )
+        
+        colors = [self.colors['primary'], self.colors['success'], self.colors['danger']]
+        
+        # Add bar charts for each metric category
+        for i, (category, metrics) in enumerate(metrics_data.items()):
+            row = (i // 2) + 1
+            col = (i % 2) + 1
+            
+            fig.add_trace(
+                go.Bar(
+                    x=list(metrics.keys()),
+                    y=list(metrics.values()),
+                    name=category,
+                    marker_color=colors[i % len(colors)],
+                    text=[f"{v:.3f}" for v in metrics.values()],
+                    textposition='auto',
+                    hovertemplate='<b>%{x}</b><br>Value: %{y:.3f}<extra></extra>'
+                ),
+                row=row, col=col
+            )
+        
+        # Add summary indicators in the fourth subplot
+        fig.add_trace(
+            go.Indicator(
+                mode="number+gauge+delta",
+                value=performance_metrics.get('sharpe_ratio', 0),
+                domain={'row': 1, 'column': 1},
+                title={'text': "Sharpe Ratio"},
+                gauge={
+                    'axis': {'range': [-2, 3]},
+                    'bar': {'color': self.colors['primary']},
+                    'steps': [
+                        {'range': [-2, 0], 'color': "lightgray"},
+                        {'range': [0, 1], 'color': "yellow"},
+                        {'range': [1, 2], 'color': "orange"},
+                        {'range': [2, 3], 'color': "green"}
+                    ],
+                    'threshold': {
+                        'line': {'color': "red", 'width': 4},
+                        'thickness': 0.75,
+                        'value': 1.0
+                    }
+                }
+            ),
+            row=2, col=2
+        )
+        
+        fig.update_layout(
+            title='Performance Metrics Dashboard',
+            height=800,
+            showlegend=False,
+            template='plotly_white'
+        )
+        
+        return fig
+    
     def _calculate_metrics(self, portfolio_data: pd.DataFrame) -> pd.DataFrame:
         """Calculate additional metrics for portfolio data"""
         data = portfolio_data.copy()
@@ -425,7 +538,8 @@ class PortfolioVisualizer:
             'portfolio_performance',
             'asset_allocation', 
             'performance_dashboard',
-            'trading_activity'
+            'trading_activity',
+            'performance_metrics'
         ]
         
         for i, fig in enumerate(charts):

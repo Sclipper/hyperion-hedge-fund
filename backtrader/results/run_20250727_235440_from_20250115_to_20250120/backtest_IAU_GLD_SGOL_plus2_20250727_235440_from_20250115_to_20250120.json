@@ -1,0 +1,213 @@
+{
+  "metadata": {
+    "tickers": [
+      "IAU",
+      "GLD",
+      "SGOL",
+      "BAR",
+      "AAAU"
+    ],
+    "start_date": "2025-01-15T00:00:00",
+    "end_date": "2025-01-20T00:00:00",
+    "strategy": "RegimeStrategy",
+    "parameters": {
+      "rebalance_frequency": "monthly",
+      "max_assets_per_period": 3,
+      "sma_period": 20,
+      "rsi_period": 14,
+      "rsi_lower": 30,
+      "rsi_upper": 70,
+      "momentum_period": 10,
+      "stop_loss": 0.05,
+      "take_profit": 0.15,
+      "min_regime_confidence": 0.6,
+      "bucket_names": [
+        "Gold"
+      ],
+      "position_min_score": 0.4,
+      "timeframes": [
+        "1h",
+        "4h",
+        "1d"
+      ],
+      "enable_technical_analysis": true,
+      "enable_fundamental_analysis": false,
+      "technical_weight": 0.6,
+      "fundamental_weight": 0.4,
+      "min_trending_confidence": 0.7,
+      "regime_detector": "<data.regime_detector.RegimeDetector object at 0x10cf99070>",
+      "asset_manager": "<data.asset_buckets.AssetBucketManager object at 0x10b65f730>",
+      "data_manager": "<data.data_manager.DataManager object at 0x10cf5bd00>",
+      "enable_core_assets": false,
+      "max_core_assets": 3,
+      "core_override_threshold": 0.95,
+      "core_expiry_days": 90,
+      "core_underperformance_threshold": 0.15,
+      "core_underperformance_period": 30,
+      "core_extension_limit": 2,
+      "core_performance_check_frequency": 7,
+      "smart_diversification_overrides": 2
+    },
+    "generated_at": "2025-07-27T23:54:40.056517"
+  },
+  "performance": {
+    "sharpe_ratio": -17.598960078711595,
+    "total_return": -0.0005871787557093692,
+    "average_return": -0.00019572625190312305,
+    "max_drawdown": 0.058700639999995474,
+    "max_drawdown_duration": 2,
+    "sqn": 0,
+    "vwr": -4.14977820391383
+  },
+  "trades": {
+    "total": 3,
+    "won": 0,
+    "lost": 0,
+    "win_rate": 0.0,
+    "average_win": 0,
+    "average_loss": 0,
+    "profit_factor": 0,
+    "details": []
+  },
+  "portfolio_timeline": [
+    {
+      "date": "2025-01-15",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "REFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    },
+    {
+      "date": "2025-01-16",
+      "portfolio_value": 99990.33936,
+      "cash": 90970.33936,
+      "total_positions": 3,
+      "regime": "REFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {
+        "GLD": {
+          "size": 12,
+          "price": 250.56,
+          "value": 3007.2
+        },
+        "SGOL": {
+          "size": 116,
+          "price": 25.92,
+          "value": 3006.7200000000003
+        },
+        "AAAU": {
+          "size": 112,
+          "price": 26.85,
+          "value": 3006.08
+        }
+      }
+    },
+    {
+      "date": "2025-01-17",
+      "portfolio_value": 99941.29936,
+      "cash": 90970.33936,
+      "total_positions": 3,
+      "regime": "REFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {
+        "GLD": {
+          "size": 12,
+          "price": 250.56,
+          "value": 2991.2400000000002
+        },
+        "SGOL": {
+          "size": 116,
+          "price": 25.92,
+          "value": 2989.32
+        },
+        "AAAU": {
+          "size": 112,
+          "price": 26.85,
+          "value": 2990.4
+        }
+      }
+    }
+  ],
+  "position_changes": [
+    {
+      "date": "2025-01-16",
+      "asset": "GLD",
+      "action": "BUY",
+      "quantity": 12,
+      "price": 250.6,
+      "value": 3007.2,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.5429166666666667,
+      "bucket": "Gold",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-16",
+      "asset": "SGOL",
+      "action": "BUY",
+      "quantity": 116,
+      "price": 25.92,
+      "value": 3006.7200000000003,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.5389999999999999,
+      "bucket": "Gold",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-16",
+      "asset": "AAAU",
+      "action": "BUY",
+      "quantity": 112,
+      "price": 26.84,
+      "value": 3006.08,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.53875,
+      "bucket": "Gold",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-17",
+      "asset": "GLD",
+      "action": "HOLD",
+      "quantity": 12,
+      "price": 249.27,
+      "value": 2991.2400000000002,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.5429166666666667,
+      "bucket": "Gold",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-17",
+      "asset": "SGOL",
+      "action": "HOLD",
+      "quantity": 116,
+      "price": 25.77,
+      "value": 2989.32,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.5389999999999999,
+      "bucket": "Gold",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-17",
+      "asset": "AAAU",
+      "action": "HOLD",
+      "quantity": 112,
+      "price": 26.7,
+      "value": 2990.4,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.53875,
+      "bucket": "Gold",
+      "regime": "REFLATION"
+    }
+  ]
+}

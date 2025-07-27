@@ -1,0 +1,2306 @@
+{
+  "DAI": [
+    {
+      "asset": "DAI",
+      "date": "2024-11-13T00:00:00",
+      "technical_score": 0.6404166666666666,
+      "fundamental_score": 0.0,
+      "combined_score": 0.6404166666666666,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.05,
+      "confidence": 0.6797916666666667,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d"
+      ]
+    },
+    {
+      "asset": "DAI",
+      "date": "2024-12-04T00:00:00",
+      "technical_score": 0.6504166666666666,
+      "fundamental_score": 0.0,
+      "combined_score": 0.6504166666666666,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.05,
+      "confidence": 0.6747916666666667,
+      "regime": "REFLATION",
+      "timeframes_analyzed": [
+        "1d"
+      ]
+    }
+  ],
+  "BCH": [
+    {
+      "asset": "BCH",
+      "date": "2024-11-13T00:00:00",
+      "technical_score": 0.6229166666666667,
+      "fundamental_score": 0.0,
+      "combined_score": 0.6229166666666667,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.05,
+      "confidence": 0.6885416666666666,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d"
+      ]
+    }
+  ],
+  "AAVE": [
+    {
+      "asset": "AAVE",
+      "date": "2024-11-13T00:00:00",
+      "technical_score": 0.6129166666666667,
+      "fundamental_score": 0.0,
+      "combined_score": 0.6129166666666667,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.05,
+      "confidence": 0.6935416666666667,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d"
+      ]
+    },
+    {
+      "asset": "AAVE",
+      "date": "2025-01-03T00:00:00",
+      "technical_score": 0.5720833333333334,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5720833333333334,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7139583333333333,
+      "regime": "REFLATION",
+      "timeframes_analyzed": [
+        "1d"
+      ]
+    },
+    {
+      "asset": "AAVE",
+      "date": "2025-06-04T00:00:00",
+      "technical_score": 0.5954166666666667,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5954166666666667,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7022916666666666,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d"
+      ]
+    }
+  ],
+  "LINK": [
+    {
+      "asset": "LINK",
+      "date": "2024-11-13T00:00:00",
+      "technical_score": 0.6129166666666667,
+      "fundamental_score": 0.0,
+      "combined_score": 0.6129166666666667,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.05,
+      "confidence": 0.6935416666666667,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d"
+      ]
+    }
+  ],
+  "LOW": [
+    {
+      "asset": "LOW",
+      "date": "2024-11-13T00:00:00",
+      "technical_score": 0.6061666666666667,
+      "fundamental_score": 0.0,
+      "combined_score": 0.6061666666666667,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.05,
+      "confidence": 0.6969166666666666,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    }
+  ],
+  "ADA": [
+    {
+      "asset": "ADA",
+      "date": "2024-11-13T00:00:00",
+      "technical_score": 0.6041666666666666,
+      "fundamental_score": 0.0,
+      "combined_score": 0.6041666666666666,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.05,
+      "confidence": 0.6979166666666667,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d"
+      ]
+    },
+    {
+      "asset": "ADA",
+      "date": "2025-07-07T00:00:00",
+      "technical_score": 0.4970833333333333,
+      "fundamental_score": 0.0,
+      "combined_score": 0.4970833333333333,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.020000000000000004,
+      "confidence": 0.7514583333333333,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d"
+      ]
+    }
+  ],
+  "JPM": [
+    {
+      "asset": "JPM",
+      "date": "2024-11-13T00:00:00",
+      "technical_score": 0.6031666666666667,
+      "fundamental_score": 0.0,
+      "combined_score": 0.6031666666666667,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.05,
+      "confidence": 0.6984166666666667,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    },
+    {
+      "asset": "JPM",
+      "date": "2025-01-03T00:00:00",
+      "technical_score": 0.5594166666666667,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5594166666666667,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7202916666666667,
+      "regime": "REFLATION",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    },
+    {
+      "asset": "JPM",
+      "date": "2025-07-07T00:00:00",
+      "technical_score": 0.544625,
+      "fundamental_score": 0.0,
+      "combined_score": 0.544625,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7276875,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    }
+  ],
+  "ETH": [
+    {
+      "asset": "ETH",
+      "date": "2024-11-13T00:00:00",
+      "technical_score": 0.6004166666666667,
+      "fundamental_score": 0.0,
+      "combined_score": 0.6004166666666667,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.05,
+      "confidence": 0.6997916666666666,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d"
+      ]
+    },
+    {
+      "asset": "ETH",
+      "date": "2025-06-04T00:00:00",
+      "technical_score": 0.5954166666666667,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5954166666666667,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7022916666666666,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d"
+      ]
+    }
+  ],
+  "WMT": [
+    {
+      "asset": "WMT",
+      "date": "2024-11-13T00:00:00",
+      "technical_score": 0.5961666666666667,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5961666666666667,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7019166666666666,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    },
+    {
+      "asset": "WMT",
+      "date": "2025-02-03T00:00:00",
+      "technical_score": 0.582875,
+      "fundamental_score": 0.0,
+      "combined_score": 0.582875,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7085625,
+      "regime": "REFLATION",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    }
+  ],
+  "LTC": [
+    {
+      "asset": "LTC",
+      "date": "2024-11-13T00:00:00",
+      "technical_score": 0.5895833333333333,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5895833333333333,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7052083333333333,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d"
+      ]
+    }
+  ],
+  "ACN": [
+    {
+      "asset": "ACN",
+      "date": "2024-11-13T00:00:00",
+      "technical_score": 0.5867916666666666,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5867916666666666,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7066041666666667,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    },
+    {
+      "asset": "ACN",
+      "date": "2025-06-04T00:00:00",
+      "technical_score": 0.5700000000000001,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5700000000000001,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.715,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    }
+  ],
+  "APH": [
+    {
+      "asset": "APH",
+      "date": "2024-11-13T00:00:00",
+      "technical_score": 0.5860000000000001,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5860000000000001,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.707,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    }
+  ],
+  "SBUX": [
+    {
+      "asset": "SBUX",
+      "date": "2024-11-13T00:00:00",
+      "technical_score": 0.585,
+      "fundamental_score": 0.0,
+      "combined_score": 0.585,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7075,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    }
+  ],
+  "CVX": [
+    {
+      "asset": "CVX",
+      "date": "2024-11-13T00:00:00",
+      "technical_score": 0.5834166666666666,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5834166666666666,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7082916666666668,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    }
+  ],
+  "BLK": [
+    {
+      "asset": "BLK",
+      "date": "2024-11-13T00:00:00",
+      "technical_score": 0.5831666666666667,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5831666666666667,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7084166666666667,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    },
+    {
+      "asset": "BLK",
+      "date": "2024-12-04T00:00:00",
+      "technical_score": 0.573,
+      "fundamental_score": 0.0,
+      "combined_score": 0.573,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7135,
+      "regime": "REFLATION",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    }
+  ],
+  "HD": [
+    {
+      "asset": "HD",
+      "date": "2024-11-13T00:00:00",
+      "technical_score": 0.5819166666666666,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5819166666666666,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7090416666666667,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    },
+    {
+      "asset": "HD",
+      "date": "2024-12-04T00:00:00",
+      "technical_score": 0.5720833333333334,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5720833333333334,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7139583333333333,
+      "regime": "REFLATION",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    }
+  ],
+  "MMC": [
+    {
+      "asset": "MMC",
+      "date": "2024-11-13T00:00:00",
+      "technical_score": 0.57975,
+      "fundamental_score": 0.0,
+      "combined_score": 0.57975,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.710125,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    },
+    {
+      "asset": "MMC",
+      "date": "2025-02-03T00:00:00",
+      "technical_score": 0.57775,
+      "fundamental_score": 0.0,
+      "combined_score": 0.57775,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.711125,
+      "regime": "REFLATION",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    }
+  ],
+  "BRK.B": [
+    {
+      "asset": "BRK.B",
+      "date": "2024-11-13T00:00:00",
+      "technical_score": 0.5795,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5795,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.71025,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    }
+  ],
+  "HON": [
+    {
+      "asset": "HON",
+      "date": "2024-11-13T00:00:00",
+      "technical_score": 0.5793333333333334,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5793333333333334,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7103333333333333,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    },
+    {
+      "asset": "HON",
+      "date": "2025-01-03T00:00:00",
+      "technical_score": 0.5479166666666666,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5479166666666666,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7260416666666667,
+      "regime": "REFLATION",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    },
+    {
+      "asset": "HON",
+      "date": "2025-06-04T00:00:00",
+      "technical_score": 0.5935833333333334,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5935833333333334,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7032083333333333,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    }
+  ],
+  "MO": [
+    {
+      "asset": "MO",
+      "date": "2024-11-13T00:00:00",
+      "technical_score": 0.5783750000000001,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5783750000000001,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7108125,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    }
+  ],
+  "TJX": [
+    {
+      "asset": "TJX",
+      "date": "2024-12-04T00:00:00",
+      "technical_score": 0.6275833333333334,
+      "fundamental_score": 0.0,
+      "combined_score": 0.6275833333333334,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.05,
+      "confidence": 0.6862083333333333,
+      "regime": "REFLATION",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    }
+  ],
+  "ETN": [
+    {
+      "asset": "ETN",
+      "date": "2024-12-04T00:00:00",
+      "technical_score": 0.5986666666666667,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5986666666666667,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7006666666666667,
+      "regime": "REFLATION",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    }
+  ],
+  "XRP": [
+    {
+      "asset": "XRP",
+      "date": "2024-12-04T00:00:00",
+      "technical_score": 0.5966666666666667,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5966666666666667,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7016666666666667,
+      "regime": "REFLATION",
+      "timeframes_analyzed": [
+        "1d"
+      ]
+    },
+    {
+      "asset": "XRP",
+      "date": "2025-02-03T00:00:00",
+      "technical_score": 0.5829166666666665,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5829166666666665,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7085416666666667,
+      "regime": "REFLATION",
+      "timeframes_analyzed": [
+        "1d"
+      ]
+    }
+  ],
+  "C": [
+    {
+      "asset": "C",
+      "date": "2024-12-04T00:00:00",
+      "technical_score": 0.5918333333333333,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5918333333333333,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7040833333333334,
+      "regime": "REFLATION",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    },
+    {
+      "asset": "C",
+      "date": "2025-01-03T00:00:00",
+      "technical_score": 0.6015,
+      "fundamental_score": 0.0,
+      "combined_score": 0.6015,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.05,
+      "confidence": 0.6992499999999999,
+      "regime": "REFLATION",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    }
+  ],
+  "UNH": [
+    {
+      "asset": "UNH",
+      "date": "2024-12-04T00:00:00",
+      "technical_score": 0.5859166666666668,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5859166666666668,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7070416666666666,
+      "regime": "REFLATION",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    },
+    {
+      "asset": "UNH",
+      "date": "2025-01-03T00:00:00",
+      "technical_score": 0.5500833333333333,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5500833333333333,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7249583333333334,
+      "regime": "REFLATION",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    }
+  ],
+  "ORCL": [
+    {
+      "asset": "ORCL",
+      "date": "2024-12-04T00:00:00",
+      "technical_score": 0.58375,
+      "fundamental_score": 0.0,
+      "combined_score": 0.58375,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.708125,
+      "regime": "REFLATION",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    },
+    {
+      "asset": "ORCL",
+      "date": "2025-07-07T00:00:00",
+      "technical_score": 0.5397083333333335,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5397083333333335,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7301458333333333,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    }
+  ],
+  "TSLA": [
+    {
+      "asset": "TSLA",
+      "date": "2024-12-04T00:00:00",
+      "technical_score": 0.5821666666666666,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5821666666666666,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7089166666666666,
+      "regime": "REFLATION",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    },
+    {
+      "asset": "TSLA",
+      "date": "2025-07-07T00:00:00",
+      "technical_score": 0.49575,
+      "fundamental_score": 0.0,
+      "combined_score": 0.49575,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.020000000000000004,
+      "confidence": 0.7521249999999999,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    }
+  ],
+  "PG": [
+    {
+      "asset": "PG",
+      "date": "2024-12-04T00:00:00",
+      "technical_score": 0.5814166666666667,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5814166666666667,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7092916666666667,
+      "regime": "REFLATION",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    },
+    {
+      "asset": "PG",
+      "date": "2025-02-03T00:00:00",
+      "technical_score": 0.6033333333333333,
+      "fundamental_score": 0.0,
+      "combined_score": 0.6033333333333333,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.05,
+      "confidence": 0.6983333333333334,
+      "regime": "REFLATION",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    }
+  ],
+  "BTC": [
+    {
+      "asset": "BTC",
+      "date": "2024-12-04T00:00:00",
+      "technical_score": 0.5804166666666667,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5804166666666667,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7097916666666666,
+      "regime": "REFLATION",
+      "timeframes_analyzed": [
+        "1d"
+      ]
+    }
+  ],
+  "BKNG": [
+    {
+      "asset": "BKNG",
+      "date": "2024-12-04T00:00:00",
+      "technical_score": 0.5772916666666668,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5772916666666668,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7113541666666666,
+      "regime": "REFLATION",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    }
+  ],
+  "GOOG": [
+    {
+      "asset": "GOOG",
+      "date": "2024-12-04T00:00:00",
+      "technical_score": 0.574875,
+      "fundamental_score": 0.0,
+      "combined_score": 0.574875,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7125625,
+      "regime": "REFLATION",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    },
+    {
+      "asset": "GOOG",
+      "date": "2025-01-03T00:00:00",
+      "technical_score": 0.56925,
+      "fundamental_score": 0.0,
+      "combined_score": 0.56925,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.715375,
+      "regime": "REFLATION",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    },
+    {
+      "asset": "GOOG",
+      "date": "2025-02-03T00:00:00",
+      "technical_score": 0.596,
+      "fundamental_score": 0.0,
+      "combined_score": 0.596,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.702,
+      "regime": "REFLATION",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    },
+    {
+      "asset": "GOOG",
+      "date": "2025-07-07T00:00:00",
+      "technical_score": 0.5913750000000001,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5913750000000001,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7043124999999999,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    }
+  ],
+  "ANET": [
+    {
+      "asset": "ANET",
+      "date": "2024-12-04T00:00:00",
+      "technical_score": 0.57475,
+      "fundamental_score": 0.0,
+      "combined_score": 0.57475,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7126250000000001,
+      "regime": "REFLATION",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    }
+  ],
+  "SPGI": [
+    {
+      "asset": "SPGI",
+      "date": "2024-12-04T00:00:00",
+      "technical_score": 0.57425,
+      "fundamental_score": 0.0,
+      "combined_score": 0.57425,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7128749999999999,
+      "regime": "REFLATION",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    },
+    {
+      "asset": "SPGI",
+      "date": "2025-02-03T00:00:00",
+      "technical_score": 0.59625,
+      "fundamental_score": 0.0,
+      "combined_score": 0.59625,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.701875,
+      "regime": "REFLATION",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    }
+  ],
+  "NVDA": [
+    {
+      "asset": "NVDA",
+      "date": "2024-12-04T00:00:00",
+      "technical_score": 0.5730833333333334,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5730833333333334,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7134583333333333,
+      "regime": "REFLATION",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    }
+  ],
+  "GOOGL": [
+    {
+      "asset": "GOOGL",
+      "date": "2024-12-04T00:00:00",
+      "technical_score": 0.572625,
+      "fundamental_score": 0.0,
+      "combined_score": 0.572625,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7136875,
+      "regime": "REFLATION",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    },
+    {
+      "asset": "GOOGL",
+      "date": "2025-01-03T00:00:00",
+      "technical_score": 0.5734166666666668,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5734166666666668,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7132916666666667,
+      "regime": "REFLATION",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    },
+    {
+      "asset": "GOOGL",
+      "date": "2025-02-03T00:00:00",
+      "technical_score": 0.61525,
+      "fundamental_score": 0.0,
+      "combined_score": 0.61525,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.05,
+      "confidence": 0.692375,
+      "regime": "REFLATION",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    }
+  ],
+  "CSCO": [
+    {
+      "asset": "CSCO",
+      "date": "2024-12-04T00:00:00",
+      "technical_score": 0.57225,
+      "fundamental_score": 0.0,
+      "combined_score": 0.57225,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.713875,
+      "regime": "REFLATION",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    },
+    {
+      "asset": "CSCO",
+      "date": "2025-02-03T00:00:00",
+      "technical_score": 0.59875,
+      "fundamental_score": 0.0,
+      "combined_score": 0.59875,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.700625,
+      "regime": "REFLATION",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    },
+    {
+      "asset": "CSCO",
+      "date": "2025-06-04T00:00:00",
+      "technical_score": 0.5743333333333334,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5743333333333334,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7128333333333333,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    }
+  ],
+  "HIBL": [
+    {
+      "asset": "HIBL",
+      "date": "2024-12-04T00:00:00",
+      "technical_score": 0.57175,
+      "fundamental_score": 0.0,
+      "combined_score": 0.57175,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.714125,
+      "regime": "REFLATION",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    }
+  ],
+  "DHR": [
+    {
+      "asset": "DHR",
+      "date": "2025-01-03T00:00:00",
+      "technical_score": 0.5745,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5745,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.71275,
+      "regime": "REFLATION",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    }
+  ],
+  "PFE": [
+    {
+      "asset": "PFE",
+      "date": "2025-01-03T00:00:00",
+      "technical_score": 0.5670000000000001,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5670000000000001,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7164999999999999,
+      "regime": "REFLATION",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    }
+  ],
+  "GS": [
+    {
+      "asset": "GS",
+      "date": "2025-01-03T00:00:00",
+      "technical_score": 0.5651666666666667,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5651666666666667,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7174166666666666,
+      "regime": "REFLATION",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    }
+  ],
+  "XOM": [
+    {
+      "asset": "XOM",
+      "date": "2025-01-03T00:00:00",
+      "technical_score": 0.5630833333333334,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5630833333333334,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7184583333333333,
+      "regime": "REFLATION",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    }
+  ],
+  "UBER": [
+    {
+      "asset": "UBER",
+      "date": "2025-01-03T00:00:00",
+      "technical_score": 0.5612916666666667,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5612916666666667,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7193541666666666,
+      "regime": "REFLATION",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    },
+    {
+      "asset": "UBER",
+      "date": "2025-02-03T00:00:00",
+      "technical_score": 0.58925,
+      "fundamental_score": 0.0,
+      "combined_score": 0.58925,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.705375,
+      "regime": "REFLATION",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    }
+  ],
+  "BSX": [
+    {
+      "asset": "BSX",
+      "date": "2025-01-03T00:00:00",
+      "technical_score": 0.5603333333333333,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5603333333333333,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7198333333333333,
+      "regime": "REFLATION",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    },
+    {
+      "asset": "BSX",
+      "date": "2025-02-03T00:00:00",
+      "technical_score": 0.5829583333333335,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5829583333333335,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7085208333333333,
+      "regime": "REFLATION",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    }
+  ],
+  "COP": [
+    {
+      "asset": "COP",
+      "date": "2025-01-03T00:00:00",
+      "technical_score": 0.55725,
+      "fundamental_score": 0.0,
+      "combined_score": 0.55725,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.721375,
+      "regime": "REFLATION",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    }
+  ],
+  "TXN": [
+    {
+      "asset": "TXN",
+      "date": "2025-01-03T00:00:00",
+      "technical_score": 0.554,
+      "fundamental_score": 0.0,
+      "combined_score": 0.554,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.723,
+      "regime": "REFLATION",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    }
+  ],
+  "AMAT": [
+    {
+      "asset": "AMAT",
+      "date": "2025-01-03T00:00:00",
+      "technical_score": 0.55175,
+      "fundamental_score": 0.0,
+      "combined_score": 0.55175,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.724125,
+      "regime": "REFLATION",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    }
+  ],
+  "AXP": [
+    {
+      "asset": "AXP",
+      "date": "2025-01-03T00:00:00",
+      "technical_score": 0.5493333333333333,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5493333333333333,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7253333333333334,
+      "regime": "REFLATION",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    }
+  ],
+  "PLTR": [
+    {
+      "asset": "PLTR",
+      "date": "2025-01-03T00:00:00",
+      "technical_score": 0.5464166666666667,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5464166666666667,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7267916666666667,
+      "regime": "REFLATION",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    }
+  ],
+  "META": [
+    {
+      "asset": "META",
+      "date": "2025-01-03T00:00:00",
+      "technical_score": 0.54625,
+      "fundamental_score": 0.0,
+      "combined_score": 0.54625,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7268749999999999,
+      "regime": "REFLATION",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    }
+  ],
+  "WELL": [
+    {
+      "asset": "WELL",
+      "date": "2025-01-03T00:00:00",
+      "technical_score": 0.5461666666666667,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5461666666666667,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7269166666666667,
+      "regime": "REFLATION",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    }
+  ],
+  "LRCX": [
+    {
+      "asset": "LRCX",
+      "date": "2025-02-03T00:00:00",
+      "technical_score": 0.5990833333333333,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5990833333333333,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7004583333333334,
+      "regime": "REFLATION",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    }
+  ],
+  "NFLX": [
+    {
+      "asset": "NFLX",
+      "date": "2025-02-03T00:00:00",
+      "technical_score": 0.5938333333333334,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5938333333333334,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7030833333333333,
+      "regime": "REFLATION",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    },
+    {
+      "asset": "NFLX",
+      "date": "2025-07-07T00:00:00",
+      "technical_score": 0.5111666666666667,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5111666666666667,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7444166666666667,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    }
+  ],
+  "AMZN": [
+    {
+      "asset": "AMZN",
+      "date": "2025-02-03T00:00:00",
+      "technical_score": 0.5915,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5915,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.70425,
+      "regime": "REFLATION",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    },
+    {
+      "asset": "AMZN",
+      "date": "2025-07-07T00:00:00",
+      "technical_score": 0.5817916666666667,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5817916666666667,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7091041666666666,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    }
+  ],
+  "PM": [
+    {
+      "asset": "PM",
+      "date": "2025-02-03T00:00:00",
+      "technical_score": 0.5903333333333334,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5903333333333334,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7048333333333333,
+      "regime": "REFLATION",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    }
+  ],
+  "MA": [
+    {
+      "asset": "MA",
+      "date": "2025-02-03T00:00:00",
+      "technical_score": 0.5885,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5885,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.70575,
+      "regime": "REFLATION",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    },
+    {
+      "asset": "MA",
+      "date": "2025-06-04T00:00:00",
+      "technical_score": 0.5805,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5805,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.70975,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    }
+  ],
+  "CRWD": [
+    {
+      "asset": "CRWD",
+      "date": "2025-02-03T00:00:00",
+      "technical_score": 0.5865833333333333,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5865833333333333,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7067083333333333,
+      "regime": "REFLATION",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    }
+  ],
+  "DIS": [
+    {
+      "asset": "DIS",
+      "date": "2025-02-03T00:00:00",
+      "technical_score": 0.5835833333333333,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5835833333333333,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7082083333333333,
+      "regime": "REFLATION",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    },
+    {
+      "asset": "DIS",
+      "date": "2025-06-04T00:00:00",
+      "technical_score": 0.5680833333333334,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5680833333333334,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7159583333333333,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    }
+  ],
+  "MS": [
+    {
+      "asset": "MS",
+      "date": "2025-02-03T00:00:00",
+      "technical_score": 0.5813333333333334,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5813333333333334,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7093333333333334,
+      "regime": "REFLATION",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    },
+    {
+      "asset": "MS",
+      "date": "2025-06-04T00:00:00",
+      "technical_score": 0.5751666666666667,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5751666666666667,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7124166666666667,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    }
+  ],
+  "GE": [
+    {
+      "asset": "GE",
+      "date": "2025-02-03T00:00:00",
+      "technical_score": 0.580125,
+      "fundamental_score": 0.0,
+      "combined_score": 0.580125,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7099375,
+      "regime": "REFLATION",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    }
+  ],
+  "SCHW": [
+    {
+      "asset": "SCHW",
+      "date": "2025-02-03T00:00:00",
+      "technical_score": 0.5793333333333333,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5793333333333333,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7103333333333334,
+      "regime": "REFLATION",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    }
+  ],
+  "XLP": [
+    {
+      "asset": "XLP",
+      "date": "2025-02-07T00:00:00",
+      "technical_score": 0.57275,
+      "fundamental_score": 0.0,
+      "combined_score": 0.57275,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.713625,
+      "regime": "DEFLATION",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    },
+    {
+      "asset": "XLP",
+      "date": "2025-03-10T00:00:00",
+      "technical_score": 0.5971666666666666,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5971666666666666,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7014166666666667,
+      "regime": "DEFLATION",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    },
+    {
+      "asset": "XLP",
+      "date": "2025-04-09T00:00:00",
+      "technical_score": 0.49125,
+      "fundamental_score": 0.0,
+      "combined_score": 0.49125,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.020000000000000004,
+      "confidence": 0.754375,
+      "regime": "DEFLATION",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    },
+    {
+      "asset": "XLP",
+      "date": "2025-05-09T00:00:00",
+      "technical_score": 0.4989166666666667,
+      "fundamental_score": 0.0,
+      "combined_score": 0.4989166666666667,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.020000000000000004,
+      "confidence": 0.7505416666666667,
+      "regime": "DEFLATION",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    }
+  ],
+  "USMV": [
+    {
+      "asset": "USMV",
+      "date": "2025-02-07T00:00:00",
+      "technical_score": 0.5631666666666667,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5631666666666667,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7184166666666667,
+      "regime": "DEFLATION",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    },
+    {
+      "asset": "USMV",
+      "date": "2025-03-10T00:00:00",
+      "technical_score": 0.47966666666666663,
+      "fundamental_score": 0.0,
+      "combined_score": 0.47966666666666663,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.020000000000000004,
+      "confidence": 0.7601666666666667,
+      "regime": "DEFLATION",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    },
+    {
+      "asset": "USMV",
+      "date": "2025-04-09T00:00:00",
+      "technical_score": 0.5316666666666667,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5316666666666667,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7341666666666666,
+      "regime": "DEFLATION",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    },
+    {
+      "asset": "USMV",
+      "date": "2025-05-09T00:00:00",
+      "technical_score": 0.5129166666666667,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5129166666666667,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7435416666666667,
+      "regime": "DEFLATION",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    }
+  ],
+  "SPLV": [
+    {
+      "asset": "SPLV",
+      "date": "2025-02-07T00:00:00",
+      "technical_score": 0.5559166666666667,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5559166666666667,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7220416666666667,
+      "regime": "DEFLATION",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    },
+    {
+      "asset": "SPLV",
+      "date": "2025-03-10T00:00:00",
+      "technical_score": 0.5680000000000001,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5680000000000001,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.716,
+      "regime": "DEFLATION",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    },
+    {
+      "asset": "SPLV",
+      "date": "2025-04-09T00:00:00",
+      "technical_score": 0.5256666666666667,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5256666666666667,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7371666666666666,
+      "regime": "DEFLATION",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    },
+    {
+      "asset": "SPLV",
+      "date": "2025-05-09T00:00:00",
+      "technical_score": 0.5210833333333333,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5210833333333333,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7394583333333333,
+      "regime": "DEFLATION",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    }
+  ],
+  "BND": [
+    {
+      "asset": "BND",
+      "date": "2025-02-07T00:00:00",
+      "technical_score": 0.5554166666666667,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5554166666666667,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7222916666666667,
+      "regime": "DEFLATION",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    },
+    {
+      "asset": "BND",
+      "date": "2025-03-10T00:00:00",
+      "technical_score": 0.61425,
+      "fundamental_score": 0.0,
+      "combined_score": 0.61425,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.05,
+      "confidence": 0.692875,
+      "regime": "DEFLATION",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    },
+    {
+      "asset": "BND",
+      "date": "2025-04-09T00:00:00",
+      "technical_score": 0.5121666666666667,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5121666666666667,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7439166666666667,
+      "regime": "DEFLATION",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    },
+    {
+      "asset": "BND",
+      "date": "2025-05-09T00:00:00",
+      "technical_score": 0.49475,
+      "fundamental_score": 0.0,
+      "combined_score": 0.49475,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.020000000000000004,
+      "confidence": 0.752625,
+      "regime": "DEFLATION",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    }
+  ],
+  "AGG": [
+    {
+      "asset": "AGG",
+      "date": "2025-02-07T00:00:00",
+      "technical_score": 0.5380833333333334,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5380833333333334,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7309583333333334,
+      "regime": "DEFLATION",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    },
+    {
+      "asset": "AGG",
+      "date": "2025-03-10T00:00:00",
+      "technical_score": 0.59825,
+      "fundamental_score": 0.0,
+      "combined_score": 0.59825,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.700875,
+      "regime": "DEFLATION",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    },
+    {
+      "asset": "AGG",
+      "date": "2025-04-09T00:00:00",
+      "technical_score": 0.507,
+      "fundamental_score": 0.0,
+      "combined_score": 0.507,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7464999999999999,
+      "regime": "DEFLATION",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    },
+    {
+      "asset": "AGG",
+      "date": "2025-05-09T00:00:00",
+      "technical_score": 0.45758333333333334,
+      "fundamental_score": 0.0,
+      "combined_score": 0.45758333333333334,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.020000000000000004,
+      "confidence": 0.7712083333333333,
+      "regime": "DEFLATION",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    }
+  ],
+  "XLU": [
+    {
+      "asset": "XLU",
+      "date": "2025-02-07T00:00:00",
+      "technical_score": 0.5104166666666666,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5104166666666666,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7447916666666667,
+      "regime": "DEFLATION",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    },
+    {
+      "asset": "XLU",
+      "date": "2025-03-10T00:00:00",
+      "technical_score": 0.5413333333333333,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5413333333333333,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7293333333333334,
+      "regime": "DEFLATION",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    },
+    {
+      "asset": "XLU",
+      "date": "2025-04-09T00:00:00",
+      "technical_score": 0.5101666666666668,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5101666666666668,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7449166666666667,
+      "regime": "DEFLATION",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    },
+    {
+      "asset": "XLU",
+      "date": "2025-05-09T00:00:00",
+      "technical_score": 0.5674166666666667,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5674166666666667,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7162916666666667,
+      "regime": "DEFLATION",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    }
+  ],
+  "KLAC": [
+    {
+      "asset": "KLAC",
+      "date": "2025-06-04T00:00:00",
+      "technical_score": 0.5866666666666667,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5866666666666667,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7066666666666667,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    }
+  ],
+  "ADP": [
+    {
+      "asset": "ADP",
+      "date": "2025-06-04T00:00:00",
+      "technical_score": 0.5820416666666667,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5820416666666667,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7089791666666667,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    }
+  ],
+  "AMD": [
+    {
+      "asset": "AMD",
+      "date": "2025-06-04T00:00:00",
+      "technical_score": 0.58125,
+      "fundamental_score": 0.0,
+      "combined_score": 0.58125,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.709375,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    }
+  ],
+  "MU": [
+    {
+      "asset": "MU",
+      "date": "2025-06-04T00:00:00",
+      "technical_score": 0.5796666666666668,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5796666666666668,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7101666666666666,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    }
+  ],
+  "CAT": [
+    {
+      "asset": "CAT",
+      "date": "2025-06-04T00:00:00",
+      "technical_score": 0.5778333333333334,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5778333333333334,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7110833333333333,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    }
+  ],
+  "LIN": [
+    {
+      "asset": "LIN",
+      "date": "2025-06-04T00:00:00",
+      "technical_score": 0.5764999999999999,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5764999999999999,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7117500000000001,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    }
+  ],
+  "COF": [
+    {
+      "asset": "COF",
+      "date": "2025-06-04T00:00:00",
+      "technical_score": 0.5751666666666667,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5751666666666667,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7124166666666667,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    }
+  ],
+  "XLI": [
+    {
+      "asset": "XLI",
+      "date": "2025-06-04T00:00:00",
+      "technical_score": 0.5715000000000001,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5715000000000001,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7142499999999999,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    }
+  ],
+  "BAC": [
+    {
+      "asset": "BAC",
+      "date": "2025-06-04T00:00:00",
+      "technical_score": 0.5709166666666666,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5709166666666666,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7145416666666666,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    },
+    {
+      "asset": "BAC",
+      "date": "2025-07-07T00:00:00",
+      "technical_score": 0.5494166666666667,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5494166666666667,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7252916666666667,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    }
+  ],
+  "MSFT": [
+    {
+      "asset": "MSFT",
+      "date": "2025-06-04T00:00:00",
+      "technical_score": 0.5700416666666667,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5700416666666667,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7149791666666667,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    },
+    {
+      "asset": "MSFT",
+      "date": "2025-07-07T00:00:00",
+      "technical_score": 0.5394583333333334,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5394583333333334,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7302708333333333,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    }
+  ],
+  "WFC": [
+    {
+      "asset": "WFC",
+      "date": "2025-06-04T00:00:00",
+      "technical_score": 0.5683333333333334,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5683333333333334,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7158333333333333,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    }
+  ],
+  "ADI": [
+    {
+      "asset": "ADI",
+      "date": "2025-06-04T00:00:00",
+      "technical_score": 0.5671666666666667,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5671666666666667,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7164166666666667,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    }
+  ],
+  "AVGO": [
+    {
+      "asset": "AVGO",
+      "date": "2025-07-07T00:00:00",
+      "technical_score": 0.5592916666666667,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5592916666666667,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7203541666666666,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d",
+        "4h",
+        "1h"
+      ]
+    }
+  ],
+  "SHIB": [
+    {
+      "asset": "SHIB",
+      "date": "2025-07-07T00:00:00",
+      "technical_score": 0.5270833333333333,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5270833333333333,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7364583333333333,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d"
+      ]
+    }
+  ],
+  "AVAX": [
+    {
+      "asset": "AVAX",
+      "date": "2025-07-07T00:00:00",
+      "technical_score": 0.4970833333333333,
+      "fundamental_score": 0.0,
+      "combined_score": 0.4970833333333333,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.020000000000000004,
+      "confidence": 0.7514583333333333,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+date,regime,confidence,stability,duration_days,active_buckets,portfolio_return_in_regime
+2024-11-13,GOLDILOCKS,0.0,0.0,21,"Risk Assets,High Beta,Cyclicals",3.3146
+2024-12-04,REFLATION,0.0,0.0,65,"Risk Assets,High Beta,Cyclicals,International",0.8348
+2025-02-07,DEFLATION,0.0,0.0,117,"Defensive Assets,Low Beta",-0.2421
+2025-06-04,GOLDILOCKS,0.0,0.0,53,"Risk Assets,High Beta,Cyclicals",4.1419

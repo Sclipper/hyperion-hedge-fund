@@ -1,0 +1,50 @@
+{
+  "RKLB": [
+    {
+      "asset": "RKLB",
+      "date": "2024-01-02T00:00:00",
+      "technical_score": 0.6204166666666667,
+      "fundamental_score": 0.0,
+      "combined_score": 0.6204166666666667,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.05,
+      "confidence": 0.6897916666666666,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d"
+      ]
+    }
+  ],
+  "AAPL": [
+    {
+      "asset": "AAPL",
+      "date": "2024-01-02T00:00:00",
+      "technical_score": 0.61625,
+      "fundamental_score": 0.0,
+      "combined_score": 0.61625,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.05,
+      "confidence": 0.691875,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d"
+      ]
+    }
+  ],
+  "INTC": [
+    {
+      "asset": "INTC",
+      "date": "2024-01-02T00:00:00",
+      "technical_score": 0.6129166666666667,
+      "fundamental_score": 0.0,
+      "combined_score": 0.6129166666666667,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.05,
+      "confidence": 0.6935416666666667,
+      "regime": "GOLDILOCKS",
+      "timeframes_analyzed": [
+        "1d"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "plan_id": "BULK_20250727_232957_AGG_1d",
+  "ticker": "AGG",
+  "timeframe": "1d",
+  "start_date": "2024-07-27T23:29:57.726335",
+  "end_date": "2025-07-27T23:29:57.726335",
+  "total_chunks": 1,
+  "completed_chunks": 0,
+  "failed_chunks": 0,
+  "chunk_states": [
+    {
+      "start_date": "2024-07-27T23:29:57.726335",
+      "end_date": "2025-07-27T23:29:57.726335",
+      "timeframe": "1d",
+      "ticker": "AGG",
+      "status": "pending",
+      "error": null,
+      "attempt": 0,
+      "max_attempts": 3
+    }
+  ],
+  "created_at": "2025-07-27T23:29:57.727326",
+  "last_updated": "2025-07-27T23:29:57.727327"
+}

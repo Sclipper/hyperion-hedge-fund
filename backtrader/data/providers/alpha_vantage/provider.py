@@ -45,8 +45,16 @@ class AlphaVantageProvider(DataProvider):
         self._bulk_fetcher = None
         self._data_validator = None
         self._error_handler = None
+        self._crypto_provider = None
         
         logger.info("AlphaVantageProvider initialized with rate limit: 75 req/min")
+    
+    def get_crypto_provider(self):
+        """Get or create crypto provider instance"""
+        if self._crypto_provider is None:
+            from .crypto_provider import AlphaVantageCryptoProvider
+            self._crypto_provider = AlphaVantageCryptoProvider()
+        return self._crypto_provider
     
     @property
     def name(self) -> str:
@@ -420,48 +428,32 @@ class AlphaVantageProvider(DataProvider):
         return resampled
     
     def _fetch_crypto_daily_data(self, ticker: str, start_date: datetime, end_date: datetime) -> pd.DataFrame:
-        """Fetch daily crypto data using crypto-specific API"""
-        # Parse crypto symbol
-        if 'USD' in ticker:
-            symbol = ticker.replace('USD', '')
-            market = 'USD'
-        else:
-            symbol = ticker
-            market = 'USD'
-        
-        params = {
-            'function': 'DIGITAL_CURRENCY_DAILY',
-            'symbol': symbol,
-            'market': market,
-            'apikey': self.api_key
-        }
-        
-        data = self._make_request(params, ticker, 'daily')
-        
-        if 'Time Series (Digital Currency Daily)' not in data:
-            logger.warning(f"No crypto daily data found for {ticker}")
+        """Fetch daily crypto data using dedicated crypto provider"""
+        try:
+            crypto_provider = self.get_crypto_provider()
+            
+            # Check if crypto is supported
+            if not crypto_provider.is_crypto_supported(ticker):
+                logger.warning(f"Cryptocurrency {ticker} is not supported by Alpha Vantage")
+                return pd.DataFrame()
+            
+            # Fetch daily data
+            df = crypto_provider.fetch_crypto_daily(ticker, start_date, end_date)
+            
+            if not df.empty:
+                # Update metadata to match our format
+                df.attrs['provider_source'] = self.name
+                df.attrs['timeframe'] = '1d'
+                df.attrs['ticker'] = ticker
+                df.attrs['asset_type'] = 'crypto'
+                
+                logger.info(f"Fetched {len(df)} crypto daily records for {ticker}")
+            
+            return df
+            
+        except Exception as e:
+            logger.error(f"Error fetching crypto daily data for {ticker}: {e}")
             return pd.DataFrame()
-        
-        time_series = data['Time Series (Digital Currency Daily)']
-        df = pd.DataFrame.from_dict(time_series, orient='index')
-        
-        # Clean up column names for crypto data
-        df.columns = ['Open', 'High', 'Low', 'Close', 'Volume']
-        df.index = pd.to_datetime(df.index)
-        df = df.astype(float)
-        
-        # Filter by date range
-        df = df[(df.index >= pd.Timestamp(start_date)) & (df.index <= pd.Timestamp(end_date))]
-        df = df.sort_index()
-        
-        # Add provider attribution
-        df.attrs['provider_source'] = self.name
-        df.attrs['timeframe'] = '1d'
-        df.attrs['ticker'] = ticker
-        df.attrs['asset_type'] = 'crypto'
-        
-        logger.info(f"Fetched {len(df)} crypto daily records for {ticker}")
-        return df
     
     def _fetch_crypto_intraday_data(self, ticker: str, timeframe: str, 
                                   start_date: datetime, end_date: datetime) -> pd.DataFrame:
@@ -531,125 +523,50 @@ class AlphaVantageProvider(DataProvider):
     
     def _fetch_crypto_intraday_enhanced(self, ticker: str, native_timeframe: str,
                                        start_date: datetime, end_date: datetime) -> pd.DataFrame:
-        """Enhanced crypto intraday fetching using premium CRYPTO_INTRADAY endpoint"""
+        """Enhanced crypto intraday fetching using dedicated crypto provider"""
         
-        logger.info(f"Fetching crypto intraday data for {ticker} using premium CRYPTO_INTRADAY endpoint")
-        
-        # Parse crypto symbol - remove USD suffix if present since we'll specify market separately
-        if ticker.upper().endswith('USD'):
-            symbol = ticker[:-3].upper()
-            market = 'USD'
-        else:
-            symbol = ticker.upper()
-            market = 'USD'
-        
-        # Sanitize symbol (remove any special characters)
-        api_symbol = self._sanitize_symbol_for_api(symbol)
-        
-        # Map our timeframes to Alpha Vantage intervals
-        # Alpha Vantage supports: 1min, 5min, 15min, 30min, 60min
-        interval_mapping = {
-            '60min': '60min',  # 1h -> 60min
-            '240min': '60min', # 4h -> fetch 60min and resample
-            '15min': '15min',
-            '30min': '30min'
-        }
-        
-        av_interval = interval_mapping.get(native_timeframe, '60min')
-        needs_resampling = (native_timeframe == '240min')  # Need to resample 60min to 4h
-        
-        params = {
-            'function': 'CRYPTO_INTRADAY',
-            'symbol': api_symbol,
-            'market': market,
-            'interval': av_interval,
-            'outputsize': 'full',
-            'apikey': self.api_key
-        }
+        logger.info(f"Fetching crypto intraday data for {ticker} using dedicated crypto provider")
         
         try:
-            data = self._make_request(params, ticker, f"crypto-{av_interval}")
+            crypto_provider = self.get_crypto_provider()
             
-            # Look for the time series key - format: 'Time Series Crypto (60min)'
-            time_series_key = None
-            for key in data.keys():
-                if 'time series' in key.lower() and 'crypto' in key.lower():
-                    time_series_key = key
-                    break
+            # Map our timeframes to Alpha Vantage intervals
+            interval_mapping = {
+                '60min': '60min',  # 1h
+                '240min': '60min', # 4h - will be resampled
+                '15min': '15min',
+                '30min': '30min',
+                '5min': '5min'
+            }
             
-            # Also check for just 'Time Series' if crypto-specific key not found
-            if not time_series_key:
-                for key in data.keys():
-                    if 'time series' in key.lower():
-                        time_series_key = key
-                        break
+            av_interval = interval_mapping.get(native_timeframe, '60min')
             
-            if not time_series_key or time_series_key not in data:
-                logger.warning(f"No crypto intraday data found for {ticker}. Available keys: {list(data.keys())}")
+            # Check if crypto is supported
+            if not crypto_provider.is_crypto_supported(ticker):
+                logger.warning(f"Cryptocurrency {ticker} is not supported by Alpha Vantage")
                 return pd.DataFrame()
             
-            time_series = data[time_series_key]
-            df = pd.DataFrame.from_dict(time_series, orient='index')
+            # Fetch data using crypto provider
+            df = crypto_provider.fetch_crypto_intraday(ticker, av_interval, start_date, end_date)
             
             if df.empty:
-                logger.warning(f"Empty crypto data for {ticker}")
-                return pd.DataFrame()
+                return df
             
-            # Clean up column names - crypto API returns different format
-            # Expected columns like: '1. open', '2. high', '3. low', '4. close', '5. volume'
-            column_mapping = {}
-            for col in df.columns:
-                col_lower = col.lower()
-                if 'open' in col_lower:
-                    column_mapping[col] = 'Open'
-                elif 'high' in col_lower:
-                    column_mapping[col] = 'High'
-                elif 'low' in col_lower:
-                    column_mapping[col] = 'Low'
-                elif 'close' in col_lower:
-                    column_mapping[col] = 'Close'
-                elif 'volume' in col_lower:
-                    column_mapping[col] = 'Volume'
+            # Resample if needed (e.g., 60min to 4h)
+            if native_timeframe == '240min' and av_interval == '60min':
+                df = crypto_provider.resample_to_timeframe(df, '4h')
             
-            # Rename columns to standard OHLCV format
-            df = df.rename(columns=column_mapping)
-            
-            # Keep only OHLCV columns
-            required_cols = ['Open', 'High', 'Low', 'Close', 'Volume']
-            available_cols = [col for col in required_cols if col in df.columns]
-            
-            if not available_cols:
-                logger.error(f"No OHLCV columns found for {ticker}. Available columns: {list(df.columns)}")
-                return pd.DataFrame()
-            
-            df = df[available_cols]
-            
-            # Convert to datetime index and numeric values
-            df.index = pd.to_datetime(df.index)
-            df = df.astype(float)
-            df = df.sort_index()
-            
-            # Filter by date range
-            df = df[(df.index >= pd.Timestamp(start_date)) & (df.index <= pd.Timestamp(end_date))]
-            
-            # Resample from 60min to 4h if needed
-            if needs_resampling and not df.empty:
-                logger.info(f"Resampling crypto {ticker} from 60min to 4H")
-                df = self._resample_timeframe(df, '4H')
-            
-            # Add provider attribution
+            # Add metadata
             df.attrs['provider_source'] = self.name
             df.attrs['timeframe'] = native_timeframe
             df.attrs['ticker'] = ticker
             df.attrs['asset_type'] = 'crypto'
-            df.attrs['fetch_method'] = 'crypto_premium'
             
             logger.info(f"Fetched {len(df)} crypto {native_timeframe} records for {ticker}")
             return df
             
         except Exception as e:
             logger.error(f"Error fetching crypto intraday data for {ticker}: {e}")
-            logger.info(f"Note: CRYPTO_INTRADAY requires premium Alpha Vantage subscription")
             return pd.DataFrame()
     
     def _convert_crypto_timeframe_to_resample_rule(self, native_timeframe: str) -> str:

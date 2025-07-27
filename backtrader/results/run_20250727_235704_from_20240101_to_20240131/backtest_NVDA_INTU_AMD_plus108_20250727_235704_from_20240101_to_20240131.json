@@ -1,0 +1,1279 @@
+{
+  "metadata": {
+    "tickers": [
+      "NVDA",
+      "INTU",
+      "AMD",
+      "COF",
+      "BX",
+      "QCOM",
+      "NFLX",
+      "WM",
+      "HON",
+      "ABBV",
+      "UBER",
+      "BLK",
+      "KO",
+      "GILD",
+      "SYK",
+      "LRCX",
+      "ABT",
+      "GOOG",
+      "PGR",
+      "CEG",
+      "MCD",
+      "DE",
+      "CRWD",
+      "SCHW",
+      "ADP",
+      "AMT",
+      "INTC",
+      "NOW",
+      "ISRG",
+      "MSFT",
+      "UNP",
+      "ORCL",
+      "IBM",
+      "RTX",
+      "DIS",
+      "BMY",
+      "SBUX",
+      "AVGO",
+      "PM",
+      "META",
+      "KLAC",
+      "ADBE",
+      "SO",
+      "GOOGL",
+      "PFE",
+      "HD",
+      "ETN",
+      "LMT",
+      "PEP",
+      "MRK",
+      "APH",
+      "GE",
+      "TMO",
+      "TMUS",
+      "TXN",
+      "LLY",
+      "GEV",
+      "ICE",
+      "C",
+      "GS",
+      "SPGI",
+      "TSLA",
+      "PG",
+      "AMGN",
+      "BKNG",
+      "CAT",
+      "T",
+      "MA",
+      "MDT",
+      "LOW",
+      "DHR",
+      "KKR",
+      "BRK.B",
+      "CSCO",
+      "PLD",
+      "CRM",
+      "NEE",
+      "CB",
+      "MO",
+      "VRTX",
+      "MMC",
+      "UNH",
+      "MS",
+      "ACN",
+      "AXP",
+      "AAPL",
+      "BA",
+      "WELL",
+      "AMAT",
+      "CMCSA",
+      "JNJ",
+      "ADI",
+      "BAC",
+      "PANW",
+      "VZ",
+      "JPM",
+      "PLTR",
+      "CME",
+      "XOM",
+      "LIN",
+      "WMT",
+      "ANET",
+      "BSX",
+      "CVX",
+      "MU",
+      "COP",
+      "COST",
+      "AMZN",
+      "WFC",
+      "RKLB",
+      "TJX"
+    ],
+    "start_date": "2024-01-01T00:00:00",
+    "end_date": "2024-01-31T00:00:00",
+    "strategy": "RegimeStrategy",
+    "parameters": {
+      "rebalance_frequency": "monthly",
+      "max_assets_per_period": 3,
+      "sma_period": 20,
+      "rsi_period": 14,
+      "rsi_lower": 30,
+      "rsi_upper": 70,
+      "momentum_period": 10,
+      "stop_loss": 0.05,
+      "take_profit": 0.15,
+      "min_regime_confidence": 0.6,
+      "bucket_names": [
+        "Risk Assets"
+      ],
+      "position_min_score": 0.4,
+      "timeframes": [
+        "1d"
+      ],
+      "enable_technical_analysis": true,
+      "enable_fundamental_analysis": false,
+      "technical_weight": 0.6,
+      "fundamental_weight": 0.4,
+      "min_trending_confidence": 0.7,
+      "regime_detector": "<data.regime_detector.RegimeDetector object at 0x125a79040>",
+      "asset_manager": "<data.asset_buckets.AssetBucketManager object at 0x123eec1f0>",
+      "data_manager": "<data.data_manager.DataManager object at 0x125629a90>",
+      "enable_core_assets": false,
+      "max_core_assets": 3,
+      "core_override_threshold": 0.95,
+      "core_expiry_days": 90,
+      "core_underperformance_threshold": 0.15,
+      "core_underperformance_period": 30,
+      "core_extension_limit": 2,
+      "core_performance_check_frequency": 7,
+      "smart_diversification_overrides": 2
+    },
+    "generated_at": "2025-07-27T23:57:04.156130"
+  },
+  "performance": {
+    "sharpe_ratio": -2.4739235459440763,
+    "total_return": -0.006276252834381235,
+    "average_return": -0.0002988691825895826,
+    "max_drawdown": 1.1380287137503577,
+    "max_drawdown_duration": 16,
+    "sqn": -8.985131985284454,
+    "vwr": -5.341377148680743
+  },
+  "trades": {
+    "total": 3,
+    "won": 0,
+    "lost": 2,
+    "win_rate": 0.0,
+    "average_win": 0.0,
+    "average_loss": -312.7750550000002,
+    "profit_factor": 0,
+    "details": []
+  },
+  "portfolio_timeline": [
+    {
+      "date": "2024-01-02",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "GOLDILOCKS",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    },
+    {
+      "date": "2024-01-03",
+      "portfolio_value": 99915.15691,
+      "cash": 85432.35691,
+      "total_positions": 3,
+      "regime": "GOLDILOCKS",
+      "regime_confidence": 0.0,
+      "position_details": {
+        "INTC": {
+          "size": 104,
+          "price": 47.1,
+          "value": 4893.2
+        },
+        "AAPL": {
+          "size": 26,
+          "price": 184.22,
+          "value": 4790.5
+        },
+        "RKLB": {
+          "size": 941,
+          "price": 5.17,
+          "value": 4799.099999999999
+        }
+      }
+    },
+    {
+      "date": "2024-01-04",
+      "portfolio_value": 100183.76691,
+      "cash": 85432.35691,
+      "total_positions": 3,
+      "regime": "GOLDILOCKS",
+      "regime_confidence": 0.0,
+      "position_details": {
+        "INTC": {
+          "size": 104,
+          "price": 47.1,
+          "value": 4874.48
+        },
+        "AAPL": {
+          "size": 26,
+          "price": 184.22,
+          "value": 4729.66
+        },
+        "RKLB": {
+          "size": 941,
+          "price": 5.17,
+          "value": 5147.2699999999995
+        }
+      }
+    },
+    {
+      "date": "2024-01-05",
+      "portfolio_value": 100100.99691,
+      "cash": 85432.35691,
+      "total_positions": 3,
+      "regime": "GOLDILOCKS",
+      "regime_confidence": 0.0,
+      "position_details": {
+        "INTC": {
+          "size": 104,
+          "price": 47.1,
+          "value": 4876.56
+        },
+        "AAPL": {
+          "size": 26,
+          "price": 184.22,
+          "value": 4710.68
+        },
+        "RKLB": {
+          "size": 941,
+          "price": 5.17,
+          "value": 5081.400000000001
+        }
+      }
+    },
+    {
+      "date": "2024-01-08",
+      "portfolio_value": 100518.26691,
+      "cash": 85432.35691,
+      "total_positions": 3,
+      "regime": "GOLDILOCKS",
+      "regime_confidence": 0.0,
+      "position_details": {
+        "INTC": {
+          "size": 104,
+          "price": 47.1,
+          "value": 5038.8
+        },
+        "AAPL": {
+          "size": 26,
+          "price": 184.22,
+          "value": 4824.56
+        },
+        "RKLB": {
+          "size": 941,
+          "price": 5.17,
+          "value": 5222.55
+        }
+      }
+    },
+    {
+      "date": "2024-01-09",
+      "portfolio_value": 100371.64691,
+      "cash": 85432.35691,
+      "total_positions": 3,
+      "regime": "GOLDILOCKS",
+      "regime_confidence": 0.0,
+      "position_details": {
+        "INTC": {
+          "size": 104,
+          "price": 47.1,
+          "value": 4997.2
+        },
+        "AAPL": {
+          "size": 26,
+          "price": 184.22,
+          "value": 4813.639999999999
+        },
+        "RKLB": {
+          "size": 941,
+          "price": 5.17,
+          "value": 5128.45
+        }
+      }
+    },
+    {
+      "date": "2024-01-10",
+      "portfolio_value": 100235.11691,
+      "cash": 85432.35691,
+      "total_positions": 3,
+      "regime": "GOLDILOCKS",
+      "regime_confidence": 0.0,
+      "position_details": {
+        "INTC": {
+          "size": 104,
+          "price": 47.1,
+          "value": 4936.88
+        },
+        "AAPL": {
+          "size": 26,
+          "price": 184.22,
+          "value": 4840.94
+        },
+        "RKLB": {
+          "size": 941,
+          "price": 5.17,
+          "value": 5024.94
+        }
+      }
+    },
+    {
+      "date": "2024-01-11",
+      "portfolio_value": 100067.81691000001,
+      "cash": 85432.35691,
+      "total_positions": 3,
+      "regime": "GOLDILOCKS",
+      "regime_confidence": 0.0,
+      "position_details": {
+        "INTC": {
+          "size": 104,
+          "price": 47.1,
+          "value": 4954.56
+        },
+        "AAPL": {
+          "size": 26,
+          "price": 184.22,
+          "value": 4825.34
+        },
+        "RKLB": {
+          "size": 941,
+          "price": 5.17,
+          "value": 4855.56
+        }
+      }
+    },
+    {
+      "date": "2024-01-12",
+      "portfolio_value": 100031.72691,
+      "cash": 85432.35691,
+      "total_positions": 3,
+      "regime": "GOLDILOCKS",
+      "regime_confidence": 0.0,
+      "position_details": {
+        "INTC": {
+          "size": 104,
+          "price": 47.1,
+          "value": 4900.48
+        },
+        "AAPL": {
+          "size": 26,
+          "price": 184.22,
+          "value": 4833.92
+        },
+        "RKLB": {
+          "size": 941,
+          "price": 5.17,
+          "value": 4864.97
+        }
+      }
+    },
+    {
+      "date": "2024-01-16",
+      "portfolio_value": 99749.51691,
+      "cash": 85432.35691,
+      "total_positions": 3,
+      "regime": "GOLDILOCKS",
+      "regime_confidence": 0.0,
+      "position_details": {
+        "INTC": {
+          "size": 104,
+          "price": 47.1,
+          "value": 4894.24
+        },
+        "AAPL": {
+          "size": 26,
+          "price": 184.22,
+          "value": 4774.38
+        },
+        "RKLB": {
+          "size": 941,
+          "price": 5.17,
+          "value": 4648.54
+        }
+      }
+    },
+    {
+      "date": "2024-01-17",
+      "portfolio_value": 99601.99691,
+      "cash": 85432.35691,
+      "total_positions": 3,
+      "regime": "GOLDILOCKS",
+      "regime_confidence": 0.0,
+      "position_details": {
+        "INTC": {
+          "size": 104,
+          "price": 47.1,
+          "value": 4790.24
+        },
+        "AAPL": {
+          "size": 26,
+          "price": 184.22,
+          "value": 4749.68
+        },
+        "RKLB": {
+          "size": 941,
+          "price": 5.17,
+          "value": 4629.72
+        }
+      }
+    },
+    {
+      "date": "2024-01-18",
+      "portfolio_value": 99761.54691,
+      "cash": 85432.35691,
+      "total_positions": 3,
+      "regime": "GOLDILOCKS",
+      "regime_confidence": 0.0,
+      "position_details": {
+        "INTC": {
+          "size": 104,
+          "price": 47.1,
+          "value": 4860.96
+        },
+        "AAPL": {
+          "size": 26,
+          "price": 184.22,
+          "value": 4904.38
+        },
+        "RKLB": {
+          "size": 941,
+          "price": 5.17,
+          "value": 4563.849999999999
+        }
+      }
+    },
+    {
+      "date": "2024-01-19",
+      "portfolio_value": 100026.80601,
+      "cash": 90038.64601,
+      "total_positions": 2,
+      "regime": "GOLDILOCKS",
+      "regime_confidence": 0.0,
+      "position_details": {
+        "INTC": {
+          "size": 104,
+          "price": 47.1,
+          "value": 5007.599999999999
+        },
+        "AAPL": {
+          "size": 26,
+          "price": 184.22,
+          "value": 4980.56
+        }
+      }
+    },
+    {
+      "date": "2024-01-22",
+      "portfolio_value": 100094.66601,
+      "cash": 90038.64601,
+      "total_positions": 2,
+      "regime": "GOLDILOCKS",
+      "regime_confidence": 0.0,
+      "position_details": {
+        "INTC": {
+          "size": 104,
+          "price": 47.1,
+          "value": 5014.88
+        },
+        "AAPL": {
+          "size": 26,
+          "price": 184.22,
+          "value": 5041.139999999999
+        }
+      }
+    },
+    {
+      "date": "2024-01-23",
+      "portfolio_value": 100197.88601,
+      "cash": 90038.64601,
+      "total_positions": 2,
+      "regime": "GOLDILOCKS",
+      "regime_confidence": 0.0,
+      "position_details": {
+        "INTC": {
+          "size": 104,
+          "price": 47.1,
+          "value": 5084.56
+        },
+        "AAPL": {
+          "size": 26,
+          "price": 184.22,
+          "value": 5074.68
+        }
+      }
+    },
+    {
+      "date": "2024-01-24",
+      "portfolio_value": 100201.00601,
+      "cash": 90038.64601,
+      "total_positions": 2,
+      "regime": "GOLDILOCKS",
+      "regime_confidence": 0.0,
+      "position_details": {
+        "INTC": {
+          "size": 104,
+          "price": 47.1,
+          "value": 5105.360000000001
+        },
+        "AAPL": {
+          "size": 26,
+          "price": 184.22,
+          "value": 5057.0
+        }
+      }
+    },
+    {
+      "date": "2024-01-25",
+      "portfolio_value": 100240.26600999999,
+      "cash": 90038.64601,
+      "total_positions": 2,
+      "regime": "GOLDILOCKS",
+      "regime_confidence": 0.0,
+      "position_details": {
+        "INTC": {
+          "size": 104,
+          "price": 47.1,
+          "value": 5153.2
+        },
+        "AAPL": {
+          "size": 26,
+          "price": 184.22,
+          "value": 5048.42
+        }
+      }
+    },
+    {
+      "date": "2024-01-26",
+      "portfolio_value": 99581.16601,
+      "cash": 90038.64601,
+      "total_positions": 2,
+      "regime": "GOLDILOCKS",
+      "regime_confidence": 0.0,
+      "position_details": {
+        "INTC": {
+          "size": 104,
+          "price": 47.1,
+          "value": 4539.599999999999
+        },
+        "AAPL": {
+          "size": 26,
+          "price": 184.22,
+          "value": 5002.92
+        }
+      }
+    },
+    {
+      "date": "2024-01-29",
+      "portfolio_value": 99564.92016999998,
+      "cash": 94579.94016999999,
+      "total_positions": 1,
+      "regime": "GOLDILOCKS",
+      "regime_confidence": 0.0,
+      "position_details": {
+        "AAPL": {
+          "size": 26,
+          "price": 184.22,
+          "value": 4984.98
+        }
+      }
+    },
+    {
+      "date": "2024-01-30",
+      "portfolio_value": 99468.98016999998,
+      "cash": 94579.94016999999,
+      "total_positions": 1,
+      "regime": "GOLDILOCKS",
+      "regime_confidence": 0.0,
+      "position_details": {
+        "AAPL": {
+          "size": 26,
+          "price": 184.22,
+          "value": 4889.04
+        }
+      }
+    },
+    {
+      "date": "2024-01-31",
+      "portfolio_value": 99374.34016999998,
+      "cash": 94579.94016999999,
+      "total_positions": 1,
+      "regime": "GOLDILOCKS",
+      "regime_confidence": 0.0,
+      "position_details": {
+        "AAPL": {
+          "size": 26,
+          "price": 184.22,
+          "value": 4794.400000000001
+        }
+      }
+    }
+  ],
+  "position_changes": [
+    {
+      "date": "2024-01-03",
+      "asset": "INTC",
+      "action": "BUY",
+      "quantity": 104,
+      "price": 47.05,
+      "value": 4893.2,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.6129166666666667,
+      "bucket": "Risk Assets",
+      "regime": "GOLDILOCKS"
+    },
+    {
+      "date": "2024-01-03",
+      "asset": "AAPL",
+      "action": "BUY",
+      "quantity": 26,
+      "price": 184.25,
+      "value": 4790.5,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.61625,
+      "bucket": "Risk Assets",
+      "regime": "GOLDILOCKS"
+    },
+    {
+      "date": "2024-01-03",
+      "asset": "RKLB",
+      "action": "BUY",
+      "quantity": 941,
+      "price": 5.1,
+      "value": 4799.099999999999,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.6204166666666667,
+      "bucket": "Risk Assets",
+      "regime": "GOLDILOCKS"
+    },
+    {
+      "date": "2024-01-04",
+      "asset": "INTC",
+      "action": "HOLD",
+      "quantity": 104,
+      "price": 46.87,
+      "value": 4874.48,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.6129166666666667,
+      "bucket": "Risk Assets",
+      "regime": "GOLDILOCKS"
+    },
+    {
+      "date": "2024-01-04",
+      "asset": "AAPL",
+      "action": "HOLD",
+      "quantity": 26,
+      "price": 181.91,
+      "value": 4729.66,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.61625,
+      "bucket": "Risk Assets",
+      "regime": "GOLDILOCKS"
+    },
+    {
+      "date": "2024-01-04",
+      "asset": "RKLB",
+      "action": "HOLD",
+      "quantity": 941,
+      "price": 5.47,
+      "value": 5147.2699999999995,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.6204166666666667,
+      "bucket": "Risk Assets",
+      "regime": "GOLDILOCKS"
+    },
+    {
+      "date": "2024-01-05",
+      "asset": "INTC",
+      "action": "HOLD",
+      "quantity": 104,
+      "price": 46.89,
+      "value": 4876.56,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.6129166666666667,
+      "bucket": "Risk Assets",
+      "regime": "GOLDILOCKS"
+    },
+    {
+      "date": "2024-01-05",
+      "asset": "AAPL",
+      "action": "HOLD",
+      "quantity": 26,
+      "price": 181.18,
+      "value": 4710.68,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.61625,
+      "bucket": "Risk Assets",
+      "regime": "GOLDILOCKS"
+    },
+    {
+      "date": "2024-01-05",
+      "asset": "RKLB",
+      "action": "HOLD",
+      "quantity": 941,
+      "price": 5.4,
+      "value": 5081.400000000001,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.6204166666666667,
+      "bucket": "Risk Assets",
+      "regime": "GOLDILOCKS"
+    },
+    {
+      "date": "2024-01-08",
+      "asset": "INTC",
+      "action": "HOLD",
+      "quantity": 104,
+      "price": 48.45,
+      "value": 5038.8,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.6129166666666667,
+      "bucket": "Risk Assets",
+      "regime": "GOLDILOCKS"
+    },
+    {
+      "date": "2024-01-08",
+      "asset": "AAPL",
+      "action": "HOLD",
+      "quantity": 26,
+      "price": 185.56,
+      "value": 4824.56,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.61625,
+      "bucket": "Risk Assets",
+      "regime": "GOLDILOCKS"
+    },
+    {
+      "date": "2024-01-08",
+      "asset": "RKLB",
+      "action": "HOLD",
+      "quantity": 941,
+      "price": 5.55,
+      "value": 5222.55,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.6204166666666667,
+      "bucket": "Risk Assets",
+      "regime": "GOLDILOCKS"
+    },
+    {
+      "date": "2024-01-09",
+      "asset": "INTC",
+      "action": "HOLD",
+      "quantity": 104,
+      "price": 48.05,
+      "value": 4997.2,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.6129166666666667,
+      "bucket": "Risk Assets",
+      "regime": "GOLDILOCKS"
+    },
+    {
+      "date": "2024-01-09",
+      "asset": "AAPL",
+      "action": "HOLD",
+      "quantity": 26,
+      "price": 185.14,
+      "value": 4813.639999999999,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.61625,
+      "bucket": "Risk Assets",
+      "regime": "GOLDILOCKS"
+    },
+    {
+      "date": "2024-01-09",
+      "asset": "RKLB",
+      "action": "HOLD",
+      "quantity": 941,
+      "price": 5.45,
+      "value": 5128.45,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.6204166666666667,
+      "bucket": "Risk Assets",
+      "regime": "GOLDILOCKS"
+    },
+    {
+      "date": "2024-01-10",
+      "asset": "INTC",
+      "action": "HOLD",
+      "quantity": 104,
+      "price": 47.47,
+      "value": 4936.88,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.6129166666666667,
+      "bucket": "Risk Assets",
+      "regime": "GOLDILOCKS"
+    },
+    {
+      "date": "2024-01-10",
+      "asset": "AAPL",
+      "action": "HOLD",
+      "quantity": 26,
+      "price": 186.19,
+      "value": 4840.94,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.61625,
+      "bucket": "Risk Assets",
+      "regime": "GOLDILOCKS"
+    },
+    {
+      "date": "2024-01-10",
+      "asset": "RKLB",
+      "action": "HOLD",
+      "quantity": 941,
+      "price": 5.34,
+      "value": 5024.94,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.6204166666666667,
+      "bucket": "Risk Assets",
+      "regime": "GOLDILOCKS"
+    },
+    {
+      "date": "2024-01-11",
+      "asset": "INTC",
+      "action": "HOLD",
+      "quantity": 104,
+      "price": 47.64,
+      "value": 4954.56,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.6129166666666667,
+      "bucket": "Risk Assets",
+      "regime": "GOLDILOCKS"
+    },
+    {
+      "date": "2024-01-11",
+      "asset": "AAPL",
+      "action": "HOLD",
+      "quantity": 26,
+      "price": 185.59,
+      "value": 4825.34,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.61625,
+      "bucket": "Risk Assets",
+      "regime": "GOLDILOCKS"
+    },
+    {
+      "date": "2024-01-11",
+      "asset": "RKLB",
+      "action": "HOLD",
+      "quantity": 941,
+      "price": 5.16,
+      "value": 4855.56,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.6204166666666667,
+      "bucket": "Risk Assets",
+      "regime": "GOLDILOCKS"
+    },
+    {
+      "date": "2024-01-12",
+      "asset": "INTC",
+      "action": "HOLD",
+      "quantity": 104,
+      "price": 47.12,
+      "value": 4900.48,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.6129166666666667,
+      "bucket": "Risk Assets",
+      "regime": "GOLDILOCKS"
+    },
+    {
+      "date": "2024-01-12",
+      "asset": "AAPL",
+      "action": "HOLD",
+      "quantity": 26,
+      "price": 185.92,
+      "value": 4833.92,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.61625,
+      "bucket": "Risk Assets",
+      "regime": "GOLDILOCKS"
+    },
+    {
+      "date": "2024-01-12",
+      "asset": "RKLB",
+      "action": "HOLD",
+      "quantity": 941,
+      "price": 5.17,
+      "value": 4864.97,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.6204166666666667,
+      "bucket": "Risk Assets",
+      "regime": "GOLDILOCKS"
+    },
+    {
+      "date": "2024-01-16",
+      "asset": "INTC",
+      "action": "HOLD",
+      "quantity": 104,
+      "price": 47.06,
+      "value": 4894.24,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.6129166666666667,
+      "bucket": "Risk Assets",
+      "regime": "GOLDILOCKS"
+    },
+    {
+      "date": "2024-01-16",
+      "asset": "AAPL",
+      "action": "HOLD",
+      "quantity": 26,
+      "price": 183.63,
+      "value": 4774.38,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.61625,
+      "bucket": "Risk Assets",
+      "regime": "GOLDILOCKS"
+    },
+    {
+      "date": "2024-01-16",
+      "asset": "RKLB",
+      "action": "HOLD",
+      "quantity": 941,
+      "price": 4.94,
+      "value": 4648.54,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.6204166666666667,
+      "bucket": "Risk Assets",
+      "regime": "GOLDILOCKS"
+    },
+    {
+      "date": "2024-01-17",
+      "asset": "INTC",
+      "action": "HOLD",
+      "quantity": 104,
+      "price": 46.06,
+      "value": 4790.24,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.6129166666666667,
+      "bucket": "Risk Assets",
+      "regime": "GOLDILOCKS"
+    },
+    {
+      "date": "2024-01-17",
+      "asset": "AAPL",
+      "action": "HOLD",
+      "quantity": 26,
+      "price": 182.68,
+      "value": 4749.68,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.61625,
+      "bucket": "Risk Assets",
+      "regime": "GOLDILOCKS"
+    },
+    {
+      "date": "2024-01-17",
+      "asset": "RKLB",
+      "action": "HOLD",
+      "quantity": 941,
+      "price": 4.92,
+      "value": 4629.72,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.6204166666666667,
+      "bucket": "Risk Assets",
+      "regime": "GOLDILOCKS"
+    },
+    {
+      "date": "2024-01-18",
+      "asset": "INTC",
+      "action": "HOLD",
+      "quantity": 104,
+      "price": 46.74,
+      "value": 4860.96,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.6129166666666667,
+      "bucket": "Risk Assets",
+      "regime": "GOLDILOCKS"
+    },
+    {
+      "date": "2024-01-18",
+      "asset": "AAPL",
+      "action": "HOLD",
+      "quantity": 26,
+      "price": 188.63,
+      "value": 4904.38,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.61625,
+      "bucket": "Risk Assets",
+      "regime": "GOLDILOCKS"
+    },
+    {
+      "date": "2024-01-18",
+      "asset": "RKLB",
+      "action": "HOLD",
+      "quantity": 941,
+      "price": 4.85,
+      "value": 4563.849999999999,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.6204166666666667,
+      "bucket": "Risk Assets",
+      "regime": "GOLDILOCKS"
+    },
+    {
+      "date": "2024-01-19",
+      "asset": "INTC",
+      "action": "HOLD",
+      "quantity": 104,
+      "price": 48.15,
+      "value": 5007.599999999999,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.6129166666666667,
+      "bucket": "Risk Assets",
+      "regime": "GOLDILOCKS"
+    },
+    {
+      "date": "2024-01-19",
+      "asset": "AAPL",
+      "action": "HOLD",
+      "quantity": 26,
+      "price": 191.56,
+      "value": 4980.56,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.61625,
+      "bucket": "Risk Assets",
+      "regime": "GOLDILOCKS"
+    },
+    {
+      "date": "2024-01-19",
+      "asset": "RKLB",
+      "action": "SELL",
+      "quantity": 941,
+      "price": 4.86,
+      "value": 4573.26,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.6204166666666667,
+      "bucket": "Risk Assets",
+      "regime": "GOLDILOCKS"
+    },
+    {
+      "date": "2024-01-22",
+      "asset": "INTC",
+      "action": "HOLD",
+      "quantity": 104,
+      "price": 48.22,
+      "value": 5014.88,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.6129166666666667,
+      "bucket": "Risk Assets",
+      "regime": "GOLDILOCKS"
+    },
+    {
+      "date": "2024-01-22",
+      "asset": "AAPL",
+      "action": "HOLD",
+      "quantity": 26,
+      "price": 193.89,
+      "value": 5041.139999999999,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.61625,
+      "bucket": "Risk Assets",
+      "regime": "GOLDILOCKS"
+    },
+    {
+      "date": "2024-01-23",
+      "asset": "INTC",
+      "action": "HOLD",
+      "quantity": 104,
+      "price": 48.89,
+      "value": 5084.56,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.6129166666666667,
+      "bucket": "Risk Assets",
+      "regime": "GOLDILOCKS"
+    },
+    {
+      "date": "2024-01-23",
+      "asset": "AAPL",
+      "action": "HOLD",
+      "quantity": 26,
+      "price": 195.18,
+      "value": 5074.68,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.61625,
+      "bucket": "Risk Assets",
+      "regime": "GOLDILOCKS"
+    },
+    {
+      "date": "2024-01-24",
+      "asset": "INTC",
+      "action": "HOLD",
+      "quantity": 104,
+      "price": 49.09,
+      "value": 5105.360000000001,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.6129166666666667,
+      "bucket": "Risk Assets",
+      "regime": "GOLDILOCKS"
+    },
+    {
+      "date": "2024-01-24",
+      "asset": "AAPL",
+      "action": "HOLD",
+      "quantity": 26,
+      "price": 194.5,
+      "value": 5057.0,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.61625,
+      "bucket": "Risk Assets",
+      "regime": "GOLDILOCKS"
+    },
+    {
+      "date": "2024-01-25",
+      "asset": "INTC",
+      "action": "HOLD",
+      "quantity": 104,
+      "price": 49.55,
+      "value": 5153.2,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.6129166666666667,
+      "bucket": "Risk Assets",
+      "regime": "GOLDILOCKS"
+    },
+    {
+      "date": "2024-01-25",
+      "asset": "AAPL",
+      "action": "HOLD",
+      "quantity": 26,
+      "price": 194.17,
+      "value": 5048.42,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.61625,
+      "bucket": "Risk Assets",
+      "regime": "GOLDILOCKS"
+    },
+    {
+      "date": "2024-01-26",
+      "asset": "INTC",
+      "action": "HOLD",
+      "quantity": 104,
+      "price": 43.65,
+      "value": 4539.599999999999,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.6129166666666667,
+      "bucket": "Risk Assets",
+      "regime": "GOLDILOCKS"
+    },
+    {
+      "date": "2024-01-26",
+      "asset": "AAPL",
+      "action": "HOLD",
+      "quantity": 26,
+      "price": 192.42,
+      "value": 5002.92,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.61625,
+      "bucket": "Risk Assets",
+      "regime": "GOLDILOCKS"
+    },
+    {
+      "date": "2024-01-29",
+      "asset": "INTC",
+      "action": "SELL",
+      "quantity": 104,
+      "price": 43.84,
+      "value": 4559.360000000001,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.6129166666666667,
+      "bucket": "Risk Assets",
+      "regime": "GOLDILOCKS"
+    },
+    {
+      "date": "2024-01-29",
+      "asset": "AAPL",
+      "action": "HOLD",
+      "quantity": 26,
+      "price": 191.73,
+      "value": 4984.98,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.61625,
+      "bucket": "Risk Assets",
+      "regime": "GOLDILOCKS"
+    },
+    {
+      "date": "2024-01-30",
+      "asset": "AAPL",
+      "action": "HOLD",
+      "quantity": 26,
+      "price": 188.04,
+      "value": 4889.04,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.61625,
+      "bucket": "Risk Assets",
+      "regime": "GOLDILOCKS"
+    },
+    {
+      "date": "2024-01-31",
+      "asset": "AAPL",
+      "action": "HOLD",
+      "quantity": 26,
+      "price": 184.4,
+      "value": 4794.400000000001,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.61625,
+      "bucket": "Risk Assets",
+      "regime": "GOLDILOCKS"
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "plan_id": "BULK_20250727_232605_ETH_4h",
+  "ticker": "ETH",
+  "timeframe": "4h",
+  "start_date": "2025-07-27T00:00:00",
+  "end_date": "2025-07-27T00:00:00",
+  "total_chunks": 0,
+  "completed_chunks": 0,
+  "failed_chunks": 0,
+  "chunk_states": [],
+  "created_at": "2025-07-27T23:26:05.260810",
+  "last_updated": "2025-07-27T23:26:05.260811"
+}

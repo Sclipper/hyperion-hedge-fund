@@ -8,6 +8,68 @@ from .data_exporters import PortfolioDataExporter
 from .visualizer import PortfolioVisualizer
 
 
+def extract_performance_metrics(strategy) -> dict:
+    """Extract performance metrics from strategy analyzers for JSON export and visualization"""
+    try:
+        sharpe = strategy.analyzers.sharpe.get_analysis()
+        returns = strategy.analyzers.returns.get_analysis()
+        drawdown = strategy.analyzers.drawdown.get_analysis()
+        trades = strategy.analyzers.trades.get_analysis()
+        sqn = strategy.analyzers.sqn.get_analysis()
+        vwr = strategy.analyzers.vwr.get_analysis()
+        
+        # Extract basic metrics
+        metrics = {
+            'sharpe_ratio': sharpe.get("sharperatio", 0) if sharpe else 0,
+            'total_return_pct': returns.get("rtot", 0) * 100 if returns else 0,
+            'avg_return_pct': returns.get("ravg", 0) * 100 if returns else 0,
+            'max_drawdown_pct': drawdown.get("max", {}).get("drawdown", 0) if drawdown else 0,
+            'max_drawdown_duration': drawdown.get("max", {}).get("len", 0) if drawdown else 0,
+            'sqn': sqn.get("sqn", 0) if sqn else 0,
+            'vwr': vwr.get("vwr", 0) if vwr else 0,
+        }
+        
+        # Extract trade metrics
+        if 'total' in trades:
+            total_trades = trades['total']['total']
+            won_trades = trades['won']['total'] if 'won' in trades else 0
+            lost_trades = trades['lost']['total'] if 'lost' in trades else 0
+            
+            metrics.update({
+                'total_trades': total_trades,
+                'won_trades': won_trades,
+                'lost_trades': lost_trades,
+                'win_rate_pct': (won_trades / total_trades * 100) if total_trades > 0 else 0,
+            })
+            
+            # Average win/loss
+            if 'won' in trades and 'pnl' in trades['won']:
+                metrics['avg_win'] = trades['won']['pnl']['average']
+            
+            if 'lost' in trades and 'pnl' in trades['lost']:
+                metrics['avg_loss'] = trades['lost']['pnl']['average']
+            
+            # Profit factor and win/loss ratio
+            if 'won' in trades and 'lost' in trades and 'pnl' in trades['won'] and 'pnl' in trades['lost']:
+                total_wins = trades['won']['pnl']['total'] if trades['won']['pnl']['total'] > 0 else 0
+                total_losses = abs(trades['lost']['pnl']['total']) if trades['lost']['pnl']['total'] < 0 else 0
+                metrics['profit_factor'] = total_wins / total_losses if total_losses > 0 else float('inf') if total_wins > 0 else 0
+                
+                avg_win = trades['won']['pnl']['average'] if trades['won']['pnl']['average'] > 0 else 0
+                avg_loss = abs(trades['lost']['pnl']['average']) if trades['lost']['pnl']['average'] < 0 else 1
+                metrics['win_loss_ratio'] = avg_win / avg_loss if avg_loss > 0 else 0
+        
+        # Calculate volatility if we have returns data
+        if returns and 'ravg' in returns and 'rstd' in returns:
+            metrics['volatility_pct'] = returns.get('rstd', 0) * 100
+        
+        return metrics
+        
+    except Exception as e:
+        print(f"Warning: Could not extract performance metrics: {e}")
+        return {}
+
+
 def save_results(strategy, tickers, start_date, end_date, results_dir="results", enable_enhanced_export=True, 
                 enable_visualization=True, export_format='all', chart_style='interactive', benchmark_ticker='SPY'):
     # Create date-based folder structure
@@ -121,6 +183,21 @@ def save_results(strategy, tickers, start_date, end_date, results_dir="results",
                     
                 dashboard_chart = visualizer.create_performance_dashboard(dashboard_data)
                 charts.append(dashboard_chart)
+                
+                # Performance metrics visualization (if strategy has analyzers)
+                if hasattr(strategy, 'analyzers'):
+                    performance_metrics = extract_performance_metrics(strategy)
+                    if performance_metrics:
+                        # Export metrics to JSON
+                        metrics_json_file = results_path / f"{filename}_performance_metrics.json"
+                        with open(metrics_json_file, 'w') as f:
+                            json.dump(performance_metrics, f, indent=2)
+                        print(f"  performance_metrics: {metrics_json_file.name}")
+                        saved_files.append(str(metrics_json_file))
+                        
+                        # Create metrics visualization chart
+                        metrics_chart = visualizer.create_performance_metrics_chart(performance_metrics)
+                        charts.append(metrics_chart)
                 
                 # Save all charts
                 chart_files = visualizer.save_visualizations(

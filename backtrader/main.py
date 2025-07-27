@@ -62,10 +62,14 @@ def run_regime_backtest(start_date, end_date, strategy_class=None, cash=100000, 
         smart_diversification_overrides=smart_diversification_overrides
     )
     
-    for ticker in all_possible_assets:
-        data = data_manager.get_data(ticker, start_date, end_date)
-        if data is not None:
-            cerebro.adddata(data, name=ticker)
+    # Optimized bulk loading with cache separation
+    print(f"Loading data for {len(all_possible_assets)} assets...")
+    data_feeds = data_manager.get_multiple_data(all_possible_assets, start_date, end_date)
+    
+    for ticker, data in data_feeds.items():
+        cerebro.adddata(data, name=ticker)
+    
+    print(f"Successfully loaded data for {len(data_feeds)}/{len(all_possible_assets)} assets")
     
     cerebro.broker.setcash(cash)
     cerebro.broker.setcommission(commission=commission)
@@ -101,10 +105,14 @@ def run_static_backtest(tickers, start_date, end_date, strategy_class=None, cash
     
     data_manager = DataManager(provider_name=data_provider)
     
-    for ticker in tickers:
-        data = data_manager.get_data(ticker, start_date, end_date)
-        if data is not None:
-            cerebro.adddata(data, name=ticker)
+    # Optimized bulk loading with cache separation
+    print(f"Loading data for {len(tickers)} tickers...")
+    data_feeds = data_manager.get_multiple_data(tickers, start_date, end_date)
+    
+    for ticker, data in data_feeds.items():
+        cerebro.adddata(data, name=ticker)
+    
+    print(f"Successfully loaded data for {len(data_feeds)}/{len(tickers)} tickers")
     
     cerebro.broker.setcash(cash)
     cerebro.broker.setcommission(commission=commission)
