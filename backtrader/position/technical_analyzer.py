@@ -61,12 +61,22 @@ class TechnicalAnalyzer:
         if not timeframe_scores:
             return 0.0
         
-        # Weight and combine timeframe scores
+        # Weight and combine timeframe scores, handling fallback data
         weighted_score = 0.0
         total_weight = 0.0
         
         for timeframe, score in timeframe_scores.items():
-            weight = self.timeframe_weights.get(timeframe, 0.33)
+            # Check if this data is fallback from a different timeframe
+            data_for_timeframe = timeframe_data[timeframe]
+            is_fallback = hasattr(data_for_timeframe, 'attrs') and 'fallback_from' in data_for_timeframe.attrs
+            
+            if is_fallback:
+                # Reduce weight for fallback data since it's not the intended timeframe
+                weight = self.timeframe_weights.get(timeframe, 0.33) * 0.5  # 50% weight penalty
+                print(f"Using fallback daily data for {timeframe} analysis (reduced weight)")
+            else:
+                weight = self.timeframe_weights.get(timeframe, 0.33)
+                
             weighted_score += score * weight
             total_weight += weight
         

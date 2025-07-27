@@ -1,0 +1,5 @@
+date,asset,shares,price,market_value,weight_pct,score,bucket,days_held,is_core_asset
+2025-07-24,BAR,89,33.13,2958.36,2.9579,0.0,Gold,1,false
+2025-07-24,AAAU,89,33.16,2961.48,2.9611,0.0,Gold,1,false
+2025-07-25,BAR,89,33.13,2929.88,2.9311,0.0,Gold,1,false
+2025-07-25,AAAU,89,33.16,2933.44,2.9347,0.0,Gold,1,false

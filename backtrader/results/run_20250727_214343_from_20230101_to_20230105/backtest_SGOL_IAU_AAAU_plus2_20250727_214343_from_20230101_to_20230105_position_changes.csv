@@ -1,0 +1,3 @@
+date,asset,action,quantity,price,value,reason,score_before,score_after,bucket,regime
+2023-01-04,BAR,BUY,164,18.37,3012.68,New position,0.0,0.578,Gold,DEFLATION
+2023-01-05,BAR,HOLD,164,18.16,2977.42,New position,0.0,0.578,Gold,DEFLATION

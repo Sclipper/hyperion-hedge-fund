@@ -1,0 +1,38 @@
+{
+  "GLD": [
+    {
+      "asset": "GLD",
+      "date": "2025-01-15T00:00:00",
+      "technical_score": 0.5429166666666667,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5429166666666667,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7285416666666666,
+      "regime": "REFLATION",
+      "timeframes_analyzed": [
+        "1h",
+        "4h",
+        "1d"
+      ]
+    }
+  ],
+  "SGOL": [
+    {
+      "asset": "SGOL",
+      "date": "2025-01-15T00:00:00",
+      "technical_score": 0.5389999999999999,
+      "fundamental_score": 0.0,
+      "combined_score": 0.5389999999999999,
+      "position_size_category": "LIGHT",
+      "position_size_percentage": 0.03,
+      "confidence": 0.7305,
+      "regime": "REFLATION",
+      "timeframes_analyzed": [
+        "1h",
+        "4h",
+        "1d"
+      ]
+    }
+  ]
+}

@@ -85,7 +85,8 @@ class FundamentalAnalyzer:
         except Exception as e:
             print(f"Error in fundamental analysis for {asset}: {e}")
             return 0.5
-    
+
+    # TODO: should utilize the asset_buckets crypto filtration function
     def _is_crypto_asset(self, asset: str) -> bool:
         """Detect if asset is cryptocurrency"""
         crypto_indicators = ['BTC', 'ETH', 'ADA', 'SOL', 'DOGE', 'XRP', 'LTC', 'DOT', 'LINK', 'UNI', 'AVAX', 'MATIC', 'ATOM', 'FTM', 'NEAR']

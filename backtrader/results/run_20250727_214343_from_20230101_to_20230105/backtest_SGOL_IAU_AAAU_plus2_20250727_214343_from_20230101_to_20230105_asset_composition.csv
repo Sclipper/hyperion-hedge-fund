@@ -1,0 +1,3 @@
+date,asset,shares,price,market_value,weight_pct,score,bucket,days_held,is_core_asset
+2023-01-04,BAR,164,18.41,3012.68,3.013,0.0,Gold,1,false
+2023-01-05,BAR,164,18.41,2977.42,2.9788,0.0,Gold,1,false

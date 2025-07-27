@@ -1,0 +1,5 @@
+date,asset,action,quantity,price,value,reason,score_before,score_after,bucket,regime
+2025-07-24,BAR,BUY,89,33.24,2958.36,New position,0.0,0.541,Gold,GOLDILOCKS
+2025-07-24,AAAU,BUY,89,33.28,2961.48,New position,0.0,0.544,Gold,GOLDILOCKS
+2025-07-25,BAR,HOLD,89,32.92,2929.88,New position,0.0,0.541,Gold,GOLDILOCKS
+2025-07-25,AAAU,HOLD,89,32.96,2933.44,New position,0.0,0.544,Gold,GOLDILOCKS

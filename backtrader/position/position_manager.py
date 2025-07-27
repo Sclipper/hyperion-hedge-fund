@@ -178,9 +178,10 @@ class PositionManager:
                 if isinstance(current_date, date):
                     current_date = datetime.combine(current_date, datetime.min.time())
                 
-                # Calculate date range for analysis (typically last 100 trading days)
+                # Calculate date range for analysis with reasonable lookback
                 end_date = current_date
-                start_date = current_date - timedelta(days=200)  # ~100 trading days
+                # Use shorter lookback for more recent analysis focused approach
+                start_date = current_date - timedelta(days=90)  # ~60 trading days
                 
                 timeframe_data = data_manager.timeframe_manager.get_multi_timeframe_data(
                     ticker=asset,
@@ -195,12 +196,14 @@ class PositionManager:
                 
             except Exception as e:
                 print(f"Error fetching multi-timeframe data for {asset}: {e}")
+                print(f"🔄 Fallback to legacy method for {asset} with timeframes: {self.timeframes}")
                 # Fallback to legacy method
                 for timeframe in self.timeframes:
                     data = self._get_timeframe_data(asset, current_date, timeframe, data_manager)
                     if data is not None and not data.empty:
                         timeframe_data[timeframe] = data
         else:
+            print(f"📊 Using legacy single-timeframe approach for {asset} with timeframes: {self.timeframes}")
             # Legacy single-timeframe approach
             for timeframe in self.timeframes:
                 data = self._get_timeframe_data(asset, current_date, timeframe, data_manager)
@@ -290,37 +293,44 @@ class PositionManager:
                            timeframe: str, 
                            data_manager) -> Optional[pd.DataFrame]:
         """Get data for specific timeframe"""
+        print(f"🔍 _get_timeframe_data called: {asset} {timeframe}")
         try:
             # Convert date to datetime if needed
             if isinstance(current_date, date):
                 current_date = datetime.combine(current_date, datetime.min.time())
             
-            # Calculate appropriate lookback period based on timeframe
+            # Calculate appropriate lookback period based on timeframe with reasonable limits
             if timeframe == '1h':
-                lookback_days = 30  # 30 days of hourly data
+                lookback_days = 30   # ~30 days for historical hourly analysis
             elif timeframe == '4h':
-                lookback_days = 90  # 90 days of 4h data
+                lookback_days = 60   # ~60 days for 4h analysis
             else:  # '1d'
-                lookback_days = 365  # 1 year of daily data
+                lookback_days = 180  # ~6 months for daily analysis (more reasonable)
             
             start_date = current_date - timedelta(days=lookback_days)
             
-            # For now, we'll use daily data and resample for other timeframes
-            # In production, you'd want to fetch actual timeframe data
-            daily_data = data_manager.download_data(asset, start_date, current_date)
+            # Try to fetch actual timeframe data first
+            print(f"Attempting to fetch {timeframe} data for {asset} from {start_date.date()} to {current_date.date()}")
+            timeframe_data = data_manager.download_data(asset, start_date, current_date, interval=timeframe)
             
-            if daily_data is None or daily_data.empty:
-                return None
+            if timeframe_data is not None and not timeframe_data.empty:
+                print(f"✅ Got {len(timeframe_data)} records of {timeframe} data for {asset}")
+                return timeframe_data
             
-            # Resample for different timeframes
-            if timeframe == '1h':
-                # For demo purposes, create hourly data by resampling daily
-                # In production, fetch actual hourly data
-                return self._resample_to_hourly(daily_data)
-            elif timeframe == '4h':
-                return self._resample_to_4h(daily_data)
-            else:  # '1d'
-                return daily_data
+            # Fallback: if intraday data not available, use daily data
+            if timeframe in ['1h', '4h']:
+                print(f"⚠️  No {timeframe} data available for {asset}, falling back to daily data")
+                daily_data = data_manager.download_data(asset, start_date, current_date, interval='1d')
+                if daily_data is not None and not daily_data.empty:
+                    print(f"✅ Using {len(daily_data)} daily records as fallback for {timeframe} analysis")
+                    # Return daily data but mark it properly for technical analysis
+                    daily_data.attrs['original_timeframe'] = timeframe
+                    daily_data.attrs['fallback_from'] = timeframe
+                    return daily_data
+                else:
+                    print(f"❌ No daily data available as fallback for {asset}")
+                    
+            return timeframe_data
                 
         except Exception as e:
             print(f"Error getting {timeframe} data for {asset}: {e}")

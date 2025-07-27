@@ -1,0 +1,5 @@
+date,asset,action,quantity,price,value,reason,score_before,score_after,bucket,regime
+2025-01-16,SGOL,BUY,116,25.92,3006.72,New position,0.0,0.539,Gold,REFLATION
+2025-01-16,GLD,BUY,12,250.6,3007.2,New position,0.0,0.543,Gold,REFLATION
+2025-01-17,SGOL,HOLD,116,25.77,2989.32,New position,0.0,0.539,Gold,REFLATION
+2025-01-17,GLD,HOLD,12,249.27,2991.24,New position,0.0,0.543,Gold,REFLATION

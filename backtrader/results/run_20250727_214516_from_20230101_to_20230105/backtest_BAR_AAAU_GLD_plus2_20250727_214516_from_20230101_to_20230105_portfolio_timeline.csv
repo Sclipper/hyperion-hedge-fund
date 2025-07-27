@@ -1,0 +1,4 @@
+date,portfolio_value,cash,total_positions,daily_return,cumulative_return,drawdown_pct,sharpe_30d,regime,regime_confidence
+2023-01-03,100000.0,100000.0,0,0.0,0.0,0.0,0.0,DEFLATION,0.0
+2023-01-04,99990.42,96977.74076,1,-0.0001,-0.0001,-0.0096,0.0,DEFLATION,0.0
+2023-01-05,99955.16,96977.74076,1,-0.0004,-0.0004,-0.0448,0.0,DEFLATION,0.0

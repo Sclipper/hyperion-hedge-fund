@@ -108,7 +108,13 @@ class AlphaVantageProvider(DataProvider):
             
             # Check for API errors
             if 'Error Message' in data:
-                raise Exception(f"Alpha Vantage API Error: {data['Error Message']}")
+                error_msg = data['Error Message']
+                if 'Invalid API call' in error_msg and 'TIME_SERIES_INTRADAY' in error_msg:
+                    # Specific handling for invalid symbol errors
+                    logger.error(f"Symbol {ticker} not supported for intraday data: {error_msg}")
+                    raise Exception(f"Symbol not supported: {error_msg}")
+                else:
+                    raise Exception(f"Alpha Vantage API Error: {error_msg}")
             
             if 'Note' in data:
                 if 'call frequency' in data['Note']:
@@ -133,31 +139,137 @@ class AlphaVantageProvider(DataProvider):
         }
         return mapping.get(timeframe, 'daily')
     
+    def _resolve_native_timeframe(self, requested_timeframe: str) -> dict:
+        """Determine optimal native timeframe and resampling strategy"""
+        
+        # Alpha Vantage native intraday intervals
+        native_supported = ['1min', '5min', '15min', '30min', '60min']
+        
+        # Smart mapping strategy - fetch lowest native timeframe and resample up
+        mapping = {
+            '1h': {'native': '60min', 'resample': None},          # Direct mapping
+            '4h': {'native': '60min', 'resample': '4H'},          # Resample from 1h
+            '2h': {'native': '60min', 'resample': '2H'},          # Future: 2-hour 
+            '8h': {'native': '60min', 'resample': '8H'},          # Future: 8-hour
+            '12h': {'native': '60min', 'resample': '12H'},        # Future: 12-hour
+            '15min': {'native': '15min', 'resample': None},       # Direct mapping
+            '30min': {'native': '30min', 'resample': None},       # Direct mapping
+            '1d': {'native': 'daily', 'resample': None}           # Daily data
+        }
+        
+        resolution = mapping.get(requested_timeframe)
+        if resolution is None:
+            # Default fallback: use 60min and try to resample
+            logger.warning(f"Unknown timeframe {requested_timeframe}, using 60min with custom resampling")
+            resolution = {'native': '60min', 'resample': requested_timeframe}
+            
+        return resolution
+    
+    def _should_use_historical_method(self, start_date: datetime, end_date: datetime) -> bool:
+        """Determine if we need historical fetching methods"""
+        days_from_now = (datetime.now() - end_date).days
+        return days_from_now > 30
+    
+    def _select_historical_method(self, start_date: datetime, end_date: datetime) -> str:
+        """Choose optimal historical fetching method"""
+        
+        total_days = (end_date - start_date).days
+        months_needed = total_days / 30
+        
+        if months_needed <= 3:
+            return 'month_by_month'  # Precise, fewer API calls
+        elif months_needed <= 25:  # Allow up to 25 months for extended slices (2+ years)
+            return 'extended_slices'  # Bulk fetching
+        else:
+            return 'hybrid'  # Combination approach
+    
+    def _resample_timeframe(self, df: pd.DataFrame, target_timeframe: str) -> pd.DataFrame:
+        """Universal resampling for any target timeframe"""
+        
+        if df.empty:
+            return df
+            
+        # Parse target timeframe
+        if target_timeframe.endswith('H'):
+            # Handle pandas-style resampling rules like '4H', '2H', etc.
+            resample_rule = target_timeframe
+        elif target_timeframe.endswith('h'):
+            # Handle our format like '4h', '2h', etc.
+            hours = int(target_timeframe[:-1])
+            resample_rule = f"{hours}H"
+        elif target_timeframe.endswith('min'):
+            minutes = int(target_timeframe[:-3])
+            resample_rule = f"{minutes}T"
+        else:
+            raise ValueError(f"Unsupported timeframe format: {target_timeframe}")
+        
+        # Market-aware resampling (9:30 AM ET origin for stock market)
+        try:
+            resampled = df.resample(resample_rule, origin='09:30').agg({
+                'Open': 'first',
+                'High': 'max',
+                'Low': 'min',
+                'Close': 'last',
+                'Volume': 'sum'
+            }).dropna()
+            
+            logger.info(f"Resampled {len(df)} records to {len(resampled)} {target_timeframe} records")
+            return resampled
+            
+        except Exception as e:
+            logger.error(f"Error resampling to {target_timeframe}: {e}")
+            return df
+    
     def fetch_data(self, ticker: str, timeframe: str, 
                   start_date: datetime, end_date: datetime, 
                   validate_data: bool = True) -> pd.DataFrame:
-        """Fetch data from Alpha Vantage with optional validation"""
+        """Enhanced fetch data with smart date-aware fetching and universal timeframe support"""
         
         if not self.validate_ticker(ticker):
             logger.error(f"Invalid ticker: {ticker}")
             return pd.DataFrame()
+        
+        # Check if symbol is likely supported by Alpha Vantage
+        if not self._is_symbol_likely_supported(ticker):
+            logger.warning(f"Symbol {ticker} may not be supported by Alpha Vantage")
+            # Still try to fetch but expect potential failures
         
         if timeframe not in self.get_supported_timeframes():
             logger.error(f"Unsupported timeframe: {timeframe}")
             return pd.DataFrame()
         
         try:
-            # Fetch data
-            if self._is_crypto_symbol(ticker):
-                if timeframe == '1d':
+            # Resolve timeframe strategy
+            timeframe_resolution = self._resolve_native_timeframe(timeframe)
+            native_timeframe = timeframe_resolution['native']
+            needs_resampling = timeframe_resolution['resample'] is not None
+            
+            logger.info(f"Fetching {ticker} {timeframe}: native={native_timeframe}, resample={timeframe_resolution['resample']}")
+            
+            # Fetch native data using enhanced logic
+            if native_timeframe == 'daily':
+                # Daily data - use existing method
+                if self._is_crypto_symbol(ticker):
                     df = self._fetch_crypto_daily_data(ticker, start_date, end_date)
                 else:
-                    df = self._fetch_crypto_intraday_data(ticker, timeframe, start_date, end_date)
-            else:
-                if timeframe == '1d':
                     df = self._fetch_daily_data(ticker, start_date, end_date)
+            else:
+                # Intraday data - use enhanced smart fetching
+                if self._is_crypto_symbol(ticker):
+                    df = self._fetch_crypto_intraday_enhanced(ticker, native_timeframe, start_date, end_date)
                 else:
-                    df = self._fetch_intraday_data(ticker, timeframe, start_date, end_date)
+                    df = self._fetch_intraday_enhanced(ticker, native_timeframe, start_date, end_date)
+            
+            # Apply resampling if needed
+            if needs_resampling and not df.empty:
+                target_resample = timeframe_resolution['resample']
+                logger.info(f"Resampling {ticker} from {native_timeframe} to {target_resample}")
+                df = self._resample_timeframe(df, target_resample)
+                
+                # Update metadata to reflect final timeframe
+                if hasattr(df, 'attrs'):
+                    df.attrs['timeframe'] = timeframe
+                    df.attrs['resampled_from'] = native_timeframe
             
             # Validate data if requested and data exists
             if validate_data and not df.empty:
@@ -186,9 +298,14 @@ class AlphaVantageProvider(DataProvider):
     
     def _fetch_daily_data(self, ticker: str, start_date: datetime, end_date: datetime) -> pd.DataFrame:
         """Fetch daily data"""
+        # Sanitize symbol for API call
+        api_symbol = self._sanitize_symbol_for_api(ticker)
+        if api_symbol != ticker:
+            logger.info(f"Sanitized symbol {ticker} -> {api_symbol} for Alpha Vantage API")
+        
         params = {
             'function': 'TIME_SERIES_DAILY',
-            'symbol': ticker,
+            'symbol': api_symbol,  # Use sanitized symbol
             'apikey': self.api_key,
             'outputsize': 'full'
         }
@@ -232,9 +349,14 @@ class AlphaVantageProvider(DataProvider):
             
         av_interval = self._convert_timeframe(base_timeframe)
         
+        # Sanitize symbol for API call
+        api_symbol = self._sanitize_symbol_for_api(ticker)
+        if api_symbol != ticker:
+            logger.info(f"Sanitized symbol {ticker} -> {api_symbol} for Alpha Vantage API")
+        
         params = {
             'function': 'TIME_SERIES_INTRADAY',
-            'symbol': ticker,
+            'symbol': api_symbol,  # Use sanitized symbol
             'interval': av_interval,
             'apikey': self.api_key,
             'outputsize': 'full'
@@ -385,6 +507,224 @@ class AlphaVantageProvider(DataProvider):
         
         logger.info(f"Fetched {len(df)} crypto {timeframe} records for {ticker}")
         return df
+    
+    def _fetch_intraday_enhanced(self, ticker: str, native_timeframe: str, 
+                                start_date: datetime, end_date: datetime) -> pd.DataFrame:
+        """Enhanced intraday fetching with smart date-aware logic"""
+        
+        # Determine if we need historical method
+        if self._should_use_historical_method(start_date, end_date):
+            logger.info(f"Using historical method for {ticker} {native_timeframe} (data > 30 days old)")
+            return self._fetch_intraday_historical(ticker, native_timeframe, start_date, end_date)
+        else:
+            logger.info(f"Using recent method for {ticker} {native_timeframe} (data within 30 days)")
+            return self._fetch_intraday_recent(ticker, native_timeframe, start_date, end_date)
+    
+    def _fetch_crypto_intraday_enhanced(self, ticker: str, native_timeframe: str,
+                                       start_date: datetime, end_date: datetime) -> pd.DataFrame:
+        """Enhanced crypto intraday fetching with smart date-aware logic"""
+        
+        # For now, use existing crypto method (can be enhanced later)
+        # Convert native_timeframe back to our format for compatibility
+        timeframe_map = {'60min': '1h', '240min': '4h', '15min': '15min', '30min': '30min'}
+        our_timeframe = timeframe_map.get(native_timeframe, '1h')
+        
+        return self._fetch_crypto_intraday_data(ticker, our_timeframe, start_date, end_date)
+    
+    def _fetch_intraday_recent(self, ticker: str, native_timeframe: str,
+                              start_date: datetime, end_date: datetime) -> pd.DataFrame:
+        """Fetch recent intraday data (within 30 days) using standard endpoint"""
+        
+        av_interval = native_timeframe  # Use native timeframe directly
+        
+        # Sanitize symbol for API call
+        api_symbol = self._sanitize_symbol_for_api(ticker)
+        if api_symbol != ticker:
+            logger.info(f"Sanitized symbol {ticker} -> {api_symbol} for Alpha Vantage API")
+        
+        params = {
+            'function': 'TIME_SERIES_INTRADAY',
+            'symbol': api_symbol,  # Use sanitized symbol
+            'interval': av_interval,
+            'apikey': self.api_key,
+            'outputsize': 'full'  # Gets last 30 days
+        }
+        
+        data = self._make_request(params, ticker, native_timeframe)
+        
+        time_series_key = f'Time Series ({av_interval})'
+        if time_series_key not in data:
+            logger.warning(f"No recent intraday data found for {ticker} ({av_interval})")
+            return pd.DataFrame()
+        
+        time_series = data[time_series_key]
+        df = pd.DataFrame.from_dict(time_series, orient='index')
+        
+        # Clean up column names and data types
+        df.columns = ['Open', 'High', 'Low', 'Close', 'Volume']
+        df.index = pd.to_datetime(df.index)
+        df = df.astype(float)
+        df = df.sort_index()
+        
+        # Filter by date range
+        df = df[(df.index >= pd.Timestamp(start_date)) & (df.index <= pd.Timestamp(end_date))]
+        
+        # Add provider attribution
+        df.attrs['provider_source'] = self.name
+        df.attrs['timeframe'] = native_timeframe
+        df.attrs['ticker'] = ticker
+        df.attrs['asset_type'] = 'stock'
+        df.attrs['fetch_method'] = 'recent'
+        
+        logger.info(f"Fetched {len(df)} recent {native_timeframe} records for {ticker}")
+        return df
+    
+    def _fetch_intraday_historical(self, ticker: str, native_timeframe: str,
+                                  start_date: datetime, end_date: datetime) -> pd.DataFrame:
+        """Fetch historical intraday data using month-by-month or extended slices"""
+        
+        method = self._select_historical_method(start_date, end_date)
+        
+        if method == 'month_by_month':
+            return self._fetch_intraday_monthly(ticker, native_timeframe, start_date, end_date)
+        elif method == 'extended_slices':
+            return self._fetch_intraday_slices(ticker, native_timeframe, start_date, end_date)
+        else:  # hybrid
+            # For now, use month_by_month as it's more precise
+            logger.info(f"Using month_by_month method for hybrid approach")
+            return self._fetch_intraday_monthly(ticker, native_timeframe, start_date, end_date)
+    
+    def _sanitize_symbol_for_api(self, ticker: str) -> str:
+        """Sanitize ticker symbol for Alpha Vantage API calls"""
+        # Alpha Vantage doesn't handle dots in symbols for intraday data
+        # Convert BRK.B to BRK-B format
+        sanitized = ticker.replace('.', '-')
+        
+        # Additional sanitization for other problematic characters
+        # Remove any special characters that might cause issues
+        import re
+        sanitized = re.sub(r'[^A-Za-z0-9\-]', '', sanitized)
+        
+        return sanitized.upper()  # Ensure uppercase for consistency
+    
+    def _is_symbol_likely_supported(self, ticker: str) -> bool:
+        """Check if symbol is likely supported by Alpha Vantage"""
+        # Basic validation for symbol format
+        if not ticker or len(ticker) < 1 or len(ticker) > 10:
+            return False
+        
+        # Check for known problematic patterns
+        problematic_patterns = [
+            r'^[0-9]+$',  # Pure numeric symbols
+            r'.*\s.*',    # Symbols with spaces
+            r'.*[^A-Za-z0-9.\-].*'  # Symbols with special chars (except . and -)
+        ]
+        
+        import re
+        for pattern in problematic_patterns:
+            if re.match(pattern, ticker):
+                return False
+        
+        return True
+    
+    def _fetch_intraday_monthly(self, ticker: str, native_timeframe: str,
+                               start_date: datetime, end_date: datetime) -> pd.DataFrame:
+        """Fetch historical intraday data month by month"""
+        
+        all_data = []
+        current_date = start_date.replace(day=1)  # Start of month
+        
+        # Sanitize symbol for API call
+        api_symbol = self._sanitize_symbol_for_api(ticker)
+        if api_symbol != ticker:
+            logger.info(f"Sanitized symbol {ticker} -> {api_symbol} for Alpha Vantage API")
+        
+        while current_date <= end_date:
+            month_str = current_date.strftime('%Y-%m')
+            
+            # Check if this month intersects with our date range
+            month_start = current_date
+            if current_date.month == 12:
+                month_end = current_date.replace(year=current_date.year + 1, month=1, day=1) - timedelta(days=1)
+            else:
+                month_end = current_date.replace(month=current_date.month + 1, day=1) - timedelta(days=1)
+            
+            # Skip if month is entirely outside our range
+            if month_end < start_date or month_start > end_date:
+                current_date = month_end + timedelta(days=1)
+                continue
+            
+            logger.info(f"Fetching historical data for {ticker} {native_timeframe} month {month_str}")
+            
+            params = {
+                'function': 'TIME_SERIES_INTRADAY',
+                'symbol': api_symbol,  # Use sanitized symbol
+                'interval': native_timeframe,
+                'month': month_str,  # Key parameter for historical data
+                'outputsize': 'full',
+                'apikey': self.api_key
+            }
+            
+            try:
+                data = self._make_request(params, ticker, f"{native_timeframe}-{month_str}")
+                
+                time_series_key = f'Time Series ({native_timeframe})'
+                if time_series_key in data:
+                    time_series = data[time_series_key]
+                    month_df = pd.DataFrame.from_dict(time_series, orient='index')
+                    
+                    if not month_df.empty:
+                        # Clean up data
+                        month_df.columns = ['Open', 'High', 'Low', 'Close', 'Volume']
+                        month_df.index = pd.to_datetime(month_df.index)
+                        month_df = month_df.astype(float)
+                        all_data.append(month_df)
+                        logger.info(f"Fetched {len(month_df)} records for {month_str}")
+                    else:
+                        logger.warning(f"Empty data for {ticker} {month_str}")
+                else:
+                    logger.warning(f"No data key found for {ticker} {month_str}")
+                    
+            except Exception as e:
+                logger.error(f"Error fetching {ticker} data for {month_str}: {e}")
+                # Continue with other months
+            
+            # Move to next month
+            if current_date.month == 12:
+                current_date = current_date.replace(year=current_date.year + 1, month=1)
+            else:
+                current_date = current_date.replace(month=current_date.month + 1)
+        
+        # Combine all monthly data
+        if not all_data:
+            logger.warning(f"No historical data found for {ticker} {native_timeframe}")
+            return pd.DataFrame()
+        
+        combined_df = pd.concat(all_data)
+        combined_df = combined_df.sort_index()
+        
+        # Filter by exact date range
+        combined_df = combined_df[(combined_df.index >= pd.Timestamp(start_date)) & 
+                                 (combined_df.index <= pd.Timestamp(end_date))]
+        
+        # Add provider attribution
+        combined_df.attrs['provider_source'] = self.name
+        combined_df.attrs['timeframe'] = native_timeframe
+        combined_df.attrs['ticker'] = ticker
+        combined_df.attrs['asset_type'] = 'stock'
+        combined_df.attrs['fetch_method'] = 'monthly'
+        
+        logger.info(f"Combined {len(combined_df)} historical {native_timeframe} records for {ticker}")
+        return combined_df
+    
+    def _fetch_intraday_slices(self, ticker: str, native_timeframe: str,
+                              start_date: datetime, end_date: datetime) -> pd.DataFrame:
+        """Fetch historical intraday data using extended slices (up to 2 years)"""
+        
+        # For now, implement as a placeholder that falls back to monthly
+        # Extended slices can be implemented in a future enhancement
+        logger.info(f"Extended slices not yet implemented, falling back to monthly method")
+        return self._fetch_intraday_monthly(ticker, native_timeframe, start_date, end_date)
     
     def get_bulk_fetcher(self):
         """Get bulk fetcher instance (lazy initialization)"""

@@ -1,0 +1,140 @@
+{
+  "metadata": {
+    "tickers": [
+      "SGOL",
+      "IAU",
+      "AAAU",
+      "GLD",
+      "BAR"
+    ],
+    "start_date": "2023-01-01T00:00:00",
+    "end_date": "2023-01-05T00:00:00",
+    "strategy": "RegimeStrategy",
+    "parameters": {
+      "rebalance_frequency": "monthly",
+      "max_assets_per_period": 1,
+      "sma_period": 20,
+      "rsi_period": 14,
+      "rsi_lower": 30,
+      "rsi_upper": 70,
+      "momentum_period": 10,
+      "stop_loss": 0.05,
+      "take_profit": 0.15,
+      "min_regime_confidence": 0.6,
+      "bucket_names": [
+        "Gold"
+      ],
+      "position_min_score": 0.3,
+      "timeframes": [
+        "1h",
+        "1d"
+      ],
+      "enable_technical_analysis": true,
+      "enable_fundamental_analysis": false,
+      "technical_weight": 0.6,
+      "fundamental_weight": 0.4,
+      "min_trending_confidence": 0.7,
+      "regime_detector": "<data.regime_detector.RegimeDetector object at 0x125e70400>",
+      "asset_manager": "<data.asset_buckets.AssetBucketManager object at 0x125a1d6d0>",
+      "data_manager": "<data.data_manager.DataManager object at 0x125e37f40>",
+      "enable_core_assets": false,
+      "max_core_assets": 3,
+      "core_override_threshold": 0.95,
+      "core_expiry_days": 90,
+      "core_underperformance_threshold": 0.15,
+      "core_underperformance_period": 30,
+      "core_extension_limit": 2,
+      "core_performance_check_frequency": 7,
+      "smart_diversification_overrides": 2
+    },
+    "generated_at": "2025-07-27T21:43:43.007483"
+  },
+  "performance": {
+    "sharpe_ratio": -20.147905668579423,
+    "total_return": -0.0004484929579329737,
+    "average_return": -0.00014949765264432458,
+    "max_drawdown": 0.044839240000001154,
+    "max_drawdown_duration": 2,
+    "sqn": 0,
+    "vwr": -3.2467717899530957
+  },
+  "trades": {
+    "total": 1,
+    "won": 0,
+    "lost": 0,
+    "win_rate": 0.0,
+    "average_win": 0,
+    "average_loss": 0,
+    "profit_factor": 0,
+    "details": []
+  },
+  "portfolio_timeline": [
+    {
+      "date": "2023-01-03",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "DEFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    },
+    {
+      "date": "2023-01-04",
+      "portfolio_value": 99990.42076000001,
+      "cash": 96977.74076,
+      "total_positions": 1,
+      "regime": "DEFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {
+        "BAR": {
+          "size": 164,
+          "price": 18.41,
+          "value": 3012.6800000000003
+        }
+      }
+    },
+    {
+      "date": "2023-01-05",
+      "portfolio_value": 99955.16076,
+      "cash": 96977.74076,
+      "total_positions": 1,
+      "regime": "DEFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {
+        "BAR": {
+          "size": 164,
+          "price": 18.41,
+          "value": 2977.42
+        }
+      }
+    }
+  ],
+  "position_changes": [
+    {
+      "date": "2023-01-04",
+      "asset": "BAR",
+      "action": "BUY",
+      "quantity": 164,
+      "price": 18.37,
+      "value": 3012.6800000000003,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.5779166666666666,
+      "bucket": "Gold",
+      "regime": "DEFLATION"
+    },
+    {
+      "date": "2023-01-05",
+      "asset": "BAR",
+      "action": "HOLD",
+      "quantity": 164,
+      "price": 18.155,
+      "value": 2977.42,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.5779166666666666,
+      "bucket": "Gold",
+      "regime": "DEFLATION"
+    }
+  ]
+}
