@@ -22,14 +22,15 @@ def run_regime_backtest(start_date, end_date, strategy_class=None, cash=100000, 
                        enable_core_assets=False, max_core_assets=3, core_override_threshold=0.95,
                        core_expiry_days=90, core_underperformance_threshold=0.15, 
                        core_underperformance_period=30, core_extension_limit=2, 
-                       core_performance_check_frequency=7, smart_diversification_overrides=2):
+                       core_performance_check_frequency=7, smart_diversification_overrides=2,
+                       data_provider=None):
     cerebro = bt.Cerebro()
     
     strategy_class = strategy_class or RegimeStrategy
     
     regime_detector = RegimeDetector()
     asset_manager = AssetBucketManager()
-    data_manager = DataManager()
+    data_manager = DataManager(provider_name=data_provider)
     
     all_possible_assets = asset_manager.get_all_assets_from_buckets(bucket_names)
     
@@ -84,7 +85,7 @@ def run_regime_backtest(start_date, end_date, strategy_class=None, cash=100000, 
     return results
 
 
-def run_static_backtest(tickers, start_date, end_date, strategy_class=None, cash=100000, commission=0.001):
+def run_static_backtest(tickers, start_date, end_date, strategy_class=None, cash=100000, commission=0.001, data_provider=None):
     from strategies.base_strategy import BaseStrategy
     
     cerebro = bt.Cerebro()
@@ -92,7 +93,7 @@ def run_static_backtest(tickers, start_date, end_date, strategy_class=None, cash
     strategy_class = strategy_class or BaseStrategy
     cerebro.addstrategy(strategy_class)
     
-    data_manager = DataManager()
+    data_manager = DataManager(provider_name=data_provider)
     
     for ticker in tickers:
         data = data_manager.get_data(ticker, start_date, end_date)
@@ -143,6 +144,8 @@ def main():
                               help='Minimum position score threshold')
     regime_parser.add_argument('--timeframes', type=str, default='1d,4h,1h',
                               help='Comma-separated timeframes for technical analysis')
+    regime_parser.add_argument('--data-provider', type=str, default=None,
+                              help='Data provider to use (yahoo, alpha_vantage). Defaults to environment variable DATA_PROVIDER or yahoo.')
     regime_parser.add_argument('--disable-technical', action='store_true',
                               help='Disable technical analysis (use fundamental only)')
     regime_parser.add_argument('--disable-fundamental', action='store_true',
@@ -195,6 +198,8 @@ def main():
                               help='Starting cash amount')
     static_parser.add_argument('--commission', type=float, default=0.001,
                               help='Commission rate')
+    static_parser.add_argument('--data-provider', type=str, default=None,
+                              help='Data provider to use (yahoo, alpha_vantage). Defaults to environment variable DATA_PROVIDER or yahoo.')
     
     parser.add_argument('--plot', action='store_true',
                        help='Plot results')
@@ -302,7 +307,8 @@ def main():
             core_underperformance_period=args.core_underperformance_period,
             core_extension_limit=args.core_extension_limit,
             core_performance_check_frequency=args.core_performance_check_frequency,
-            smart_diversification_overrides=args.smart_diversification_overrides
+            smart_diversification_overrides=args.smart_diversification_overrides,
+            data_provider=getattr(args, 'data_provider', None)
         )
     elif args.mode == 'compare':
         # Compare results mode
@@ -335,7 +341,8 @@ def main():
             start_date=start_date,
             end_date=end_date,
             cash=args.cash,
-            commission=args.commission
+            commission=args.commission,
+            data_provider=getattr(args, 'data_provider', None)
         )
     
     if args.plot:
