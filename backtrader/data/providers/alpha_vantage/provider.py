@@ -412,3 +412,4 @@ class AlphaVantageProvider(DataProvider):
             self._error_handler = ErrorRecoveryStrategy(max_retries=3)
         
         return self._error_handler
+    

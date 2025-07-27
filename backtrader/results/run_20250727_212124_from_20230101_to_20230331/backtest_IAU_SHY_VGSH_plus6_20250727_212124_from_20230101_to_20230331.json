@@ -1,0 +1,636 @@
+{
+  "metadata": {
+    "tickers": [
+      "IAU",
+      "SHY",
+      "VGSH",
+      "AAAU",
+      "GLD",
+      "BAR",
+      "IEF",
+      "TLT",
+      "SGOL"
+    ],
+    "start_date": "2023-01-01T00:00:00",
+    "end_date": "2023-03-31T00:00:00",
+    "strategy": "RegimeStrategy",
+    "parameters": {
+      "rebalance_frequency": "monthly",
+      "max_assets_per_period": 3,
+      "sma_period": 20,
+      "rsi_period": 14,
+      "rsi_lower": 30,
+      "rsi_upper": 70,
+      "momentum_period": 10,
+      "stop_loss": 0.05,
+      "take_profit": 0.15,
+      "min_regime_confidence": 0.6,
+      "bucket_names": [
+        "Treasurys",
+        "Gold"
+      ],
+      "position_min_score": 0.3,
+      "timeframes": [
+        "1d"
+      ],
+      "enable_technical_analysis": true,
+      "enable_fundamental_analysis": false,
+      "technical_weight": 0.6,
+      "fundamental_weight": 0.4,
+      "min_trending_confidence": 0.7,
+      "regime_detector": "<data.regime_detector.RegimeDetector object at 0x129b2d070>",
+      "asset_manager": "<data.asset_buckets.AssetBucketManager object at 0x10fe61220>",
+      "data_manager": "<data.data_manager.DataManager object at 0x129af0d00>",
+      "enable_core_assets": false,
+      "max_core_assets": 3,
+      "core_override_threshold": 0.95,
+      "core_expiry_days": 90,
+      "core_underperformance_threshold": 0.15,
+      "core_underperformance_period": 30,
+      "core_extension_limit": 2,
+      "core_performance_check_frequency": 7,
+      "smart_diversification_overrides": 2
+    },
+    "generated_at": "2025-07-27T21:21:24.528597"
+  },
+  "performance": {
+    "sharpe_ratio": null,
+    "total_return": 0.0,
+    "average_return": 0.0,
+    "max_drawdown": 0.0,
+    "max_drawdown_duration": 0.0,
+    "sqn": 0,
+    "vwr": 0.0
+  },
+  "trades": {
+    "total": 0,
+    "won": 0,
+    "lost": 0,
+    "win_rate": 0,
+    "average_win": 0,
+    "average_loss": 0,
+    "profit_factor": 0,
+    "details": []
+  },
+  "portfolio_timeline": [
+    {
+      "date": "2023-01-03",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "DEFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    },
+    {
+      "date": "2023-01-04",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "DEFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    },
+    {
+      "date": "2023-01-05",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "DEFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    },
+    {
+      "date": "2023-01-06",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "DEFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    },
+    {
+      "date": "2023-01-09",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "DEFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    },
+    {
+      "date": "2023-01-10",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "DEFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    },
+    {
+      "date": "2023-01-11",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "DEFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    },
+    {
+      "date": "2023-01-12",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "DEFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    },
+    {
+      "date": "2023-01-13",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "DEFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    },
+    {
+      "date": "2023-01-17",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "DEFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    },
+    {
+      "date": "2023-01-18",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "DEFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    },
+    {
+      "date": "2023-01-19",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "DEFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    },
+    {
+      "date": "2023-01-20",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "DEFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    },
+    {
+      "date": "2023-01-23",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "DEFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    },
+    {
+      "date": "2023-01-24",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "DEFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    },
+    {
+      "date": "2023-01-25",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "DEFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    },
+    {
+      "date": "2023-01-26",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "DEFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    },
+    {
+      "date": "2023-01-27",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "DEFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    },
+    {
+      "date": "2023-01-30",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "DEFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    },
+    {
+      "date": "2023-01-31",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "DEFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    },
+    {
+      "date": "2023-02-01",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "DEFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    },
+    {
+      "date": "2023-02-02",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "DEFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    },
+    {
+      "date": "2023-02-03",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "DEFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    },
+    {
+      "date": "2023-02-06",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "DEFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    },
+    {
+      "date": "2023-02-07",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "DEFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    },
+    {
+      "date": "2023-02-08",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "DEFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    },
+    {
+      "date": "2023-02-09",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "DEFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    },
+    {
+      "date": "2023-02-10",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "DEFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    },
+    {
+      "date": "2023-02-13",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "DEFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    },
+    {
+      "date": "2023-02-14",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "DEFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    },
+    {
+      "date": "2023-02-15",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "DEFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    },
+    {
+      "date": "2023-02-16",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "DEFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    },
+    {
+      "date": "2023-02-17",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "DEFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    },
+    {
+      "date": "2023-02-21",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "DEFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    },
+    {
+      "date": "2023-02-22",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "DEFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    },
+    {
+      "date": "2023-02-23",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "DEFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    },
+    {
+      "date": "2023-02-24",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "DEFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    },
+    {
+      "date": "2023-02-27",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "DEFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    },
+    {
+      "date": "2023-02-28",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "DEFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    },
+    {
+      "date": "2023-03-01",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "DEFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    },
+    {
+      "date": "2023-03-02",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "DEFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    },
+    {
+      "date": "2023-03-03",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "DEFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    },
+    {
+      "date": "2023-03-06",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "DEFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    },
+    {
+      "date": "2023-03-07",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "DEFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    },
+    {
+      "date": "2023-03-08",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "DEFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    },
+    {
+      "date": "2023-03-09",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "DEFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    },
+    {
+      "date": "2023-03-10",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "DEFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    },
+    {
+      "date": "2023-03-13",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "DEFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    },
+    {
+      "date": "2023-03-14",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "DEFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    },
+    {
+      "date": "2023-03-15",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "DEFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    },
+    {
+      "date": "2023-03-16",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "DEFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    },
+    {
+      "date": "2023-03-17",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "DEFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    },
+    {
+      "date": "2023-03-20",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "DEFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    },
+    {
+      "date": "2023-03-21",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "DEFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    },
+    {
+      "date": "2023-03-22",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "DEFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    },
+    {
+      "date": "2023-03-23",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "DEFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    },
+    {
+      "date": "2023-03-24",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "DEFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    },
+    {
+      "date": "2023-03-27",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "DEFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    },
+    {
+      "date": "2023-03-28",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "DEFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    },
+    {
+      "date": "2023-03-29",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "DEFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    },
+    {
+      "date": "2023-03-30",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "DEFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    },
+    {
+      "date": "2023-03-31",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "DEFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    }
+  ],
+  "position_changes": []
+}

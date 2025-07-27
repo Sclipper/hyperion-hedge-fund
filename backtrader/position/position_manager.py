@@ -354,6 +354,12 @@ class PositionManager:
             return PositionSizeCategory.HALF, self.max_position_size * 0.5
         elif combined_score >= 0.6:
             return PositionSizeCategory.LIGHT, self.max_position_size * 0.25
+        elif combined_score >= 0.5:
+            return PositionSizeCategory.LIGHT, self.max_position_size * 0.15
+        elif combined_score >= 0.4:
+            return PositionSizeCategory.LIGHT, self.max_position_size * 0.1
+        elif combined_score >= self.min_score_threshold:
+            return PositionSizeCategory.LIGHT, self.max_position_size * 0.05
         else:
             return PositionSizeCategory.NO_POSITION, 0.0
     
