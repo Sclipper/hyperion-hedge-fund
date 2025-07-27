@@ -577,5 +577,233 @@ class ParameterRegistry:
     
     def _register_system_parameters(self):
         """Register base system parameters"""
-        # Implementation continues...
-        pass 
+        
+        # Database Configuration (Advanced Tier)
+        self.register_parameter(ParameterDefinition(
+            name='database_url',
+            type=str,
+            default_value=None,
+            description='PostgreSQL database connection URL',
+            tier_level=ParameterTier.ADVANCED,
+            module='Database',
+            cli_name='database-url',
+            help_text='Full PostgreSQL connection string (postgresql://user:password@host:port/dbname). If not provided, will attempt to use environment variables.',
+            examples=[
+                'postgresql://user:password@localhost:5432/hedge_fund',
+                'postgresql://user:password@db.example.com:5432/trading_data'
+            ],
+            warnings=[
+                'Database connection is required for regime detection',
+                'Without database connection, system will use mock data with limited functionality'
+            ]
+        ))
+        
+        self.register_parameter(ParameterDefinition(
+            name='db_host',
+            type=str,
+            default_value='localhost',
+            description='Database host address',
+            tier_level=ParameterTier.ADVANCED,
+            module='Database',
+            cli_name='db-host',
+            help_text='PostgreSQL server hostname or IP address'
+        ))
+        
+        self.register_parameter(ParameterDefinition(
+            name='db_port',
+            type=int,
+            default_value=5432,
+            description='Database port number',
+            tier_level=ParameterTier.ADVANCED,
+            module='Database',
+            cli_name='db-port',
+            help_text='PostgreSQL server port number',
+            min_value=1,
+            max_value=65535
+        ))
+        
+        self.register_parameter(ParameterDefinition(
+            name='db_name',
+            type=str,
+            default_value='hedge_fund',
+            description='Database name',
+            tier_level=ParameterTier.ADVANCED,
+            module='Database',
+            cli_name='db-name',
+            help_text='PostgreSQL database name containing regime and scanner data'
+        ))
+        
+        self.register_parameter(ParameterDefinition(
+            name='db_user',
+            type=str,
+            default_value='postgres',
+            description='Database username',
+            tier_level=ParameterTier.ADVANCED,
+            module='Database',
+            cli_name='db-user',
+            help_text='PostgreSQL username for authentication'
+        ))
+        
+        self.register_parameter(ParameterDefinition(
+            name='db_password',
+            type=str,
+            default_value=None,
+            description='Database password',
+            tier_level=ParameterTier.ADVANCED,
+            module='Database',
+            cli_name='db-password',
+            help_text='PostgreSQL password for authentication. Consider using environment variables for security.',
+            warnings=[
+                'Avoid hardcoding passwords in configuration files',
+                'Use environment variable DB_PASSWORD instead'
+            ]
+        ))
+        
+        self.register_parameter(ParameterDefinition(
+            name='enable_database',
+            type=bool,
+            default_value=True,
+            description='Enable database connection for regime detection',
+            tier_level=ParameterTier.INTERMEDIATE,
+            module='Database',
+            cli_name='enable-database',
+            help_text='Enable/disable database connection. When disabled, system uses mock data with limited functionality.'
+        ))
+        
+        self.register_parameter(ParameterDefinition(
+            name='db_pool_size',
+            type=int,
+            default_value=5,
+            description='Database connection pool size',
+            tier_level=ParameterTier.EXPERT,
+            module='Database',
+            cli_name='db-pool-size',
+            help_text='Number of database connections to maintain in the pool',
+            min_value=1,
+            max_value=20
+        ))
+        
+        # Module 12: Enhanced Asset Scanner Configuration
+        self.register_parameter(ParameterDefinition(
+            name='enable_asset_scanner_database',
+            type=bool,
+            default_value=True,
+            description='Enable database lookup for asset scanner',
+            tier_level=ParameterTier.INTERMEDIATE,
+            module='Enhanced Asset Scanner',
+            cli_name='enable-scanner-database',
+            help_text='When disabled, scanner relies entirely on technical analysis fallback',
+            examples=[
+                '--enable-scanner-database=true   # Use database + fallback',
+                '--enable-scanner-database=false  # Force technical analysis only'
+            ],
+            warnings=[
+                'Disabling database reduces scanner accuracy but improves self-sufficiency'
+            ]
+        ))
+        
+        self.register_parameter(ParameterDefinition(
+            name='asset_scanner_timeframes',
+            type=list,
+            default_value=['1d', '4h', '1h'],
+            description='Timeframes for multi-timeframe asset analysis',
+            tier_level=ParameterTier.ADVANCED,
+            module='Enhanced Asset Scanner',
+            cli_name='scanner-timeframes',
+            help_text='List of timeframes to analyze. More timeframes = higher accuracy but slower processing',
+            examples=[
+                "['1d']                    # Daily only (fastest)",
+                "['1d', '4h']             # Daily + 4-hour",
+                "['1d', '4h', '1h']       # Full multi-timeframe (default)",
+                "['1d', '4h', '1h', '15m'] # Ultra high-frequency"
+            ],
+            warnings=[
+                'More timeframes require more data and processing time',
+                'Ensure data manager supports all specified timeframes'
+            ]
+        ))
+        
+        self.register_parameter(ParameterDefinition(
+            name='asset_scanner_confidence_threshold',
+            type=float,
+            default_value=0.6,
+            description='Minimum confidence threshold for asset scanner results',
+            tier_level=ParameterTier.INTERMEDIATE,
+            module='Enhanced Asset Scanner',
+            cli_name='scanner-confidence-threshold',
+            help_text='Assets below this confidence are excluded from scanner results',
+            min_value=0.0,
+            max_value=1.0,
+            examples=[
+                '0.5   # Lower threshold, more assets included',
+                '0.6   # Balanced threshold (default)',
+                '0.7   # Higher threshold, only confident signals',
+                '0.8   # Very high threshold, only strongest signals'
+            ],
+            use_cases=[
+                'Lower thresholds for exploratory analysis',
+                'Higher thresholds for conservative trading'
+            ]
+        ))
+        
+        self.register_parameter(ParameterDefinition(
+            name='asset_scanner_enable_fallback',
+            type=bool,
+            default_value=True,
+            description='Enable technical analysis fallback when database unavailable',
+            tier_level=ParameterTier.INTERMEDIATE,
+            module='Enhanced Asset Scanner',
+            cli_name='scanner-enable-fallback',
+            help_text='When enabled, scanner calculates market conditions using technical analysis if database fails',
+            warnings=[
+                'Disabling fallback may result in no scanner data when database unavailable'
+            ]
+        ))
+        
+        self.register_parameter(ParameterDefinition(
+            name='asset_scanner_cache_ttl',
+            type=int,
+            default_value=300,
+            description='Cache time-to-live for scanner results (seconds)',
+            tier_level=ParameterTier.EXPERT,
+            module='Enhanced Asset Scanner',
+            cli_name='scanner-cache-ttl',
+            help_text='How long to cache scanner results. Lower values = more database queries but fresher data',
+            min_value=60,
+            max_value=3600,
+            examples=[
+                '60    # 1 minute (very fresh data)',
+                '300   # 5 minutes (default)',
+                '900   # 15 minutes (longer caching)',
+                '3600  # 1 hour (maximum caching)'
+            ]
+        ))
+        
+        self.register_parameter(ParameterDefinition(
+            name='asset_scanner_timeframe_weights',
+            type=dict,
+            default_value={'1d': 0.5, '4h': 0.3, '1h': 0.2},
+            description='Confidence weights for different timeframes',
+            tier_level=ParameterTier.EXPERT,
+            module='Enhanced Asset Scanner',
+            cli_name='scanner-timeframe-weights',
+            help_text='Weights for combining multi-timeframe analysis. Must sum to 1.0',
+            examples=[
+                "{'1d': 1.0}                           # Daily only",
+                "{'1d': 0.7, '4h': 0.3}               # Daily focus",
+                "{'1d': 0.5, '4h': 0.3, '1h': 0.2}    # Balanced (default)",
+                "{'1d': 0.4, '4h': 0.4, '1h': 0.2}    # Intermediate focus"
+            ],
+            warnings=[
+                'Weights must sum to 1.0',
+                'Keys must match timeframes in asset_scanner_timeframes'
+            ],
+            validation_rules=[
+                ValidationRule(
+                    name='weights_sum_to_one',
+                    description='Timeframe weights must sum to 1.0',
+                    validator=lambda x: abs(sum(x.values()) - 1.0) < 0.01 if isinstance(x, dict) else False,
+                    error_message='Timeframe weights must sum to 1.0'
+                )
+            ]
+        )) 

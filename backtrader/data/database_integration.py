@@ -2,25 +2,18 @@ import sys
 import os
 from typing import List, Dict, Optional, Tuple
 from datetime import datetime, timedelta
-from sqlalchemy import text
-from sqlalchemy.orm import Session
 import pandas as pd
-
-sys.path.append(os.path.join(os.path.dirname(__file__), '../../'))
-
-try:
-    from app.backend.database.connection import SessionLocal
-    DATABASE_AVAILABLE = True
-except ImportError:
-    SessionLocal = None
-    DATABASE_AVAILABLE = False
-    print("Warning: Database connection not available. Using mock data.")
+from .database_manager import get_database_manager, execute_query
 
 
 class DatabaseIntegration:
     def __init__(self):
-        self.database_available = DATABASE_AVAILABLE
+        self.db_manager = get_database_manager()
+        self.database_available = self.db_manager.is_connected
         self.cache = {}
+        
+        if not self.database_available:
+            print("Warning: Database connection not available. Using mock data.")
     
     def get_macro_research_data(self, end_date: str) -> Dict:
         if not self.database_available:
@@ -36,50 +29,35 @@ class DatabaseIntegration:
         if cache_key in self.cache:
             return self.cache[cache_key]
         
-        db = SessionLocal()
-        try:
-            result = db.execute(text("""
-                SELECT title, regime, buckets, created_at
-                FROM research 
-                WHERE created_at <= :end_date
-                AND regime IS NOT NULL
-                ORDER BY created_at DESC 
-                LIMIT 1
-            """), {"end_date": end_date})
+        research_data = execute_query("""
+            SELECT title, regime, buckets, created_at
+            FROM research 
+            WHERE created_at <= :end_date
+            AND regime IS NOT NULL
+            ORDER BY created_at DESC 
+            LIMIT 1
+        """, {"end_date": end_date})
             
-            research_data = [dict(row._mapping) for row in result]
-            
-            if research_data:
-                regime = research_data[0].get('regime')
-                buckets = research_data[0].get('buckets', [])
-                result_data = {
-                    'research_data': research_data,
-                    'regime': regime,
-                    'buckets': buckets,
-                    'has_data': True
-                }
-            else:
-                print(f"ERROR: No macro research data available for {end_date}")
-                result_data = {
-                    'research_data': [],
-                    'regime': None,
-                    'buckets': [],
-                    'has_data': False
-                }
-            
-            self.cache[cache_key] = result_data
-            return result_data
-                
-        except Exception as e:
-            print(f"ERROR: Could not fetch macro data: {e}")
-            return {
+        if research_data:
+            regime = research_data[0].get('regime')
+            buckets = research_data[0].get('buckets', [])
+            result_data = {
+                'research_data': research_data,
+                'regime': regime,
+                'buckets': buckets,
+                'has_data': True
+            }
+        else:
+            print(f"ERROR: No macro research data available for {end_date}")
+            result_data = {
                 'research_data': [],
                 'regime': None,
                 'buckets': [],
                 'has_data': False
             }
-        finally:
-            db.close()
+        
+        self.cache[cache_key] = result_data
+        return result_data
     
     def get_trending_assets(self, tickers: List[str], end_date: str, limit: int = 10, min_confidence: float = 0.7) -> List[str]:
         if not self.database_available:
@@ -89,34 +67,24 @@ class DatabaseIntegration:
         if cache_key in self.cache:
             return self.cache[cache_key]
         
-        db = SessionLocal()
-        try:
-            result = db.execute(text("""
-                SELECT * FROM scanner_historical
-                WHERE ticker = ANY(:tickers)
-                AND confidence >= :min_confidence
-                AND market = 'trending'
-                AND date <= :end_date
-                ORDER BY confidence DESC, date DESC
-                LIMIT :limit
-            """), {"tickers": tickers, "end_date": end_date, "limit": limit, "min_confidence": min_confidence})
-            
-            trending_data = [dict(row._mapping) for row in result]
+        trending_data = execute_query("""
+            SELECT * FROM scanner_historical
+            WHERE ticker = ANY(:tickers)
+            AND confidence >= :min_confidence
+            AND market = 'trending'
+            AND date <= :end_date
+            ORDER BY confidence DESC, date DESC
+            LIMIT :limit
+        """, {"tickers": tickers, "end_date": end_date, "limit": limit, "min_confidence": min_confidence})
+        
+        if trending_data:
             trending_tickers = [item['ticker'] for item in trending_data]
-            
-            if trending_tickers:
-                result_tickers = trending_tickers
-            else:
-                result_tickers = tickers[:limit]
-            
-            self.cache[cache_key] = result_tickers
-            return result_tickers
-                
-        except Exception as e:
-            print(f"Warning: Could not fetch trending assets: {e}")
-            return tickers[:limit]
-        finally:
-            db.close()
+            result_tickers = trending_tickers
+        else:
+            result_tickers = tickers[:limit]
+        
+        self.cache[cache_key] = result_tickers
+        return result_tickers
     
     def get_market_sentiment_data(self, date: str) -> Dict:
         if not self.database_available:
@@ -131,39 +99,30 @@ class DatabaseIntegration:
         if cache_key in self.cache:
             return self.cache[cache_key]
         
-        db = SessionLocal()
-        try:
-            # Look for research data around the given date
-            result = db.execute(text("""
-                SELECT plain_text, created_at
-                FROM research 
-                WHERE created_at <= :date
-                ORDER BY created_at DESC 
-                LIMIT 3
-            """), {"date": date})
-            
-            research_entries = [dict(row._mapping) for row in result]
-            
+        research_entries = execute_query("""
+            SELECT plain_text, created_at
+            FROM research 
+            WHERE created_at <= :date
+            ORDER BY created_at DESC 
+            LIMIT 3
+        """, {"date": date})
+        
+        if research_entries:
             sentiment_score = self._analyze_sentiment_from_research(research_entries)
-            
             result_data = {
                 'sentiment_score': sentiment_score,
                 'research_count': len(research_entries),
                 'date': date
             }
-            
-            self.cache[cache_key] = result_data
-            return result_data
-                
-        except Exception as e:
-            print(f"ERROR: Could not fetch sentiment data: {e}")
-            return {
+        else:
+            result_data = {
                 'sentiment_score': 0.5,
                 'research_count': 0,
                 'date': date
             }
-        finally:
-            db.close()
+        
+        self.cache[cache_key] = result_data
+        return result_data
     
     def get_regime_change_history(self, start_date: str, end_date: str) -> pd.DataFrame:
         dates = pd.date_range(start_date, end_date, freq='W')  # Weekly sampling

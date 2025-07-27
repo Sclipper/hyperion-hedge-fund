@@ -24,7 +24,7 @@ class EnhancedPositionManager(PositionManager):
                  min_score_threshold=0.6,
                  timeframes=['1d', '4h', '1h'],
                  enable_technical_analysis=True,
-                 enable_fundamental_analysis=True,
+                 enable_fundamental_analysis=False,
                  technical_weight=0.6,
                  fundamental_weight=0.4,
                  event_writer: EventWriter = None):
