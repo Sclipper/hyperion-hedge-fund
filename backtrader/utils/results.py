@@ -5,9 +5,11 @@ from datetime import datetime
 from typing import Dict, Any
 from .analyzers import print_analysis
 from .data_exporters import PortfolioDataExporter
+from .visualizer import PortfolioVisualizer
 
 
-def save_results(strategy, tickers, start_date, end_date, results_dir="results", enable_enhanced_export=True):
+def save_results(strategy, tickers, start_date, end_date, results_dir="results", enable_enhanced_export=True, 
+                enable_visualization=True, export_format='all', chart_style='interactive', benchmark_ticker='SPY'):
     # Create date-based folder structure
     base_results_path = Path(results_dir)
     base_results_path.mkdir(exist_ok=True)
@@ -43,7 +45,8 @@ def save_results(strategy, tickers, start_date, end_date, results_dir="results",
     saved_files = [str(json_file), str(csv_file)]
     
     # Enhanced CSV exports (new functionality)
-    if enable_enhanced_export and False:  # Temporarily disabled for testing
+    enhanced_files = {}
+    if enable_enhanced_export and export_format in ['csv', 'all']:
         try:
             exporter = PortfolioDataExporter(results_dir)
             enhanced_files = exporter.create_enhanced_export_package(
@@ -58,12 +61,89 @@ def save_results(strategy, tickers, start_date, end_date, results_dir="results",
         except Exception as e:
             print(f"Warning: Enhanced export failed: {e}")
     
+    # Portfolio visualizations (new functionality) 
+    visualization_files = {}
+    if enable_visualization and export_format in ['charts', 'all']:
+        try:
+            # Create portfolio visualization data
+            portfolio_data = None
+            position_changes = None
+            
+            # Extract data from enhanced exports or analyzers
+            if enhanced_files:
+                # Try to load the generated CSV files for visualization
+                timeline_file = enhanced_files.get('portfolio_timeline')
+                changes_file = enhanced_files.get('position_changes')
+                
+                if timeline_file and Path(timeline_file).exists():
+                    portfolio_data = pd.read_csv(timeline_file)
+                    portfolio_data['date'] = pd.to_datetime(portfolio_data['date'])
+                
+                if changes_file and Path(changes_file).exists():
+                    position_changes = pd.read_csv(changes_file)
+                    position_changes['date'] = pd.to_datetime(position_changes['date'])
+            
+            if portfolio_data is not None and not portfolio_data.empty:
+                # Initialize visualizer
+                visualizer = PortfolioVisualizer(style=chart_style)
+                
+                # Create charts
+                charts = []
+                
+                # Portfolio performance chart
+                portfolio_chart = visualizer.create_portfolio_chart(
+                    portfolio_data, 
+                    title=f"Portfolio Performance: {', '.join(tickers)}"
+                )
+                charts.append(portfolio_chart)
+                
+                # Trading activity chart (if position changes available)
+                if position_changes is not None and not position_changes.empty:
+                    trading_chart = visualizer.create_trading_activity_chart(
+                        portfolio_data, position_changes
+                    )
+                    charts.append(trading_chart)
+                
+                # Performance dashboard
+                dashboard_data = {'portfolio_timeline': portfolio_data}
+                if position_changes is not None:
+                    dashboard_data['position_changes'] = position_changes
+                    
+                dashboard_chart = visualizer.create_performance_dashboard(dashboard_data)
+                charts.append(dashboard_chart)
+                
+                # Save all charts
+                chart_files = visualizer.save_visualizations(
+                    charts, results_path, filename
+                )
+                
+                print(f"\nVisualization charts generated:")
+                for chart_file in chart_files:
+                    print(f"  {Path(chart_file).name}")
+                    saved_files.append(chart_file)
+                    
+                visualization_files['charts'] = chart_files
+                
+            else:
+                print("Warning: No portfolio data available for visualization")
+                
+        except Exception as e:
+            print(f"Warning: Visualization generation failed: {e}")
+            import traceback
+            traceback.print_exc()
+    
     print_analysis(strategy)
     
     print(f"\nCore results saved in folder: {folder_name}")
     print(f"  JSON: {Path(json_file).name}")
     print(f"  Trades CSV: {Path(csv_file).name}")
     print(f"  Location: {results_path}")
+    
+    # Add visualization and export info to results
+    results_data['enhanced_exports'] = enhanced_files
+    results_data['visualizations'] = visualization_files
+    results_data['export_format'] = export_format
+    results_data['chart_style'] = chart_style
     
     return results_data
 

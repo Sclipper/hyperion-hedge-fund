@@ -23,7 +23,8 @@ def run_regime_backtest(start_date, end_date, strategy_class=None, cash=100000, 
                        core_expiry_days=90, core_underperformance_threshold=0.15, 
                        core_underperformance_period=30, core_extension_limit=2, 
                        core_performance_check_frequency=7, smart_diversification_overrides=2,
-                       data_provider=None):
+                       data_provider=None,
+                       enable_visualization=True, export_format='all', chart_style='interactive', benchmark_ticker='SPY'):
     cerebro = bt.Cerebro()
     
     strategy_class = strategy_class or RegimeStrategy
@@ -80,12 +81,17 @@ def run_regime_backtest(start_date, end_date, strategy_class=None, cash=100000, 
     
     print(f'Final Portfolio Value: {cerebro.broker.getvalue():.2f}')
     
-    save_results(results[0], all_possible_assets, start_date, end_date)
+    save_results(results[0], all_possible_assets, start_date, end_date,
+                enable_visualization=enable_visualization,
+                export_format=export_format, 
+                chart_style=chart_style,
+                benchmark_ticker=benchmark_ticker)
     
     return results
 
 
-def run_static_backtest(tickers, start_date, end_date, strategy_class=None, cash=100000, commission=0.001, data_provider=None):
+def run_static_backtest(tickers, start_date, end_date, strategy_class=None, cash=100000, commission=0.001, data_provider=None,
+                       enable_visualization=True, export_format='all', chart_style='interactive', benchmark_ticker='SPY'):
     from strategies.base_strategy import BaseStrategy
     
     cerebro = bt.Cerebro()
@@ -113,7 +119,11 @@ def run_static_backtest(tickers, start_date, end_date, strategy_class=None, cash
     
     print(f'Final Portfolio Value: {cerebro.broker.getvalue():.2f}')
     
-    save_results(results[0], tickers, start_date, end_date)
+    save_results(results[0], tickers, start_date, end_date,
+                enable_visualization=enable_visualization,
+                export_format=export_format, 
+                chart_style=chart_style,
+                benchmark_ticker=benchmark_ticker)
     
     return results
 
@@ -200,6 +210,21 @@ def main():
                               help='Commission rate')
     static_parser.add_argument('--data-provider', type=str, default=None,
                               help='Data provider to use (yahoo, alpha_vantage). Defaults to environment variable DATA_PROVIDER or yahoo.')
+    
+    # Phase 5: Enhanced export and visualization options (for both regime and static)
+    for subparser in [regime_parser, static_parser]:
+        subparser.add_argument('--enable-visualization', action='store_true', default=True,
+                              help='Generate portfolio charts (default: true)')
+        subparser.add_argument('--disable-visualization', action='store_true',
+                              help='Disable portfolio chart generation')
+        subparser.add_argument('--export-format', type=str, default='all',
+                              choices=['csv', 'json', 'charts', 'all'],
+                              help='Export format: csv, json, charts, or all (default: all)')
+        subparser.add_argument('--chart-style', type=str, default='interactive',
+                              choices=['static', 'interactive'],
+                              help='Chart style: static or interactive (default: interactive)')
+        subparser.add_argument('--benchmark', type=str, default='SPY',
+                              help='Benchmark ticker for comparison (default: SPY)')
     
     parser.add_argument('--plot', action='store_true',
                        help='Plot results')
@@ -308,7 +333,12 @@ def main():
             core_extension_limit=args.core_extension_limit,
             core_performance_check_frequency=args.core_performance_check_frequency,
             smart_diversification_overrides=args.smart_diversification_overrides,
-            data_provider=getattr(args, 'data_provider', None)
+            data_provider=getattr(args, 'data_provider', None),
+            # Phase 5: Enhanced export and visualization parameters
+            enable_visualization=args.enable_visualization and not args.disable_visualization,
+            export_format=args.export_format,
+            chart_style=args.chart_style,
+            benchmark_ticker=args.benchmark
         )
     elif args.mode == 'compare':
         # Compare results mode
@@ -342,7 +372,12 @@ def main():
             end_date=end_date,
             cash=args.cash,
             commission=args.commission,
-            data_provider=getattr(args, 'data_provider', None)
+            data_provider=getattr(args, 'data_provider', None),
+            # Phase 5: Enhanced export and visualization parameters
+            enable_visualization=args.enable_visualization and not args.disable_visualization,
+            export_format=args.export_format,
+            chart_style=args.chart_style,
+            benchmark_ticker=args.benchmark
         )
     
     if args.plot:
