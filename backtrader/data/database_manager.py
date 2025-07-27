@@ -16,6 +16,16 @@ from sqlalchemy.orm import sessionmaker, Session
 from sqlalchemy.exc import SQLAlchemyError
 import logging
 
+try:
+    from dotenv import load_dotenv
+    # Load .env file from the project root
+    dotenv_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), '.env')
+    if os.path.exists(dotenv_path):
+        load_dotenv(dotenv_path)
+        print(f"✓ Loaded environment variables from {dotenv_path}")
+except ImportError:
+    print("Warning: python-dotenv not installed. .env file support disabled.")
+
 
 class DatabaseManager:
     """

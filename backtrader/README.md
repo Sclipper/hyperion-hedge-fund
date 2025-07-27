@@ -599,53 +599,6 @@ export DB_USER='postgres'
 export DB_PASSWORD='your_password'
 ```
 
-### **Database Setup Instructions**
-
-#### **1. Install PostgreSQL**
-```bash
-# Ubuntu/Debian
-sudo apt update
-sudo apt install postgresql postgresql-contrib
-
-# macOS (using Homebrew)
-brew install postgresql
-brew services start postgresql
-
-# Windows: Download from https://www.postgresql.org/download/windows/
-```
-
-#### **2. Create Database and User**
-```bash
-# Connect to PostgreSQL as superuser
-sudo -u postgres psql
-
-# Create database and user
-CREATE DATABASE hedge_fund;
-CREATE USER hedge_user WITH ENCRYPTED PASSWORD 'your_secure_password';
-GRANT ALL PRIVILEGES ON DATABASE hedge_fund TO hedge_user;
-
-# Grant schema permissions
-\c hedge_fund
-GRANT ALL ON SCHEMA public TO hedge_user;
-GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO hedge_user;
-GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO hedge_user;
-
-# Exit PostgreSQL
-\q
-```
-
-#### **3. Create Required Tables**
-```bash
-# Connect to the database
-psql -h localhost -U hedge_user -d hedge_fund
-
-# Create the tables (copy SQL from schema above)
--- Paste the CREATE TABLE statements from above
-
-# Exit
-\q
-```
-
 #### **4. Verify Database Connection**
 ```bash
 # Test database connection with the system
@@ -655,51 +608,6 @@ python utils/database_test.py
 # ✓ Database connection successful
 # ✓ Required tables found: research, scanner_historical
 # ✓ Database ready for hedge fund system
-```
-
-### **Database Configuration Options**
-
-#### **Command Line Parameters**
-```bash
-# Enable/disable database usage
-python main.py regime --enable-database=true   # Use database (default)
-python main.py regime --enable-database=false  # Technical analysis only
-
-# Override database connection
-python main.py regime --database-url "postgresql://user:pass@host:port/db"
-
-# Individual database parameters
-python main.py regime \
-  --db-host localhost \
-  --db-port 5432 \
-  --db-name hedge_fund \
-  --db-user hedge_user \
-  --db-password your_password
-```
-
-#### **Configuration File (YAML)**
-```yaml
-# config/database.yaml
-database:
-  enable_database: true
-  db_host: "localhost"
-  db_port: 5432
-  db_name: "hedge_fund"
-  db_user: "hedge_user"
-  db_password: "your_password"
-  
-  # Connection pool settings
-  db_pool_size: 5
-  db_max_overflow: 10
-  db_pool_timeout: 30
-
-# Enhanced Asset Scanner settings
-asset_scanner:
-  enable_asset_scanner_database: true
-  asset_scanner_confidence_threshold: 0.6
-  asset_scanner_enable_fallback: true
-  asset_scanner_cache_ttl: 300  # 5 minutes
-  regime_detector_use_enhanced_scanner: true
 ```
 
 ### **Data Population Examples**
@@ -724,8 +632,6 @@ INSERT INTO scanner_historical (ticker, market, confidence, date, strength, volu
 ('TSLA', 'breakout', 0.89, '2024-07-26', 0.92, 2.15),
 ('NVDA', 'trending', 0.87, '2024-07-26', 0.84, 1.45);
 ```
-
-
 
 ## ⚠️ Data Requirements
 
