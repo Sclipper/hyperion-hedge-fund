@@ -193,7 +193,7 @@ class AlphaVantageProvider(DataProvider):
             'outputsize': 'full'
         }
         
-        data = self._make_request(params, ticker, timeframe)
+        data = self._make_request(params, ticker, 'daily')
         
         if 'Time Series (Daily)' not in data:
             logger.warning(f"No daily data found for {ticker}")
@@ -208,7 +208,7 @@ class AlphaVantageProvider(DataProvider):
         df = df.astype(float)
         
         # Filter by date range
-        df = df[(df.index >= start_date) & (df.index <= end_date)]
+        df = df[(df.index >= pd.Timestamp(start_date)) & (df.index <= pd.Timestamp(end_date))]
         df = df.sort_index()
         
         # Add provider attribution
@@ -240,7 +240,7 @@ class AlphaVantageProvider(DataProvider):
             'outputsize': 'full'
         }
         
-        data = self._make_request(params, ticker, timeframe)
+        data = self._make_request(params, ticker, base_timeframe)
         
         time_series_key = f'Time Series ({av_interval})'
         if time_series_key not in data:
@@ -257,7 +257,7 @@ class AlphaVantageProvider(DataProvider):
         df = df.sort_index()
         
         # Filter by date range
-        df = df[(df.index >= start_date) & (df.index <= end_date)]
+        df = df[(df.index >= pd.Timestamp(start_date)) & (df.index <= pd.Timestamp(end_date))]
         
         # Resample to 4h if needed
         if timeframe == '4h' and not df.empty:
@@ -305,7 +305,7 @@ class AlphaVantageProvider(DataProvider):
             'apikey': self.api_key
         }
         
-        data = self._make_request(params, ticker, timeframe)
+        data = self._make_request(params, ticker, 'daily')
         
         if 'Time Series (Digital Currency Daily)' not in data:
             logger.warning(f"No crypto daily data found for {ticker}")
@@ -320,7 +320,7 @@ class AlphaVantageProvider(DataProvider):
         df = df.astype(float)
         
         # Filter by date range
-        df = df[(df.index >= start_date) & (df.index <= end_date)]
+        df = df[(df.index >= pd.Timestamp(start_date)) & (df.index <= pd.Timestamp(end_date))]
         df = df.sort_index()
         
         # Add provider attribution
@@ -371,7 +371,7 @@ class AlphaVantageProvider(DataProvider):
         df = df.sort_index()
         
         # Filter by date range
-        df = df[(df.index >= start_date) & (df.index <= end_date)]
+        df = df[(df.index >= pd.Timestamp(start_date)) & (df.index <= pd.Timestamp(end_date))]
         
         # Resample to 4h if needed
         if timeframe == '4h' and not df.empty:
