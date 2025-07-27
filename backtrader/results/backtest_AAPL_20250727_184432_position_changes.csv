@@ -1,0 +1,4 @@
+date,asset,action,quantity,price,value,reason,score_before,score_after,bucket,regime
+2023-02-17,AAPL,BUY,657,150.83,99094.74,Position update,0.0,0.0,Unknown,Unknown
+2023-02-21,AAPL,HOLD,657,146.81,96450.93,Position update,0.0,0.0,Unknown,Unknown
+2023-02-22,AAPL,SELL,657,147.23,96730.24,Position update,0.0,0.0,Unknown,Unknown

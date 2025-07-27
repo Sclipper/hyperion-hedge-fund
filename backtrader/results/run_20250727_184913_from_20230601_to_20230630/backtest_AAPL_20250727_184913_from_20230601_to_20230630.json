@@ -1,0 +1,221 @@
+{
+  "metadata": {
+    "tickers": [
+      "AAPL"
+    ],
+    "start_date": "2023-06-01T00:00:00",
+    "end_date": "2023-06-30T00:00:00",
+    "strategy": "BaseStrategy",
+    "parameters": {
+      "sma_period": 20,
+      "rsi_period": 14,
+      "rsi_lower": 30,
+      "rsi_upper": 70,
+      "stop_loss": 0.05,
+      "take_profit": 0.15
+    },
+    "generated_at": "2025-07-27T18:49:13.386417"
+  },
+  "performance": {
+    "sharpe_ratio": null,
+    "total_return": 0.0,
+    "average_return": 0.0,
+    "max_drawdown": 0.0,
+    "max_drawdown_duration": 0.0,
+    "sqn": 0,
+    "vwr": 0.0
+  },
+  "trades": {
+    "total": 0,
+    "won": 0,
+    "lost": 0,
+    "win_rate": 0,
+    "average_win": 0,
+    "average_loss": 0,
+    "profit_factor": 0,
+    "details": []
+  },
+  "portfolio_timeline": [
+    {
+      "date": "2023-06-01",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "Unknown",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    },
+    {
+      "date": "2023-06-02",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "Unknown",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    },
+    {
+      "date": "2023-06-05",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "Unknown",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    },
+    {
+      "date": "2023-06-06",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "Unknown",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    },
+    {
+      "date": "2023-06-07",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "Unknown",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    },
+    {
+      "date": "2023-06-08",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "Unknown",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    },
+    {
+      "date": "2023-06-09",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "Unknown",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    },
+    {
+      "date": "2023-06-12",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "Unknown",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    },
+    {
+      "date": "2023-06-13",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "Unknown",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    },
+    {
+      "date": "2023-06-14",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "Unknown",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    },
+    {
+      "date": "2023-06-15",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "Unknown",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    },
+    {
+      "date": "2023-06-16",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "Unknown",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    },
+    {
+      "date": "2023-06-20",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "Unknown",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    },
+    {
+      "date": "2023-06-21",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "Unknown",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    },
+    {
+      "date": "2023-06-22",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "Unknown",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    },
+    {
+      "date": "2023-06-23",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "Unknown",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    },
+    {
+      "date": "2023-06-26",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "Unknown",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    },
+    {
+      "date": "2023-06-27",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "Unknown",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    },
+    {
+      "date": "2023-06-28",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "Unknown",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    },
+    {
+      "date": "2023-06-29",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "Unknown",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    }
+  ],
+  "position_changes": []
+}

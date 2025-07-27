@@ -31,6 +31,22 @@ class RegimeStrategy(bt.Strategy):
         ('technical_weight', 0.6),  # Weight for technical analysis
         ('fundamental_weight', 0.4),  # Weight for fundamental analysis
         ('min_trending_confidence', 0.7),  # Minimum confidence for trending assets
+        
+        # External dependencies (passed from main.py)
+        ('regime_detector', None),  # RegimeDetector instance
+        ('asset_manager', None),    # AssetBucketManager instance
+        ('data_manager', None),     # DataManager instance
+        
+        # Core Asset Management Parameters (Module 5)
+        ('enable_core_assets', False),
+        ('max_core_assets', 3),
+        ('core_override_threshold', 0.95),
+        ('core_expiry_days', 90),
+        ('core_underperformance_threshold', 0.15),
+        ('core_underperformance_period', 30),
+        ('core_extension_limit', 2),
+        ('core_performance_check_frequency', 7),
+        ('smart_diversification_overrides', 2),
     )
     
     def __init__(self):

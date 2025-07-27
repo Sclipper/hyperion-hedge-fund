@@ -4,32 +4,66 @@ from pathlib import Path
 from datetime import datetime
 from typing import Dict, Any
 from .analyzers import print_analysis
+from .data_exporters import PortfolioDataExporter
 
 
-def save_results(strategy, tickers, start_date, end_date, results_dir="results"):
-    results_path = Path(results_dir)
+def save_results(strategy, tickers, start_date, end_date, results_dir="results", enable_enhanced_export=True):
+    # Create date-based folder structure
+    base_results_path = Path(results_dir)
+    base_results_path.mkdir(exist_ok=True)
+    
+    run_date = datetime.now().strftime('%Y%m%d_%H%M%S')
+    start_str = start_date.strftime('%Y%m%d')
+    end_str = end_date.strftime('%Y%m%d')
+    
+    # Create folder name: run_YYYYMMDD_HHMMSS_from_YYYYMMDD_to_YYYYMMDD
+    folder_name = f"run_{run_date}_from_{start_str}_to_{end_str}"
+    results_path = base_results_path / folder_name
     results_path.mkdir(exist_ok=True)
     
-    timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
-    tickers_str = '_'.join(tickers)
-    filename = f"backtest_{tickers_str}_{timestamp}"
+    # Create filename with same structure
+    tickers_str = '_'.join(tickers[:3])  # Limit to first 3 tickers for filename
+    if len(tickers) > 3:
+        tickers_str += f'_plus{len(tickers)-3}'
+    filename = f"backtest_{tickers_str}_{run_date}_from_{start_str}_to_{end_str}"
     
     results_data = extract_results(strategy, tickers, start_date, end_date)
     
+    # Original JSON export
     json_file = results_path / f"{filename}.json"
     with open(json_file, 'w') as f:
         json.dump(results_data, f, indent=2, default=str)
     
+    # Original trades CSV export
     csv_file = results_path / f"{filename}_trades.csv"
     if results_data['trades']['details']:
         trades_df = pd.DataFrame(results_data['trades']['details'])
         trades_df.to_csv(csv_file, index=False)
     
+    saved_files = [str(json_file), str(csv_file)]
+    
+    # Enhanced CSV exports (new functionality)
+    if enable_enhanced_export and False:  # Temporarily disabled for testing
+        try:
+            exporter = PortfolioDataExporter(results_dir)
+            enhanced_files = exporter.create_enhanced_export_package(
+                strategy, tickers, start_date, end_date
+            )
+            
+            print(f"\nEnhanced CSV exports in folder: {folder_name}")
+            for export_type, filepath in enhanced_files.items():
+                print(f"  {export_type}: {Path(filepath).name}")
+                saved_files.append(filepath)
+                
+        except Exception as e:
+            print(f"Warning: Enhanced export failed: {e}")
+    
     print_analysis(strategy)
     
-    print(f"Results saved to:")
-    print(f"  JSON: {json_file}")
-    print(f"  CSV: {csv_file}")
+    print(f"\nCore results saved in folder: {folder_name}")
+    print(f"  JSON: {Path(json_file).name}")
+    print(f"  Trades CSV: {Path(csv_file).name}")
+    print(f"  Location: {results_path}")
     
     return results_data
 
@@ -41,6 +75,10 @@ def extract_results(strategy, tickers, start_date, end_date) -> Dict[str, Any]:
     trades = strategy.analyzers.trades.get_analysis()
     sqn = strategy.analyzers.sqn.get_analysis()
     vwr = strategy.analyzers.vwr.get_analysis()
+    
+    # Get data from our new custom analyzers
+    portfolio_tracker = strategy.analyzers.portfolio_tracker.get_analysis()
+    position_tracker = strategy.analyzers.position_tracker.get_analysis()
     
     results = {
         'metadata': {
@@ -69,7 +107,9 @@ def extract_results(strategy, tickers, start_date, end_date) -> Dict[str, Any]:
             'average_loss': 0,
             'profit_factor': 0,
             'details': []
-        }
+        },
+        'portfolio_timeline': portfolio_tracker.get('portfolio_timeline', []),
+        'position_changes': position_tracker.get('position_changes', [])
     }
     
     if results['trades']['total'] > 0:

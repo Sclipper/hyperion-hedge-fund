@@ -36,6 +36,22 @@ python -m config.cli_parser --tier intermediate --export-config strategy.yaml
 python main.py regime --config strategy.yaml
 ```
 
+### Data Pre-loading
+```bash
+# Pre-download daily data for major assets (1 year)
+python scripts/preload_data.py --tickers AAPL,MSFT,GOOGL --period 1y
+
+# Multi-timeframe download with Alpha Vantage (requires API key)
+python scripts/preload_data.py --tickers AAPL --timeframes 1h,4h,1d --period 6m --provider alpha_vantage
+
+# Download all risk assets for backtesting
+python scripts/preload_data.py --bucket "Risk Assets" --period 1y
+
+# Estimate download time and show cache stats
+python scripts/preload_data.py --cache-stats
+python scripts/preload_data.py --tickers AAPL,MSFT --timeframes 1h,4h,1d --period 1y --estimate-only
+```
+
 ### Testing
 ```bash
 # Run all tests
@@ -53,6 +69,10 @@ python utils/database_test.py
 
 # Test asset scanner functionality
 python utils/scanner_test.py
+
+# Test Alpha Vantage integration (requires API key)
+python tests/test_complete_integration.py
+python tests/test_checkpoint_and_timeframes.py
 ```
 
 ### Event Monitoring and Analysis
