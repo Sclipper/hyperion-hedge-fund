@@ -1,3 +1,0 @@
-date,asset,shares,price,market_value,weight_pct,score,bucket,days_held,is_core_asset
-2023-02-17,AAPL,657,150.63,99094.74,99.0641,0.0,Unknown,1,false
-2023-02-21,AAPL,657,150.63,96450.93,99.0387,0.0,Unknown,1,false
