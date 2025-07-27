@@ -453,13 +453,17 @@ class PortfolioVisualizer:
             row = (i // 2) + 1
             col = (i % 2) + 1
             
+            # Handle None values in metrics
+            values = [v if v is not None else 0 for v in metrics.values()]
+            text_values = [f"{v:.3f}" if v is not None else "N/A" for v in metrics.values()]
+            
             fig.add_trace(
                 go.Bar(
                     x=list(metrics.keys()),
-                    y=list(metrics.values()),
+                    y=values,
                     name=category,
                     marker_color=colors[i % len(colors)],
-                    text=[f"{v:.3f}" for v in metrics.values()],
+                    text=text_values,
                     textposition='auto',
                     hovertemplate='<b>%{x}</b><br>Value: %{y:.3f}<extra></extra>'
                 ),
@@ -497,6 +501,124 @@ class PortfolioVisualizer:
             height=800,
             showlegend=False,
             template='plotly_white'
+        )
+        
+        return fig
+    
+    def create_pnl_chart(self, performance_metrics: dict) -> go.Figure:
+        """
+        Create PnL (Profit and Loss) visualization chart showing unrealized and realized PnL over time
+        
+        Args:
+            performance_metrics: Dictionary with PnL history data
+            
+        Returns:
+            Plotly figure with PnL visualization
+        """
+        fig = make_subplots(
+            rows=2, cols=1,
+            subplot_titles=['Unrealized PnL Over Time', 'Realized PnL Cumulative'],
+            vertical_spacing=0.12,
+            row_heights=[0.6, 0.4]
+        )
+        
+        # Extract PnL data
+        unrealized_history = performance_metrics.get('unrealized_pnl_history', [])
+        realized_history = performance_metrics.get('realized_pnl_history', [])
+        
+        # Unrealized PnL chart
+        if unrealized_history:
+            dates = [entry[0] for entry in unrealized_history]
+            unrealized_pnl = [entry[1] for entry in unrealized_history]
+            
+            # Convert dates to datetime if they're not already
+            dates = pd.to_datetime(dates)
+            
+            fig.add_trace(
+                go.Scatter(
+                    x=dates,
+                    y=unrealized_pnl,
+                    name='Unrealized PnL',
+                    line=dict(color=self.colors['primary'], width=2),
+                    fill='tonexty',
+                    fillcolor='rgba(46, 134, 171, 0.3)',
+                    hovertemplate='<b>%{x}</b><br>Unrealized PnL: $%{y:,.2f}<extra></extra>'
+                ),
+                row=1, col=1
+            )
+            
+            # Add zero line for reference
+            fig.add_hline(y=0, line_dash="dash", line_color="gray", opacity=0.5, row=1, col=1)
+        
+        # Realized PnL cumulative chart
+        if realized_history:
+            realized_dates = [entry[0] for entry in realized_history]
+            realized_pnl = [entry[1] for entry in realized_history]
+            
+            # Convert dates to datetime if they're not already
+            realized_dates = pd.to_datetime(realized_dates)
+            
+            # Calculate cumulative realized PnL
+            cumulative_realized = []
+            running_total = 0
+            for pnl in realized_pnl:
+                running_total += pnl
+                cumulative_realized.append(running_total)
+            
+            fig.add_trace(
+                go.Scatter(
+                    x=realized_dates,
+                    y=cumulative_realized,
+                    name='Cumulative Realized PnL',
+                    line=dict(color=self.colors['success'], width=2),
+                    mode='lines+markers',
+                    marker=dict(size=4),
+                    hovertemplate='<b>%{x}</b><br>Cumulative Realized PnL: $%{y:,.2f}<extra></extra>'
+                ),
+                row=2, col=1
+            )
+            
+            # Add individual realized PnL bars
+            colors = ['green' if pnl >= 0 else 'red' for pnl in realized_pnl]
+            fig.add_trace(
+                go.Bar(
+                    x=realized_dates,
+                    y=realized_pnl,
+                    name='Individual Realized PnL',
+                    marker_color=colors,
+                    opacity=0.6,
+                    hovertemplate='<b>%{x}</b><br>Trade PnL: $%{y:,.2f}<extra></extra>'
+                ),
+                row=2, col=1
+            )
+            
+            # Add zero line for reference
+            fig.add_hline(y=0, line_dash="dash", line_color="gray", opacity=0.5, row=2, col=1)
+        
+        # Update layout
+        fig.update_layout(
+            title='Profit & Loss Analysis',
+            height=700,
+            showlegend=True,
+            template='plotly_white',
+            hovermode='x unified'
+        )
+        
+        # Update axes
+        fig.update_yaxes(title_text="Unrealized PnL ($)", row=1, col=1)
+        fig.update_yaxes(title_text="Realized PnL ($)", row=2, col=1)
+        
+        # Format X-axes with proper date formatting
+        fig.update_xaxes(
+            title_text="Date", 
+            row=2, col=1,
+            type='date',
+            tickformat='%Y-%m-%d'
+        )
+        fig.update_xaxes(
+            type='date',
+            tickformat='%Y-%m-%d',
+            row=1, col=1
         )
         
         return fig
@@ -539,7 +661,8 @@ class PortfolioVisualizer:
             'asset_allocation', 
             'performance_dashboard',
             'trading_activity',
-            'performance_metrics'
+            'performance_metrics',
+            'pnl_analysis'
         ]
         
         for i, fig in enumerate(charts):

@@ -47,6 +47,7 @@ class RegimeStrategy(bt.Strategy):
         ('core_extension_limit', 2),
         ('core_performance_check_frequency', 7),
         ('smart_diversification_overrides', 2),
+        ('enable_take_profit_stop_loss', False),  # Enable/disable take-profit and stop-loss
     )
     
     def __init__(self):
@@ -93,6 +94,11 @@ class RegimeStrategy(bt.Strategy):
         self.position_scores = {}  # Track current position scores
         self.asset_bucket_mapping = {}  # Maps assets to their buckets for analytics
         
+        # Track PnL for visualization and metrics
+        self.unrealized_pnl_history = []  # List of (date, unrealized_pnl) tuples
+        self.realized_pnl_history = []    # List of (date, realized_pnl, asset) tuples
+        self.total_realized_pnl = 0.0     # Running total of realized PnL
+        
     def log(self, txt, dt=None):
         dt = dt or self.datas[0].datetime.date(0)
         print(f'{dt.isoformat()}, {txt}')
@@ -124,7 +130,15 @@ class RegimeStrategy(bt.Strategy):
         if not trade.isclosed:
             return
         
-        self.log(f'TRADE PROFIT: {trade.data._name}, GROSS: {trade.pnl:.2f}, NET: {trade.pnlcomm:.2f}')
+        asset_name = trade.data._name
+        realized_pnl = trade.pnlcomm  # Net PnL after commissions
+        current_date = self.datas[0].datetime.date(0)
+        
+        # Track realized PnL
+        self.realized_pnl_history.append((current_date, realized_pnl, asset_name))
+        self.total_realized_pnl += realized_pnl
+        
+        self.log(f'TRADE PROFIT: {asset_name}, GROSS: {trade.pnl:.2f}, NET: {realized_pnl:.2f}')
     
     def next(self):
         current_date = self.datas[0].datetime.date(0)
@@ -138,6 +152,9 @@ class RegimeStrategy(bt.Strategy):
         
         # Apply risk management to existing positions
         self._apply_risk_management()
+        
+        # Calculate and track unrealized PnL
+        self._track_unrealized_pnl(current_date)
     
     def _should_rebalance_regime_change(self, current_date: datetime) -> bool:
         """Check for regime change separately from position manager rebalancing"""
@@ -331,17 +348,38 @@ class RegimeStrategy(bt.Strategy):
                 
                 pct_change = (current_price - entry_price) / entry_price
                 
-                # Stop loss
-                if pct_change <= -self.params.stop_loss:
-                    if ticker not in self.orders or self.orders[ticker] is None:
-                        self.log(f'STOP LOSS: {ticker}, Loss: {pct_change:.2%}')
-                        self.orders[ticker] = self.sell(data=data, size=position.size)
-                
-                # Take profit
-                elif pct_change >= self.params.take_profit:
-                    if ticker not in self.orders or self.orders[ticker] is None:
-                        self.log(f'TAKE PROFIT: {ticker}, Gain: {pct_change:.2%}')
-                        self.orders[ticker] = self.sell(data=data, size=position.size)
+                # Stop loss and take profit (only if enabled)
+                if self.params.enable_take_profit_stop_loss:
+                    # Stop loss
+                    if pct_change <= -self.params.stop_loss:
+                        if ticker not in self.orders or self.orders[ticker] is None:
+                            self.log(f'STOP LOSS: {ticker}, Loss: {pct_change:.2%}')
+                            self.orders[ticker] = self.sell(data=data, size=position.size)
+                    
+                    # Take profit
+                    elif pct_change >= self.params.take_profit:
+                        if ticker not in self.orders or self.orders[ticker] is None:
+                            self.log(f'TAKE PROFIT: {ticker}, Gain: {pct_change:.2%}')
+                            self.orders[ticker] = self.sell(data=data, size=position.size)
+    
+    def _track_unrealized_pnl(self, current_date):
+        """Calculate and track unrealized PnL for open positions"""
+        total_unrealized_pnl = 0.0
+        
+        for data in self.datas:
+            ticker = data._name
+            position = self.getposition(data)
+            
+            if position.size != 0 and ticker in self.buy_prices:
+                current_price = data.close[0]
+                entry_price = self.buy_prices[ticker]
+                position_value = position.size * current_price
+                cost_basis = position.size * entry_price
+                unrealized_pnl = position_value - cost_basis
+                total_unrealized_pnl += unrealized_pnl
+        
+        # Store the unrealized PnL for this date
+        self.unrealized_pnl_history.append((current_date, total_unrealized_pnl))
     
     def stop(self):
         self.log(f'Final Portfolio Value: {self.broker.getvalue():.2f}')
@@ -350,6 +388,7 @@ class RegimeStrategy(bt.Strategy):
         if self.regime_history:
             regimes_used = set(entry['regime'] for entry in self.regime_history)
             self.log(f'Regimes Used: {list(regimes_used)}')
+        
         
         # Position history export is now handled by save_results() function
         # to ensure it goes to the correct run folder with proper naming

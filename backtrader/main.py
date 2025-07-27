@@ -23,7 +23,7 @@ def run_regime_backtest(start_date, end_date, strategy_class=None, cash=100000, 
                        core_expiry_days=90, core_underperformance_threshold=0.15, 
                        core_underperformance_period=30, core_extension_limit=2, 
                        core_performance_check_frequency=7, smart_diversification_overrides=2,
-                       data_provider=None,
+                       enable_take_profit_stop_loss=False, data_provider=None,
                        enable_visualization=True, export_format='all', chart_style='interactive', benchmark_ticker='SPY'):
     cerebro = bt.Cerebro()
     
@@ -59,7 +59,8 @@ def run_regime_backtest(start_date, end_date, strategy_class=None, cash=100000, 
         core_underperformance_period=core_underperformance_period,
         core_extension_limit=core_extension_limit,
         core_performance_check_frequency=core_performance_check_frequency,
-        smart_diversification_overrides=smart_diversification_overrides
+        smart_diversification_overrides=smart_diversification_overrides,
+        enable_take_profit_stop_loss=enable_take_profit_stop_loss
     )
     
     # Optimized bulk loading with cache separation
@@ -194,6 +195,8 @@ def main():
                               help='Days between performance checks for core assets')
     regime_parser.add_argument('--smart-diversification-overrides', type=int, default=2,
                               help='Maximum bucket overrides per rebalancing cycle')
+    regime_parser.add_argument('--enable-take-profit-stop-loss', action='store_true',
+                              help='Enable take-profit and stop-loss functionality (disabled by default)')
     
     # Compare results command
     compare_parser = subparsers.add_parser('compare', help='Compare backtest results')
@@ -341,6 +344,7 @@ def main():
             core_extension_limit=args.core_extension_limit,
             core_performance_check_frequency=args.core_performance_check_frequency,
             smart_diversification_overrides=args.smart_diversification_overrides,
+            enable_take_profit_stop_loss=args.enable_take_profit_stop_loss,
             data_provider=getattr(args, 'data_provider', None),
             # Phase 5: Enhanced export and visualization parameters
             enable_visualization=args.enable_visualization and not args.disable_visualization,

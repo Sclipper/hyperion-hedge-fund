@@ -29,6 +29,19 @@ def extract_performance_metrics(strategy) -> dict:
             'vwr': vwr.get("vwr", 0) if vwr else 0,
         }
         
+        # Extract PnL data from strategy if available
+        if hasattr(strategy, 'total_realized_pnl'):
+            metrics['total_realized_pnl'] = strategy.total_realized_pnl
+        
+        if hasattr(strategy, 'unrealized_pnl_history') and strategy.unrealized_pnl_history:
+            # Get the final unrealized PnL
+            final_unrealized = strategy.unrealized_pnl_history[-1][1] if strategy.unrealized_pnl_history else 0
+            metrics['final_unrealized_pnl'] = final_unrealized
+            metrics['unrealized_pnl_history'] = strategy.unrealized_pnl_history
+        
+        if hasattr(strategy, 'realized_pnl_history'):
+            metrics['realized_pnl_history'] = strategy.realized_pnl_history
+        
         # Extract trade metrics
         if 'total' in trades:
             total_trades = trades['total']['total']
@@ -191,13 +204,19 @@ def save_results(strategy, tickers, start_date, end_date, results_dir="results",
                         # Export metrics to JSON
                         metrics_json_file = results_path / f"{filename}_performance_metrics.json"
                         with open(metrics_json_file, 'w') as f:
-                            json.dump(performance_metrics, f, indent=2)
+                            json.dump(performance_metrics, f, indent=2, default=str)
                         print(f"  performance_metrics: {metrics_json_file.name}")
                         saved_files.append(str(metrics_json_file))
                         
                         # Create metrics visualization chart
                         metrics_chart = visualizer.create_performance_metrics_chart(performance_metrics)
                         charts.append(metrics_chart)
+                        
+                        # Create PnL visualization chart if PnL data is available
+                        if ('unrealized_pnl_history' in performance_metrics or 
+                            'realized_pnl_history' in performance_metrics):
+                            pnl_chart = visualizer.create_pnl_chart(performance_metrics)
+                            charts.append(pnl_chart)
                 
                 # Save all charts
                 chart_files = visualizer.save_visualizations(
