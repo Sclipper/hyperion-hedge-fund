@@ -1,0 +1,9 @@
+date,regime,confidence,stability,duration_days,active_buckets,portfolio_return_in_regime
+2024-03-27,GOLDILOCKS,0.0,0.0,37,Unknown,0.0
+2024-05-03,REFLATION,0.0,0.0,39,Unknown,0.0
+2024-06-11,INFLATION,0.0,0.0,29,Unknown,0.0
+2024-07-10,DEFLATION,0.0,0.0,43,Unknown,0.0
+2024-08-22,GOLDILOCKS,0.0,0.0,104,Unknown,0.0
+2024-12-04,REFLATION,0.0,0.0,65,Unknown,0.0
+2025-02-07,DEFLATION,0.0,0.0,117,Unknown,0.0
+2025-06-04,GOLDILOCKS,0.0,0.0,51,Unknown,0.0

@@ -124,7 +124,10 @@ class DataManager:
                 return cached_data
         
         try:
-            print(f"Downloading {ticker} data from {start_date.date()} to {end_date.date()} "
+            # Handle both datetime and date objects
+            start_str = start_date.date() if hasattr(start_date, 'date') else start_date
+            end_str = end_date.date() if hasattr(end_date, 'date') else end_date
+            print(f"Downloading {ticker} data from {start_str} to {end_str} "
                   f"using {provider.name} provider (timeframe: {interval})")
             
             # Use provider to fetch data

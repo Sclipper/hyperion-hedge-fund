@@ -578,6 +578,180 @@ class ParameterRegistry:
     def _register_system_parameters(self):
         """Register base system parameters"""
         
+        # Essential Tier 1 System Parameters
+        self.register_parameter(ParameterDefinition(
+            name='start_date',
+            type=str,
+            default_value='2021-01-01',
+            description='Backtest start date',
+            tier_level=ParameterTier.BASIC,
+            module='System Configuration',
+            cli_name='start-date',
+            help_text='Start date for backtesting in YYYY-MM-DD format',
+            validation_rules=[
+                ValidationRule(
+                    name='valid_date_format',
+                    description='Must be valid date in YYYY-MM-DD format',
+                    validator=lambda x: isinstance(x, str) and len(x.split('-')) == 3,
+                    error_message='start_date must be in YYYY-MM-DD format'
+                )
+            ],
+            examples=['2021-01-01', '2022-01-01', '2023-01-01'],
+            use_cases=['Long backtest: 2020-01-01', 'Recent data: 2023-01-01', 'Post-COVID: 2021-01-01']
+        ))
+        
+        self.register_parameter(ParameterDefinition(
+            name='end_date',
+            type=str,
+            default_value=None,
+            description='Backtest end date (optional)',
+            tier_level=ParameterTier.BASIC,
+            module='System Configuration',
+            cli_name='end-date',
+            help_text='End date for backtesting in YYYY-MM-DD format. If not specified, uses current date.',
+            examples=['2023-12-31', '2024-01-01', 'None (use current date)'],
+            use_cases=['Historical period: 2023-12-31', 'Recent period: None', 'Custom range: specific date']
+        ))
+        
+        self.register_parameter(ParameterDefinition(
+            name='cash',
+            type=float,
+            default_value=100000.0,
+            description='Initial portfolio cash amount',
+            tier_level=ParameterTier.BASIC,
+            module='System Configuration',
+            cli_name='cash',
+            help_text='Starting cash amount for the portfolio in USD',
+            validation_rules=[
+                ValidationRule(
+                    name='positive_amount',
+                    description='Must be positive',
+                    validator=lambda x: isinstance(x, (int, float)) and x > 0,
+                    error_message='cash must be positive'
+                )
+            ],
+            min_value=1000,
+            max_value=100000000,
+            examples=['10000 (small account)', '100000 (standard)', '1000000 (large account)'],
+            use_cases=['Testing: 10000', 'Personal: 100000', 'Institutional: 1000000+']
+        ))
+        
+        self.register_parameter(ParameterDefinition(
+            name='commission',
+            type=float,
+            default_value=0.001,
+            description='Commission rate per trade',
+            tier_level=ParameterTier.BASIC,
+            module='System Configuration',
+            cli_name='commission',
+            help_text='Commission rate as decimal (0.001 = 0.1% per trade)',
+            validation_rules=[
+                ValidationRule(
+                    name='valid_commission',
+                    description='Must be between 0 and 0.1',
+                    validator=lambda x: isinstance(x, (int, float)) and 0 <= x <= 0.1,
+                    error_message='commission must be between 0 and 0.1'
+                )
+            ],
+            min_value=0.0,
+            max_value=0.1,
+            examples=['0.0 (no commission)', '0.001 (0.1% - typical)', '0.005 (0.5% - high)'],
+            use_cases=['Zero commission: 0.0', 'Discount broker: 0.001', 'Full service: 0.005']
+        ))
+        
+        self.register_parameter(ParameterDefinition(
+            name='buckets',
+            type=str,
+            default_value='Risk Assets',
+            description='Comma-separated list of asset buckets',
+            tier_level=ParameterTier.BASIC,
+            module='System Configuration',
+            cli_name='buckets',
+            help_text='Asset buckets to include in backtesting. Multiple buckets separated by commas.',
+            choices=['Risk Assets', 'Defensive Assets', 'Value Assets', 'Growth Assets', 'High Beta', 'Low Beta', 'Cyclicals', 'Quality', 'International', 'Commodities', 'Fixed Income', 'Alternatives'],
+            examples=[
+                'Risk Assets',
+                'Risk Assets,Defensive Assets',
+                'Risk Assets,Defensive Assets,Value Assets',
+                'Risk Assets,Defensive Assets,International'
+            ],
+            use_cases=[
+                'Growth focused: Risk Assets,Growth Assets',
+                'Balanced: Risk Assets,Defensive Assets',
+                'Diversified: Risk Assets,Defensive Assets,International',
+                'Conservative: Defensive Assets,Quality'
+            ]
+        ))
+        
+        self.register_parameter(ParameterDefinition(
+            name='rebalance_frequency',
+            type=str,
+            default_value='monthly',
+            description='How often to rebalance the portfolio',
+            tier_level=ParameterTier.BASIC,
+            module='System Configuration',
+            cli_name='rebalance-frequency',
+            help_text='Frequency of portfolio rebalancing: daily, weekly, monthly, quarterly',
+            choices=['daily', 'weekly', 'monthly', 'quarterly'],
+            examples=['daily (high frequency)', 'weekly (active)', 'monthly (balanced)', 'quarterly (long-term)'],
+            use_cases=['Day trading: daily', 'Active: weekly', 'Standard: monthly', 'Buy-and-hold: quarterly']
+        ))
+        
+        self.register_parameter(ParameterDefinition(
+            name='timeframes',
+            type=str,
+            default_value='1d',
+            description='Comma-separated list of timeframes for analysis',
+            tier_level=ParameterTier.BASIC,
+            module='System Configuration',
+            cli_name='timeframes',
+            help_text='Data timeframes for analysis: 1d, 4h, 1h, etc. Multiple timeframes separated by commas.',
+            examples=[
+                '1d (daily only)',
+                '1d,4h (daily + 4-hour)',
+                '1d,4h,1h (multi-timeframe)',
+                '1h (intraday only)'
+            ],
+            use_cases=['Long-term: 1d', 'Balanced: 1d,4h', 'Active: 1d,4h,1h', 'Day trading: 1h,15m']
+        ))
+        
+        self.register_parameter(ParameterDefinition(
+            name='min_trending_confidence',
+            type=float,
+            default_value=0.7,
+            description='Minimum confidence for trending asset detection',
+            tier_level=ParameterTier.BASIC,
+            module='System Configuration',
+            cli_name='min-trending-confidence',
+            help_text='Minimum confidence threshold for asset scanner trending detection (0.0-1.0)',
+            validation_rules=[
+                ValidationRule(
+                    name='valid_confidence',
+                    description='Must be between 0.0 and 1.0',
+                    validator=lambda x: isinstance(x, (int, float)) and 0.0 <= x <= 1.0,
+                    error_message='min_trending_confidence must be between 0.0 and 1.0'
+                )
+            ],
+            min_value=0.0,
+            max_value=1.0,
+            examples=['0.5 (lenient)', '0.7 (balanced)', '0.8 (strict)'],
+            use_cases=['Exploratory: 0.5-0.6', 'Standard: 0.7', 'Conservative: 0.8+']
+        ))
+        
+        self.register_parameter(ParameterDefinition(
+            name='data_provider',
+            type=str,
+            default_value='yahoo',
+            description='Data provider to use for market data',
+            tier_level=ParameterTier.BASIC,
+            module='System Configuration',
+            cli_name='data-provider',
+            help_text='Data source provider: yahoo (Yahoo Finance) or alpha_vantage (Alpha Vantage)',
+            choices=['yahoo', 'alpha_vantage'],
+            examples=['yahoo (free, reliable)', 'alpha_vantage (premium features)'],
+            use_cases=['Free usage: yahoo', 'Premium features: alpha_vantage']
+        ))
+        
         # Database Configuration (Advanced Tier)
         self.register_parameter(ParameterDefinition(
             name='database_url',

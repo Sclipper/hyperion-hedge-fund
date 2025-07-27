@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from typing import Dict, List, Optional, Tuple
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 import pandas as pd
 import numpy as np
 from enum import Enum
@@ -174,6 +174,10 @@ class PositionManager:
         if hasattr(data_manager, 'timeframe_manager'):
             # Use new TimeframeManager for multi-timeframe data
             try:
+                # Convert date to datetime if needed
+                if isinstance(current_date, date):
+                    current_date = datetime.combine(current_date, datetime.min.time())
+                
                 # Calculate date range for analysis (typically last 100 trading days)
                 end_date = current_date
                 start_date = current_date - timedelta(days=200)  # ~100 trading days
@@ -287,6 +291,10 @@ class PositionManager:
                            data_manager) -> Optional[pd.DataFrame]:
         """Get data for specific timeframe"""
         try:
+            # Convert date to datetime if needed
+            if isinstance(current_date, date):
+                current_date = datetime.combine(current_date, datetime.min.time())
+            
             # Calculate appropriate lookback period based on timeframe
             if timeframe == '1h':
                 lookback_days = 30  # 30 days of hourly data

@@ -127,7 +127,7 @@ class TechnicalAnalyzer:
             # Volume indicators
             if 'Volume' in data.columns and not data['Volume'].isna().all():
                 indicators['obv'] = ta.volume.on_balance_volume(data['Close'], data['Volume'])
-                indicators['volume_sma'] = ta.volume.volume_sma(data['Close'], data['Volume'], window=20)
+                indicators['volume_sma'] = data['Volume'].rolling(window=20).mean()  # Simple volume SMA
             
             # Volatility indicators
             bb_bands = ta.volatility.BollingerBands(data['Close'])
