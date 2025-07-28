@@ -552,9 +552,21 @@ class AlphaVantageProvider(DataProvider):
             if df.empty:
                 return df
             
-            # Resample if needed (e.g., 60min to 4h)
-            if native_timeframe == '240min' and av_interval == '60min':
-                df = crypto_provider.resample_to_timeframe(df, '4h')
+
+            # Resample if needed using the universal resampling
+            # Map native timeframe to user-friendly format
+            target_map = {
+                '240min': '4h',
+                '120min': '2h', 
+                '360min': '6h',
+                '480min': '8h',
+                '720min': '12h'
+            }
+            
+            if native_timeframe in target_map and av_interval != native_timeframe:
+                target_tf = target_map[native_timeframe]
+                logger.info(f"Resampling crypto data from {av_interval} to {target_tf}")
+                df = crypto_provider.resample_to_timeframe(df, target_tf)
             
             # Add metadata
             df.attrs['provider_source'] = self.name

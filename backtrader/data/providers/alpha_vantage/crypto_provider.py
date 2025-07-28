@@ -297,13 +297,13 @@ class AlphaVantageCryptoProvider:
             rows = []
             
             for date_str, values in time_series.items():
-                # Extract USD values
+                # Extract values - Alpha Vantage uses simple numeric keys for crypto daily
                 row = {
                     'Date': date_str,
-                    'Open': float(values.get('1a. open (USD)', 0)),
-                    'High': float(values.get('2a. high (USD)', 0)),
-                    'Low': float(values.get('3a. low (USD)', 0)),
-                    'Close': float(values.get('4a. close (USD)', 0)),
+                    'Open': float(values.get('1. open', values.get('1a. open (USD)', 0))),
+                    'High': float(values.get('2. high', values.get('2a. high (USD)', 0))),
+                    'Low': float(values.get('3. low', values.get('3a. low (USD)', 0))),
+                    'Close': float(values.get('4. close', values.get('4a. close (USD)', 0))),
                     'Volume': float(values.get('5. volume', 0))
                 }
                 rows.append(row)
@@ -327,15 +327,17 @@ class AlphaVantageCryptoProvider:
             
         except Exception as e:
             logger.error(f"Failed to fetch crypto daily data for {symbol}: {e}")
+            import traceback
+            traceback.print_exc()
             return pd.DataFrame()
     
     def resample_to_timeframe(self, df: pd.DataFrame, target_timeframe: str) -> pd.DataFrame:
         """
-        Resample data to target timeframe
+        Universal resampling to any target timeframe
         
         Args:
             df: Source DataFrame with OHLCV data
-            target_timeframe: Target timeframe (e.g., '4h')
+            target_timeframe: Target timeframe (e.g., '4h', '2h', '15min', '6h', '8h', '12h')
             
         Returns:
             Resampled DataFrame
@@ -343,35 +345,84 @@ class AlphaVantageCryptoProvider:
         if df.empty:
             return df
         
-        # Map timeframes to pandas resample rules
-        resample_map = {
-            '5min': '5T',
-            '15min': '15T',
-            '30min': '30T',
-            '1h': '1H',
-            '4h': '4H',
-            '1d': '1D'
-        }
-        
-        if target_timeframe not in resample_map:
-            logger.error(f"Unsupported target timeframe: {target_timeframe}")
+        # Convert target timeframe to pandas resample rule
+        rule = self._convert_to_pandas_rule(target_timeframe)
+        if not rule:
+            logger.error(f"Cannot convert timeframe '{target_timeframe}' to pandas rule")
             return df
         
-        rule = resample_map[target_timeframe]
+        try:
+            # Resample OHLCV data
+            resampled = df.resample(rule).agg({
+                'Open': 'first',
+                'High': 'max',
+                'Low': 'min',
+                'Close': 'last',
+                'Volume': 'sum'
+            }).dropna()
+            
+            # Preserve metadata
+            resampled.attrs = df.attrs.copy()
+            resampled.attrs['resampled_from'] = df.attrs.get('interval', 'unknown')
+            resampled.attrs['interval'] = target_timeframe
+            
+            logger.info(f"Resampled {len(df)} records to {len(resampled)} records ({target_timeframe})")
+            return resampled
+            
+        except Exception as e:
+            logger.error(f"Failed to resample to {target_timeframe}: {e}")
+            return df
+    
+    def _convert_to_pandas_rule(self, timeframe: str) -> str:
+        """
+        Convert any timeframe string to pandas resample rule
         
-        # Resample OHLCV data
-        resampled = df.resample(rule).agg({
-            'Open': 'first',
-            'High': 'max',
-            'Low': 'min',
-            'Close': 'last',
-            'Volume': 'sum'
-        }).dropna()
+        Supports:
+        - Minutes: '1min', '5min', '15min', '30min', '45min', etc.
+        - Hours: '1h', '2h', '4h', '6h', '8h', '12h', etc.
+        - Days: '1d', '2d', '3d', etc.
+        - Weeks: '1w', '2w', etc.
         
-        # Preserve metadata
-        resampled.attrs = df.attrs.copy()
-        resampled.attrs['resampled_from'] = df.attrs.get('interval', 'unknown')
-        resampled.attrs['interval'] = target_timeframe
+        Returns:
+            Pandas resample rule string or empty string if invalid
+        """
+        timeframe = timeframe.lower()
         
-        logger.info(f"Resampled {len(df)} records to {len(resampled)} records ({target_timeframe})")
-        return resampled
+        # Minutes
+        if timeframe.endswith('min'):
+            try:
+                minutes = int(timeframe[:-3])
+                return f"{minutes}min"
+            except ValueError:
+                return ""
+        
+        # Hours
+        elif timeframe.endswith('h'):
+            try:
+                hours = int(timeframe[:-1])
+                return f"{hours}h"
+            except ValueError:
+                return ""
+        
+        # Days
+        elif timeframe.endswith('d'):
+            try:
+                days = int(timeframe[:-1])
+                return f"{days}D"
+            except ValueError:
+                return ""
+        
+        # Weeks
+        elif timeframe.endswith('w'):
+            try:
+                weeks = int(timeframe[:-1])
+                return f"{weeks}W"
+            except ValueError:
+                return ""
+        
+        # Legacy pandas format (already a valid rule)
+        elif any(timeframe.endswith(suffix) for suffix in ['T', 'H', 'D', 'W']):
+            # Convert old format to new (T->min, H->h)
+            return timeframe.replace('T', 'min').replace('H', 'h')
+        
+        return ""
