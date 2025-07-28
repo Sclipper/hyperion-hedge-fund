@@ -1,0 +1,2090 @@
+{
+  "metadata": {
+    "tickers": [
+      "DIS",
+      "ABT",
+      "DE",
+      "CMCSA",
+      "UNP",
+      "KKR",
+      "IBM",
+      "AMZN",
+      "BAC",
+      "VRTX",
+      "BRK.B",
+      "C",
+      "ABBV",
+      "TJX",
+      "SPGI",
+      "ORCL",
+      "NFLX",
+      "TSLA",
+      "JNJ",
+      "JPM",
+      "ANET",
+      "ADP",
+      "MA",
+      "BMY",
+      "UNH",
+      "TXN",
+      "LRCX",
+      "MCD",
+      "MDT",
+      "NEE",
+      "NOW",
+      "ICE",
+      "COF",
+      "AVGO",
+      "MRK",
+      "BKNG",
+      "ETN",
+      "ADI",
+      "INTC",
+      "GOOG",
+      "BSX",
+      "CSCO",
+      "WELL",
+      "AXP",
+      "TMO",
+      "QCOM",
+      "KO",
+      "ACN",
+      "CAT",
+      "HON",
+      "APH",
+      "RKLB",
+      "PG",
+      "LOW",
+      "CB",
+      "ADBE",
+      "ISRG",
+      "PANW",
+      "PLTR",
+      "SYK",
+      "CRWD",
+      "GE",
+      "AMT",
+      "SO",
+      "NVDA",
+      "AAPL",
+      "KLAC",
+      "XOM",
+      "PGR",
+      "WFC",
+      "MS",
+      "MU",
+      "VZ",
+      "CME",
+      "WM",
+      "INTU",
+      "PEP",
+      "CVX",
+      "BA",
+      "PM",
+      "LMT",
+      "DHR",
+      "T",
+      "META",
+      "AMAT",
+      "MO",
+      "HD",
+      "BX",
+      "LIN",
+      "WMT",
+      "UBER",
+      "SCHW",
+      "MMC",
+      "BLK",
+      "GILD",
+      "PLD",
+      "CEG",
+      "LLY",
+      "COP",
+      "GS",
+      "CRM",
+      "MSFT",
+      "TMUS",
+      "PFE",
+      "GOOGL",
+      "COST",
+      "AMGN",
+      "RTX",
+      "SBUX",
+      "AMD"
+    ],
+    "start_date": "2025-01-01T00:00:00",
+    "end_date": "2025-01-31T00:00:00",
+    "strategy": "RegimeStrategy",
+    "parameters": {
+      "rebalance_frequency": "monthly",
+      "max_assets_per_period": 5,
+      "sma_period": 20,
+      "rsi_period": 14,
+      "rsi_lower": 30,
+      "rsi_upper": 70,
+      "momentum_period": 10,
+      "stop_loss": 0.05,
+      "take_profit": 0.15,
+      "min_regime_confidence": 0.6,
+      "bucket_names": [
+        "Risk Assets"
+      ],
+      "position_min_score": 0.4,
+      "timeframes": [
+        "1d"
+      ],
+      "enable_technical_analysis": true,
+      "enable_fundamental_analysis": false,
+      "technical_weight": 0.6,
+      "fundamental_weight": 0.4,
+      "min_trending_confidence": 0.7,
+      "regime_detector": "<data.regime_detector.RegimeDetector object at 0x10eaa5fd0>",
+      "asset_manager": "<data.asset_buckets.AssetBucketManager object at 0x10eaa5a00>",
+      "data_manager": "<data.data_manager.DataManager object at 0x10eadd190>",
+      "data_preloader": "<utils.data_preloader.DataPreloader object at 0x10ec5e2b0>",
+      "enable_core_assets": false,
+      "max_core_assets": 3,
+      "core_override_threshold": 0.95,
+      "core_expiry_days": 90,
+      "core_underperformance_threshold": 0.15,
+      "core_underperformance_period": 30,
+      "core_extension_limit": 2,
+      "core_performance_check_frequency": 7,
+      "smart_diversification_overrides": 2,
+      "enable_take_profit_stop_loss": false
+    },
+    "generated_at": "2025-07-29T00:42:54.248134"
+  },
+  "performance": {
+    "sharpe_ratio": 4.266750759872376,
+    "total_return": 0.0070242049093802265,
+    "average_return": 0.00035121024546901135,
+    "max_drawdown": 0.24145388827558095,
+    "max_drawdown_duration": 6,
+    "sqn": 0,
+    "vwr": 6.869931774436401
+  },
+  "trades": {
+    "total": 5,
+    "won": 0,
+    "lost": 0,
+    "win_rate": 0.0,
+    "average_win": 0,
+    "average_loss": 0,
+    "profit_factor": 0,
+    "details": []
+  },
+  "portfolio_timeline": [
+    {
+      "date": "2025-01-02",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "REFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    },
+    {
+      "date": "2025-01-03",
+      "portfolio_value": 100217.89324999998,
+      "cash": 83626.89324999998,
+      "total_positions": 5,
+      "regime": "REFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {
+        "TSLA": {
+          "size": 7,
+          "price": 381.48,
+          "value": 2873.08
+        },
+        "JPM": {
+          "size": 12,
+          "price": 243.89,
+          "value": 2919.36
+        },
+        "AAPL": {
+          "size": 12,
+          "price": 243.36,
+          "value": 2920.32
+        },
+        "CME": {
+          "size": 21,
+          "price": 231.64,
+          "value": 4882.5
+        },
+        "WMT": {
+          "size": 33,
+          "price": 90.15,
+          "value": 2995.7400000000002
+        }
+      }
+    },
+    {
+      "date": "2025-01-06",
+      "portfolio_value": 100093.85324999999,
+      "cash": 83626.89324999998,
+      "total_positions": 5,
+      "regime": "REFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {
+        "TSLA": {
+          "size": 7,
+          "price": 381.48,
+          "value": 2877.35
+        },
+        "JPM": {
+          "size": 12,
+          "price": 243.89,
+          "value": 2890.2
+        },
+        "AAPL": {
+          "size": 12,
+          "price": 243.36,
+          "value": 2940.0
+        },
+        "CME": {
+          "size": 21,
+          "price": 231.64,
+          "value": 4742.22
+        },
+        "WMT": {
+          "size": 33,
+          "price": 90.15,
+          "value": 3017.19
+        }
+      }
+    },
+    {
+      "date": "2025-01-07",
+      "portfolio_value": 99975.91324999998,
+      "cash": 83626.89324999998,
+      "total_positions": 5,
+      "regime": "REFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {
+        "TSLA": {
+          "size": 7,
+          "price": 381.48,
+          "value": 2760.52
+        },
+        "JPM": {
+          "size": 12,
+          "price": 243.89,
+          "value": 2918.04
+        },
+        "AAPL": {
+          "size": 12,
+          "price": 243.36,
+          "value": 2906.52
+        },
+        "CME": {
+          "size": 21,
+          "price": 231.64,
+          "value": 4767.21
+        },
+        "WMT": {
+          "size": 33,
+          "price": 90.15,
+          "value": 2996.73
+        }
+      }
+    },
+    {
+      "date": "2025-01-08",
+      "portfolio_value": 100066.13324999997,
+      "cash": 83626.89324999998,
+      "total_positions": 5,
+      "regime": "REFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {
+        "TSLA": {
+          "size": 7,
+          "price": 381.48,
+          "value": 2764.58
+        },
+        "JPM": {
+          "size": 12,
+          "price": 243.89,
+          "value": 2917.56
+        },
+        "AAPL": {
+          "size": 12,
+          "price": 243.36,
+          "value": 2912.3999999999996
+        },
+        "CME": {
+          "size": 21,
+          "price": 231.64,
+          "value": 4815.3
+        },
+        "WMT": {
+          "size": 33,
+          "price": 90.15,
+          "value": 3029.4
+        }
+      }
+    },
+    {
+      "date": "2025-01-10",
+      "portfolio_value": 99992.91324999998,
+      "cash": 83626.89324999998,
+      "total_positions": 5,
+      "regime": "REFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {
+        "TSLA": {
+          "size": 7,
+          "price": 381.48,
+          "value": 2763.1800000000003
+        },
+        "JPM": {
+          "size": 12,
+          "price": 243.89,
+          "value": 2878.44
+        },
+        "AAPL": {
+          "size": 12,
+          "price": 243.36,
+          "value": 2842.2
+        },
+        "CME": {
+          "size": 21,
+          "price": 231.64,
+          "value": 4813.2
+        },
+        "WMT": {
+          "size": 33,
+          "price": 90.15,
+          "value": 3069.0
+        }
+      }
+    },
+    {
+      "date": "2025-01-13",
+      "portfolio_value": 100032.32324999999,
+      "cash": 83626.89324999998,
+      "total_positions": 5,
+      "regime": "REFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {
+        "TSLA": {
+          "size": 7,
+          "price": 381.48,
+          "value": 2823.17
+        },
+        "JPM": {
+          "size": 12,
+          "price": 243.89,
+          "value": 2930.52
+        },
+        "AAPL": {
+          "size": 12,
+          "price": 243.36,
+          "value": 2812.8
+        },
+        "CME": {
+          "size": 21,
+          "price": 231.64,
+          "value": 4818.45
+        },
+        "WMT": {
+          "size": 33,
+          "price": 90.15,
+          "value": 3020.4900000000002
+        }
+      }
+    },
+    {
+      "date": "2025-01-14",
+      "portfolio_value": 100032.81324999998,
+      "cash": 83626.89324999998,
+      "total_positions": 5,
+      "regime": "REFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {
+        "TSLA": {
+          "size": 7,
+          "price": 381.48,
+          "value": 2774.52
+        },
+        "JPM": {
+          "size": 12,
+          "price": 243.89,
+          "value": 2969.64
+        },
+        "AAPL": {
+          "size": 12,
+          "price": 243.36,
+          "value": 2799.36
+        },
+        "CME": {
+          "size": 21,
+          "price": 231.64,
+          "value": 4866.33
+        },
+        "WMT": {
+          "size": 33,
+          "price": 90.15,
+          "value": 2996.07
+        }
+      }
+    },
+    {
+      "date": "2025-01-15",
+      "portfolio_value": 100306.77324999998,
+      "cash": 83626.89324999998,
+      "total_positions": 5,
+      "regime": "REFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {
+        "TSLA": {
+          "size": 7,
+          "price": 381.48,
+          "value": 2997.54
+        },
+        "JPM": {
+          "size": 12,
+          "price": 243.89,
+          "value": 3028.2
+        },
+        "AAPL": {
+          "size": 12,
+          "price": 243.36,
+          "value": 2854.44
+        },
+        "CME": {
+          "size": 21,
+          "price": 231.64,
+          "value": 4785.48
+        },
+        "WMT": {
+          "size": 33,
+          "price": 90.15,
+          "value": 3014.2200000000003
+        }
+      }
+    },
+    {
+      "date": "2025-01-16",
+      "portfolio_value": 100205.40324999997,
+      "cash": 83626.89324999998,
+      "total_positions": 5,
+      "regime": "REFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {
+        "TSLA": {
+          "size": 7,
+          "price": 381.48,
+          "value": 2896.74
+        },
+        "JPM": {
+          "size": 12,
+          "price": 243.89,
+          "value": 3051.2400000000002
+        },
+        "AAPL": {
+          "size": 12,
+          "price": 243.36,
+          "value": 2739.12
+        },
+        "CME": {
+          "size": 21,
+          "price": 231.64,
+          "value": 4878.51
+        },
+        "WMT": {
+          "size": 33,
+          "price": 90.15,
+          "value": 3012.9
+        }
+      }
+    },
+    {
+      "date": "2025-01-17",
+      "portfolio_value": 100403.00324999998,
+      "cash": 83626.89324999998,
+      "total_positions": 5,
+      "regime": "REFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {
+        "TSLA": {
+          "size": 7,
+          "price": 381.48,
+          "value": 2985.5
+        },
+        "JPM": {
+          "size": 12,
+          "price": 243.89,
+          "value": 3109.92
+        },
+        "AAPL": {
+          "size": 12,
+          "price": 243.36,
+          "value": 2759.7599999999998
+        },
+        "CME": {
+          "size": 21,
+          "price": 231.64,
+          "value": 4886.91
+        },
+        "WMT": {
+          "size": 33,
+          "price": 90.15,
+          "value": 3034.02
+        }
+      }
+    },
+    {
+      "date": "2025-01-21",
+      "portfolio_value": 100372.31324999998,
+      "cash": 83626.89324999998,
+      "total_positions": 5,
+      "regime": "REFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {
+        "TSLA": {
+          "size": 7,
+          "price": 381.48,
+          "value": 2968.49
+        },
+        "JPM": {
+          "size": 12,
+          "price": 243.89,
+          "value": 3156.3599999999997
+        },
+        "AAPL": {
+          "size": 12,
+          "price": 243.36,
+          "value": 2671.68
+        },
+        "CME": {
+          "size": 21,
+          "price": 231.64,
+          "value": 4877.25
+        },
+        "WMT": {
+          "size": 33,
+          "price": 90.15,
+          "value": 3071.64
+        }
+      }
+    },
+    {
+      "date": "2025-01-22",
+      "portfolio_value": 100332.42324999998,
+      "cash": 83626.89324999998,
+      "total_positions": 5,
+      "regime": "REFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {
+        "TSLA": {
+          "size": 7,
+          "price": 381.48,
+          "value": 2905.77
+        },
+        "JPM": {
+          "size": 12,
+          "price": 243.89,
+          "value": 3154.08
+        },
+        "AAPL": {
+          "size": 12,
+          "price": 243.36,
+          "value": 2685.96
+        },
+        "CME": {
+          "size": 21,
+          "price": 231.64,
+          "value": 4883.13
+        },
+        "WMT": {
+          "size": 33,
+          "price": 90.15,
+          "value": 3076.59
+        }
+      }
+    },
+    {
+      "date": "2025-01-23",
+      "portfolio_value": 100385.58324999998,
+      "cash": 83626.89324999998,
+      "total_positions": 5,
+      "regime": "REFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {
+        "TSLA": {
+          "size": 7,
+          "price": 381.48,
+          "value": 2886.66
+        },
+        "JPM": {
+          "size": 12,
+          "price": 243.89,
+          "value": 3191.3999999999996
+        },
+        "AAPL": {
+          "size": 12,
+          "price": 243.36,
+          "value": 2683.92
+        },
+        "CME": {
+          "size": 21,
+          "price": 231.64,
+          "value": 4900.98
+        },
+        "WMT": {
+          "size": 33,
+          "price": 90.15,
+          "value": 3095.73
+        }
+      }
+    },
+    {
+      "date": "2025-01-24",
+      "portfolio_value": 100379.75324999998,
+      "cash": 83626.89324999998,
+      "total_positions": 5,
+      "regime": "REFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {
+        "TSLA": {
+          "size": 7,
+          "price": 381.48,
+          "value": 2846.06
+        },
+        "JPM": {
+          "size": 12,
+          "price": 243.89,
+          "value": 3178.08
+        },
+        "AAPL": {
+          "size": 12,
+          "price": 243.36,
+          "value": 2673.36
+        },
+        "CME": {
+          "size": 21,
+          "price": 231.64,
+          "value": 4928.28
+        },
+        "WMT": {
+          "size": 33,
+          "price": 90.15,
+          "value": 3127.0800000000004
+        }
+      }
+    },
+    {
+      "date": "2025-01-27",
+      "portfolio_value": 100545.61324999998,
+      "cash": 83626.89324999998,
+      "total_positions": 5,
+      "regime": "REFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {
+        "TSLA": {
+          "size": 7,
+          "price": 381.48,
+          "value": 2780.0499999999997
+        },
+        "JPM": {
+          "size": 12,
+          "price": 243.89,
+          "value": 3190.2000000000003
+        },
+        "AAPL": {
+          "size": 12,
+          "price": 243.36,
+          "value": 2758.32
+        },
+        "CME": {
+          "size": 21,
+          "price": 231.64,
+          "value": 4975.95
+        },
+        "WMT": {
+          "size": 33,
+          "price": 90.15,
+          "value": 3214.2000000000003
+        }
+      }
+    },
+    {
+      "date": "2025-01-28",
+      "portfolio_value": 100611.08324999998,
+      "cash": 83626.89324999998,
+      "total_positions": 5,
+      "regime": "REFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {
+        "TSLA": {
+          "size": 7,
+          "price": 381.48,
+          "value": 2786.6299999999997
+        },
+        "JPM": {
+          "size": 12,
+          "price": 243.89,
+          "value": 3205.68
+        },
+        "AAPL": {
+          "size": 12,
+          "price": 243.36,
+          "value": 2859.12
+        },
+        "CME": {
+          "size": 21,
+          "price": 231.64,
+          "value": 4922.19
+        },
+        "WMT": {
+          "size": 33,
+          "price": 90.15,
+          "value": 3210.57
+        }
+      }
+    },
+    {
+      "date": "2025-01-29",
+      "portfolio_value": 100521.87324999998,
+      "cash": 83626.89324999998,
+      "total_positions": 5,
+      "regime": "REFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {
+        "TSLA": {
+          "size": 7,
+          "price": 381.48,
+          "value": 2723.7000000000003
+        },
+        "JPM": {
+          "size": 12,
+          "price": 243.89,
+          "value": 3198.96
+        },
+        "AAPL": {
+          "size": 12,
+          "price": 243.36,
+          "value": 2872.32
+        },
+        "CME": {
+          "size": 21,
+          "price": 231.64,
+          "value": 4882.5
+        },
+        "WMT": {
+          "size": 33,
+          "price": 90.15,
+          "value": 3217.5
+        }
+      }
+    },
+    {
+      "date": "2025-01-30",
+      "portfolio_value": 100708.46324999997,
+      "cash": 83626.89324999998,
+      "total_positions": 5,
+      "regime": "REFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {
+        "TSLA": {
+          "size": 7,
+          "price": 381.48,
+          "value": 2801.96
+        },
+        "JPM": {
+          "size": 12,
+          "price": 243.89,
+          "value": 3218.76
+        },
+        "AAPL": {
+          "size": 12,
+          "price": 243.36,
+          "value": 2851.08
+        },
+        "CME": {
+          "size": 21,
+          "price": 231.64,
+          "value": 4954.32
+        },
+        "WMT": {
+          "size": 33,
+          "price": 90.15,
+          "value": 3255.4500000000003
+        }
+      }
+    },
+    {
+      "date": "2025-01-31",
+      "portfolio_value": 100704.89324999998,
+      "cash": 83626.89324999998,
+      "total_positions": 5,
+      "regime": "REFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {
+        "TSLA": {
+          "size": 7,
+          "price": 381.48,
+          "value": 2832.2000000000003
+        },
+        "JPM": {
+          "size": 12,
+          "price": 243.89,
+          "value": 3207.6000000000004
+        },
+        "AAPL": {
+          "size": 12,
+          "price": 243.36,
+          "value": 2832.0
+        },
+        "CME": {
+          "size": 21,
+          "price": 231.64,
+          "value": 4966.92
+        },
+        "WMT": {
+          "size": 33,
+          "price": 90.15,
+          "value": 3239.2799999999997
+        }
+      }
+    }
+  ],
+  "position_changes": [
+    {
+      "date": "2025-01-03",
+      "asset": "TSLA",
+      "action": "BUY",
+      "quantity": 7,
+      "price": 410.44,
+      "value": 2873.08,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.59875,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-03",
+      "asset": "JPM",
+      "action": "BUY",
+      "quantity": 12,
+      "price": 243.28,
+      "value": 2919.36,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.59875,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-03",
+      "asset": "AAPL",
+      "action": "BUY",
+      "quantity": 12,
+      "price": 243.36,
+      "value": 2920.32,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.59375,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-03",
+      "asset": "CME",
+      "action": "BUY",
+      "quantity": 21,
+      "price": 232.5,
+      "value": 4882.5,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.6087499999999999,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-03",
+      "asset": "WMT",
+      "action": "BUY",
+      "quantity": 33,
+      "price": 90.78,
+      "value": 2995.7400000000002,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.5987499999999999,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-06",
+      "asset": "TSLA",
+      "action": "HOLD",
+      "quantity": 7,
+      "price": 411.05,
+      "value": 2877.35,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.59875,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-06",
+      "asset": "JPM",
+      "action": "HOLD",
+      "quantity": 12,
+      "price": 240.85,
+      "value": 2890.2,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.59875,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-06",
+      "asset": "AAPL",
+      "action": "HOLD",
+      "quantity": 12,
+      "price": 245.0,
+      "value": 2940.0,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.59375,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-06",
+      "asset": "CME",
+      "action": "HOLD",
+      "quantity": 21,
+      "price": 225.82,
+      "value": 4742.22,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.6087499999999999,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-06",
+      "asset": "WMT",
+      "action": "HOLD",
+      "quantity": 33,
+      "price": 91.43,
+      "value": 3017.19,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.5987499999999999,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-07",
+      "asset": "TSLA",
+      "action": "HOLD",
+      "quantity": 7,
+      "price": 394.36,
+      "value": 2760.52,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.59875,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-07",
+      "asset": "JPM",
+      "action": "HOLD",
+      "quantity": 12,
+      "price": 243.17,
+      "value": 2918.04,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.59875,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-07",
+      "asset": "AAPL",
+      "action": "HOLD",
+      "quantity": 12,
+      "price": 242.21,
+      "value": 2906.52,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.59375,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-07",
+      "asset": "CME",
+      "action": "HOLD",
+      "quantity": 21,
+      "price": 227.01,
+      "value": 4767.21,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.6087499999999999,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-07",
+      "asset": "WMT",
+      "action": "HOLD",
+      "quantity": 33,
+      "price": 90.81,
+      "value": 2996.73,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.5987499999999999,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-08",
+      "asset": "TSLA",
+      "action": "HOLD",
+      "quantity": 7,
+      "price": 394.94,
+      "value": 2764.58,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.59875,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-08",
+      "asset": "JPM",
+      "action": "HOLD",
+      "quantity": 12,
+      "price": 243.13,
+      "value": 2917.56,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.59875,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-08",
+      "asset": "AAPL",
+      "action": "HOLD",
+      "quantity": 12,
+      "price": 242.7,
+      "value": 2912.3999999999996,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.59375,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-08",
+      "asset": "CME",
+      "action": "HOLD",
+      "quantity": 21,
+      "price": 229.3,
+      "value": 4815.3,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.6087499999999999,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-08",
+      "asset": "WMT",
+      "action": "HOLD",
+      "quantity": 33,
+      "price": 91.8,
+      "value": 3029.4,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.5987499999999999,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-10",
+      "asset": "TSLA",
+      "action": "HOLD",
+      "quantity": 7,
+      "price": 394.74,
+      "value": 2763.1800000000003,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.59875,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-10",
+      "asset": "JPM",
+      "action": "HOLD",
+      "quantity": 12,
+      "price": 239.87,
+      "value": 2878.44,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.59875,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-10",
+      "asset": "AAPL",
+      "action": "HOLD",
+      "quantity": 12,
+      "price": 236.85,
+      "value": 2842.2,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.59375,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-10",
+      "asset": "CME",
+      "action": "HOLD",
+      "quantity": 21,
+      "price": 229.2,
+      "value": 4813.2,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.6087499999999999,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-10",
+      "asset": "WMT",
+      "action": "HOLD",
+      "quantity": 33,
+      "price": 93.0,
+      "value": 3069.0,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.5987499999999999,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-13",
+      "asset": "TSLA",
+      "action": "HOLD",
+      "quantity": 7,
+      "price": 403.31,
+      "value": 2823.17,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.59875,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-13",
+      "asset": "JPM",
+      "action": "HOLD",
+      "quantity": 12,
+      "price": 244.21,
+      "value": 2930.52,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.59875,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-13",
+      "asset": "AAPL",
+      "action": "HOLD",
+      "quantity": 12,
+      "price": 234.4,
+      "value": 2812.8,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.59375,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-13",
+      "asset": "CME",
+      "action": "HOLD",
+      "quantity": 21,
+      "price": 229.45,
+      "value": 4818.45,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.6087499999999999,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-13",
+      "asset": "WMT",
+      "action": "HOLD",
+      "quantity": 33,
+      "price": 91.53,
+      "value": 3020.4900000000002,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.5987499999999999,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-14",
+      "asset": "TSLA",
+      "action": "HOLD",
+      "quantity": 7,
+      "price": 396.36,
+      "value": 2774.52,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.59875,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-14",
+      "asset": "JPM",
+      "action": "HOLD",
+      "quantity": 12,
+      "price": 247.47,
+      "value": 2969.64,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.59875,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-14",
+      "asset": "AAPL",
+      "action": "HOLD",
+      "quantity": 12,
+      "price": 233.28,
+      "value": 2799.36,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.59375,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-14",
+      "asset": "CME",
+      "action": "HOLD",
+      "quantity": 21,
+      "price": 231.73,
+      "value": 4866.33,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.6087499999999999,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-14",
+      "asset": "WMT",
+      "action": "HOLD",
+      "quantity": 33,
+      "price": 90.79,
+      "value": 2996.07,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.5987499999999999,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-15",
+      "asset": "TSLA",
+      "action": "HOLD",
+      "quantity": 7,
+      "price": 428.22,
+      "value": 2997.54,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.59875,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-15",
+      "asset": "JPM",
+      "action": "HOLD",
+      "quantity": 12,
+      "price": 252.35,
+      "value": 3028.2,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.59875,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-15",
+      "asset": "AAPL",
+      "action": "HOLD",
+      "quantity": 12,
+      "price": 237.87,
+      "value": 2854.44,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.59375,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-15",
+      "asset": "CME",
+      "action": "HOLD",
+      "quantity": 21,
+      "price": 227.88,
+      "value": 4785.48,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.6087499999999999,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-15",
+      "asset": "WMT",
+      "action": "HOLD",
+      "quantity": 33,
+      "price": 91.34,
+      "value": 3014.2200000000003,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.5987499999999999,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-16",
+      "asset": "TSLA",
+      "action": "HOLD",
+      "quantity": 7,
+      "price": 413.82,
+      "value": 2896.74,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.59875,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-16",
+      "asset": "JPM",
+      "action": "HOLD",
+      "quantity": 12,
+      "price": 254.27,
+      "value": 3051.2400000000002,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.59875,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-16",
+      "asset": "AAPL",
+      "action": "HOLD",
+      "quantity": 12,
+      "price": 228.26,
+      "value": 2739.12,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.59375,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-16",
+      "asset": "CME",
+      "action": "HOLD",
+      "quantity": 21,
+      "price": 232.31,
+      "value": 4878.51,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.6087499999999999,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-16",
+      "asset": "WMT",
+      "action": "HOLD",
+      "quantity": 33,
+      "price": 91.3,
+      "value": 3012.9,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.5987499999999999,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-17",
+      "asset": "TSLA",
+      "action": "HOLD",
+      "quantity": 7,
+      "price": 426.5,
+      "value": 2985.5,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.59875,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-17",
+      "asset": "JPM",
+      "action": "HOLD",
+      "quantity": 12,
+      "price": 259.16,
+      "value": 3109.92,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.59875,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-17",
+      "asset": "AAPL",
+      "action": "HOLD",
+      "quantity": 12,
+      "price": 229.98,
+      "value": 2759.7599999999998,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.59375,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-17",
+      "asset": "CME",
+      "action": "HOLD",
+      "quantity": 21,
+      "price": 232.71,
+      "value": 4886.91,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.6087499999999999,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-17",
+      "asset": "WMT",
+      "action": "HOLD",
+      "quantity": 33,
+      "price": 91.94,
+      "value": 3034.02,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.5987499999999999,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-21",
+      "asset": "TSLA",
+      "action": "HOLD",
+      "quantity": 7,
+      "price": 424.07,
+      "value": 2968.49,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.59875,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-21",
+      "asset": "JPM",
+      "action": "HOLD",
+      "quantity": 12,
+      "price": 263.03,
+      "value": 3156.3599999999997,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.59875,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-21",
+      "asset": "AAPL",
+      "action": "HOLD",
+      "quantity": 12,
+      "price": 222.64,
+      "value": 2671.68,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.59375,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-21",
+      "asset": "CME",
+      "action": "HOLD",
+      "quantity": 21,
+      "price": 232.25,
+      "value": 4877.25,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.6087499999999999,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-21",
+      "asset": "WMT",
+      "action": "HOLD",
+      "quantity": 33,
+      "price": 93.08,
+      "value": 3071.64,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.5987499999999999,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-22",
+      "asset": "TSLA",
+      "action": "HOLD",
+      "quantity": 7,
+      "price": 415.11,
+      "value": 2905.77,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.59875,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-22",
+      "asset": "JPM",
+      "action": "HOLD",
+      "quantity": 12,
+      "price": 262.84,
+      "value": 3154.08,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.59875,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-22",
+      "asset": "AAPL",
+      "action": "HOLD",
+      "quantity": 12,
+      "price": 223.83,
+      "value": 2685.96,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.59375,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-22",
+      "asset": "CME",
+      "action": "HOLD",
+      "quantity": 21,
+      "price": 232.53,
+      "value": 4883.13,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.6087499999999999,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-22",
+      "asset": "WMT",
+      "action": "HOLD",
+      "quantity": 33,
+      "price": 93.23,
+      "value": 3076.59,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.5987499999999999,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-23",
+      "asset": "TSLA",
+      "action": "HOLD",
+      "quantity": 7,
+      "price": 412.38,
+      "value": 2886.66,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.59875,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-23",
+      "asset": "JPM",
+      "action": "HOLD",
+      "quantity": 12,
+      "price": 265.95,
+      "value": 3191.3999999999996,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.59875,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-23",
+      "asset": "AAPL",
+      "action": "HOLD",
+      "quantity": 12,
+      "price": 223.66,
+      "value": 2683.92,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.59375,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-23",
+      "asset": "CME",
+      "action": "HOLD",
+      "quantity": 21,
+      "price": 233.38,
+      "value": 4900.98,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.6087499999999999,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-23",
+      "asset": "WMT",
+      "action": "HOLD",
+      "quantity": 33,
+      "price": 93.81,
+      "value": 3095.73,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.5987499999999999,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-24",
+      "asset": "TSLA",
+      "action": "HOLD",
+      "quantity": 7,
+      "price": 406.58,
+      "value": 2846.06,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.59875,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-24",
+      "asset": "JPM",
+      "action": "HOLD",
+      "quantity": 12,
+      "price": 264.84,
+      "value": 3178.08,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.59875,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-24",
+      "asset": "AAPL",
+      "action": "HOLD",
+      "quantity": 12,
+      "price": 222.78,
+      "value": 2673.36,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.59375,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-24",
+      "asset": "CME",
+      "action": "HOLD",
+      "quantity": 21,
+      "price": 234.68,
+      "value": 4928.28,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.6087499999999999,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-24",
+      "asset": "WMT",
+      "action": "HOLD",
+      "quantity": 33,
+      "price": 94.76,
+      "value": 3127.0800000000004,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.5987499999999999,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-27",
+      "asset": "TSLA",
+      "action": "HOLD",
+      "quantity": 7,
+      "price": 397.15,
+      "value": 2780.0499999999997,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.59875,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-27",
+      "asset": "JPM",
+      "action": "HOLD",
+      "quantity": 12,
+      "price": 265.85,
+      "value": 3190.2000000000003,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.59875,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-27",
+      "asset": "AAPL",
+      "action": "HOLD",
+      "quantity": 12,
+      "price": 229.86,
+      "value": 2758.32,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.59375,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-27",
+      "asset": "CME",
+      "action": "HOLD",
+      "quantity": 21,
+      "price": 236.95,
+      "value": 4975.95,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.6087499999999999,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-27",
+      "asset": "WMT",
+      "action": "HOLD",
+      "quantity": 33,
+      "price": 97.4,
+      "value": 3214.2000000000003,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.5987499999999999,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-28",
+      "asset": "TSLA",
+      "action": "HOLD",
+      "quantity": 7,
+      "price": 398.09,
+      "value": 2786.6299999999997,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.59875,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-28",
+      "asset": "JPM",
+      "action": "HOLD",
+      "quantity": 12,
+      "price": 267.14,
+      "value": 3205.68,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.59875,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-28",
+      "asset": "AAPL",
+      "action": "HOLD",
+      "quantity": 12,
+      "price": 238.26,
+      "value": 2859.12,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.59375,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-28",
+      "asset": "CME",
+      "action": "HOLD",
+      "quantity": 21,
+      "price": 234.39,
+      "value": 4922.19,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.6087499999999999,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-28",
+      "asset": "WMT",
+      "action": "HOLD",
+      "quantity": 33,
+      "price": 97.29,
+      "value": 3210.57,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.5987499999999999,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-29",
+      "asset": "TSLA",
+      "action": "HOLD",
+      "quantity": 7,
+      "price": 389.1,
+      "value": 2723.7000000000003,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.59875,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-29",
+      "asset": "JPM",
+      "action": "HOLD",
+      "quantity": 12,
+      "price": 266.58,
+      "value": 3198.96,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.59875,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-29",
+      "asset": "AAPL",
+      "action": "HOLD",
+      "quantity": 12,
+      "price": 239.36,
+      "value": 2872.32,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.59375,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-29",
+      "asset": "CME",
+      "action": "HOLD",
+      "quantity": 21,
+      "price": 232.5,
+      "value": 4882.5,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.6087499999999999,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-29",
+      "asset": "WMT",
+      "action": "HOLD",
+      "quantity": 33,
+      "price": 97.5,
+      "value": 3217.5,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.5987499999999999,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-30",
+      "asset": "TSLA",
+      "action": "HOLD",
+      "quantity": 7,
+      "price": 400.28,
+      "value": 2801.96,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.59875,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-30",
+      "asset": "JPM",
+      "action": "HOLD",
+      "quantity": 12,
+      "price": 268.23,
+      "value": 3218.76,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.59875,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-30",
+      "asset": "AAPL",
+      "action": "HOLD",
+      "quantity": 12,
+      "price": 237.59,
+      "value": 2851.08,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.59375,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-30",
+      "asset": "CME",
+      "action": "HOLD",
+      "quantity": 21,
+      "price": 235.92,
+      "value": 4954.32,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.6087499999999999,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-30",
+      "asset": "WMT",
+      "action": "HOLD",
+      "quantity": 33,
+      "price": 98.65,
+      "value": 3255.4500000000003,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.5987499999999999,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-31",
+      "asset": "TSLA",
+      "action": "HOLD",
+      "quantity": 7,
+      "price": 404.6,
+      "value": 2832.2000000000003,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.59875,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-31",
+      "asset": "JPM",
+      "action": "HOLD",
+      "quantity": 12,
+      "price": 267.3,
+      "value": 3207.6000000000004,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.59875,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-31",
+      "asset": "AAPL",
+      "action": "HOLD",
+      "quantity": 12,
+      "price": 236.0,
+      "value": 2832.0,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.59375,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-31",
+      "asset": "CME",
+      "action": "HOLD",
+      "quantity": 21,
+      "price": 236.52,
+      "value": 4966.92,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.6087499999999999,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-31",
+      "asset": "WMT",
+      "action": "HOLD",
+      "quantity": 33,
+      "price": 98.16,
+      "value": 3239.2799999999997,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.5987499999999999,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    }
+  ]
+}

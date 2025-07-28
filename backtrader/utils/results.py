@@ -98,11 +98,8 @@ def save_results(strategy, tickers, start_date, end_date, results_dir="results",
     results_path = base_results_path / folder_name
     results_path.mkdir(exist_ok=True)
     
-    # Create filename with same structure
-    tickers_str = '_'.join(tickers[:3])  # Limit to first 3 tickers for filename
-    if len(tickers) > 3:
-        tickers_str += f'_plus{len(tickers)-3}'
-    filename = f"backtest_{tickers_str}_{run_date}_from_{start_str}_to_{end_str}"
+    # Create clean filename without ticker names
+    filename = f"backtest_{run_date}_from_{start_str}_to_{end_str}"
     
     results_data = extract_results(strategy, tickers, start_date, end_date)
     
@@ -178,7 +175,7 @@ def save_results(strategy, tickers, start_date, end_date, results_dir="results",
                 # Portfolio performance chart
                 portfolio_chart = visualizer.create_portfolio_chart(
                     portfolio_data, 
-                    title=f"Portfolio Performance: {', '.join(tickers)}"
+                    title=f"Portfolio Performance ({len(tickers)} assets)"
                 )
                 charts.append(portfolio_chart)
                 

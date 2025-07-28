@@ -1,0 +1,510 @@
+{
+  "metadata": {
+    "tickers": [
+      "ANET",
+      "SO",
+      "ADP",
+      "DHR",
+      "CME",
+      "ORCL",
+      "JPM",
+      "ISRG",
+      "BAC",
+      "MSFT",
+      "C",
+      "CAT",
+      "MO",
+      "IBM",
+      "BMY",
+      "QCOM",
+      "GE",
+      "WMT",
+      "VRTX",
+      "CSCO",
+      "BRK.B",
+      "PANW",
+      "AVGO",
+      "BX",
+      "INTC",
+      "ETN",
+      "LMT",
+      "HD",
+      "CRM",
+      "CMCSA",
+      "PGR",
+      "UBER",
+      "KKR",
+      "COP",
+      "SCHW",
+      "NEE",
+      "PEP",
+      "KLAC",
+      "NOW",
+      "KO",
+      "LIN",
+      "T",
+      "LRCX",
+      "SYK",
+      "AMGN",
+      "PG",
+      "DE",
+      "META",
+      "CVX",
+      "AMZN",
+      "COF",
+      "INTU",
+      "BSX",
+      "NFLX",
+      "TJX",
+      "CB",
+      "CEG",
+      "XOM",
+      "AMAT",
+      "AAPL",
+      "ADI",
+      "NVDA",
+      "LOW",
+      "GS",
+      "MA",
+      "TXN",
+      "WFC",
+      "PFE",
+      "PM",
+      "AMT",
+      "TMO",
+      "GOOG",
+      "JNJ",
+      "MCD",
+      "LLY",
+      "SBUX",
+      "APH",
+      "COST",
+      "RTX",
+      "TSLA",
+      "BA",
+      "AMD",
+      "MRK",
+      "BLK",
+      "ICE",
+      "ABBV",
+      "RKLB",
+      "PLD",
+      "SPGI",
+      "MS",
+      "BKNG",
+      "UNP",
+      "PLTR",
+      "WELL",
+      "WM",
+      "MMC",
+      "DIS",
+      "UNH",
+      "VZ",
+      "GILD",
+      "GOOGL",
+      "MDT",
+      "TMUS",
+      "AXP",
+      "ADBE",
+      "HON",
+      "MU",
+      "CRWD",
+      "ABT",
+      "ACN"
+    ],
+    "start_date": "2025-01-01T00:00:00",
+    "end_date": "2025-01-10T00:00:00",
+    "strategy": "RegimeStrategy",
+    "parameters": {
+      "rebalance_frequency": "monthly",
+      "max_assets_per_period": 3,
+      "sma_period": 20,
+      "rsi_period": 14,
+      "rsi_lower": 30,
+      "rsi_upper": 70,
+      "momentum_period": 10,
+      "stop_loss": 0.05,
+      "take_profit": 0.15,
+      "min_regime_confidence": 0.6,
+      "bucket_names": [
+        "Risk Assets"
+      ],
+      "position_min_score": 0.4,
+      "timeframes": [
+        "1d"
+      ],
+      "enable_technical_analysis": true,
+      "enable_fundamental_analysis": false,
+      "technical_weight": 0.6,
+      "fundamental_weight": 0.4,
+      "min_trending_confidence": 0.7,
+      "regime_detector": "<data.regime_detector.RegimeDetector object at 0x108316e20>",
+      "asset_manager": "<data.asset_buckets.AssetBucketManager object at 0x108316d90>",
+      "data_manager": "<data.data_manager.DataManager object at 0x108342df0>",
+      "data_preloader": "<utils.data_preloader.DataPreloader object at 0x10a2c2100>",
+      "enable_core_assets": false,
+      "max_core_assets": 3,
+      "core_override_threshold": 0.95,
+      "core_expiry_days": 90,
+      "core_underperformance_threshold": 0.15,
+      "core_underperformance_period": 30,
+      "core_extension_limit": 2,
+      "core_performance_check_frequency": 7,
+      "smart_diversification_overrides": 2,
+      "enable_take_profit_stop_loss": false
+    },
+    "generated_at": "2025-07-29T01:35:51.901932"
+  },
+  "performance": {
+    "sharpe_ratio": -0.9447813150727348,
+    "total_return": -0.00017122945892715155,
+    "average_return": -2.853824315452526e-05,
+    "max_drawdown": 0.2287057307514177,
+    "max_drawdown_duration": 4,
+    "sqn": 0,
+    "vwr": -0.5533049928383555
+  },
+  "trades": {
+    "total": 3,
+    "won": 0,
+    "lost": 0,
+    "win_rate": 0.0,
+    "average_win": 0,
+    "average_loss": 0,
+    "profit_factor": 0,
+    "details": []
+  },
+  "portfolio_timeline": [
+    {
+      "date": "2025-01-02",
+      "portfolio_value": 100000.0,
+      "cash": 100000.0,
+      "total_positions": 0,
+      "regime": "REFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {}
+    },
+    {
+      "date": "2025-01-03",
+      "portfolio_value": 100202.99852,
+      "cash": 89528.05851999999,
+      "total_positions": 3,
+      "regime": "REFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {
+        "CME": {
+          "size": 21,
+          "price": 231.64,
+          "value": 4882.5
+        },
+        "JPM": {
+          "size": 12,
+          "price": 243.89,
+          "value": 2919.36
+        },
+        "TSLA": {
+          "size": 7,
+          "price": 381.48,
+          "value": 2873.08
+        }
+      }
+    },
+    {
+      "date": "2025-01-06",
+      "portfolio_value": 100037.82852,
+      "cash": 89528.05851999999,
+      "total_positions": 3,
+      "regime": "REFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {
+        "CME": {
+          "size": 21,
+          "price": 231.64,
+          "value": 4742.22
+        },
+        "JPM": {
+          "size": 12,
+          "price": 243.89,
+          "value": 2890.2
+        },
+        "TSLA": {
+          "size": 7,
+          "price": 381.48,
+          "value": 2877.35
+        }
+      }
+    },
+    {
+      "date": "2025-01-07",
+      "portfolio_value": 99973.82852,
+      "cash": 89528.05851999999,
+      "total_positions": 3,
+      "regime": "REFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {
+        "CME": {
+          "size": 21,
+          "price": 231.64,
+          "value": 4767.21
+        },
+        "JPM": {
+          "size": 12,
+          "price": 243.89,
+          "value": 2918.04
+        },
+        "TSLA": {
+          "size": 7,
+          "price": 381.48,
+          "value": 2760.52
+        }
+      }
+    },
+    {
+      "date": "2025-01-08",
+      "portfolio_value": 100025.49852,
+      "cash": 89528.05851999999,
+      "total_positions": 3,
+      "regime": "REFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {
+        "CME": {
+          "size": 21,
+          "price": 231.64,
+          "value": 4815.3
+        },
+        "JPM": {
+          "size": 12,
+          "price": 243.89,
+          "value": 2917.56
+        },
+        "TSLA": {
+          "size": 7,
+          "price": 381.48,
+          "value": 2764.58
+        }
+      }
+    },
+    {
+      "date": "2025-01-10",
+      "portfolio_value": 99982.87852,
+      "cash": 89528.05851999999,
+      "total_positions": 3,
+      "regime": "REFLATION",
+      "regime_confidence": 0.0,
+      "position_details": {
+        "CME": {
+          "size": 21,
+          "price": 231.64,
+          "value": 4813.2
+        },
+        "JPM": {
+          "size": 12,
+          "price": 243.89,
+          "value": 2878.44
+        },
+        "TSLA": {
+          "size": 7,
+          "price": 381.48,
+          "value": 2763.1800000000003
+        }
+      }
+    }
+  ],
+  "position_changes": [
+    {
+      "date": "2025-01-03",
+      "asset": "CME",
+      "action": "BUY",
+      "quantity": 21,
+      "price": 232.5,
+      "value": 4882.5,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.6087499999999999,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-03",
+      "asset": "JPM",
+      "action": "BUY",
+      "quantity": 12,
+      "price": 243.28,
+      "value": 2919.36,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.59875,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-03",
+      "asset": "TSLA",
+      "action": "BUY",
+      "quantity": 7,
+      "price": 410.44,
+      "value": 2873.08,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.59875,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-06",
+      "asset": "CME",
+      "action": "HOLD",
+      "quantity": 21,
+      "price": 225.82,
+      "value": 4742.22,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.6087499999999999,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-06",
+      "asset": "JPM",
+      "action": "HOLD",
+      "quantity": 12,
+      "price": 240.85,
+      "value": 2890.2,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.59875,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-06",
+      "asset": "TSLA",
+      "action": "HOLD",
+      "quantity": 7,
+      "price": 411.05,
+      "value": 2877.35,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.59875,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-07",
+      "asset": "CME",
+      "action": "HOLD",
+      "quantity": 21,
+      "price": 227.01,
+      "value": 4767.21,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.6087499999999999,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-07",
+      "asset": "JPM",
+      "action": "HOLD",
+      "quantity": 12,
+      "price": 243.17,
+      "value": 2918.04,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.59875,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-07",
+      "asset": "TSLA",
+      "action": "HOLD",
+      "quantity": 7,
+      "price": 394.36,
+      "value": 2760.52,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.59875,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-08",
+      "asset": "CME",
+      "action": "HOLD",
+      "quantity": 21,
+      "price": 229.3,
+      "value": 4815.3,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.6087499999999999,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-08",
+      "asset": "JPM",
+      "action": "HOLD",
+      "quantity": 12,
+      "price": 243.13,
+      "value": 2917.56,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.59875,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-08",
+      "asset": "TSLA",
+      "action": "HOLD",
+      "quantity": 7,
+      "price": 394.94,
+      "value": 2764.58,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.59875,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-10",
+      "asset": "CME",
+      "action": "HOLD",
+      "quantity": 21,
+      "price": 229.2,
+      "value": 4813.2,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.6087499999999999,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-10",
+      "asset": "JPM",
+      "action": "HOLD",
+      "quantity": 12,
+      "price": 239.87,
+      "value": 2878.44,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.59875,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    },
+    {
+      "date": "2025-01-10",
+      "asset": "TSLA",
+      "action": "HOLD",
+      "quantity": 7,
+      "price": 394.74,
+      "value": 2763.1800000000003,
+      "reason": "New position",
+      "score_before": 0.0,
+      "score_after": 0.59875,
+      "bucket": "Risk Assets",
+      "regime": "REFLATION"
+    }
+  ]
+}

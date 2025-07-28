@@ -153,8 +153,29 @@ class DataPreloader:
             if tf in asset_data:
                 df = asset_data[tf]
                 if not df.empty:
+                    # Convert dates to pandas timestamps for comparison
+                    import pandas as pd
+                    
+                    # Handle both datetime and date objects
+                    if hasattr(start_date, 'date'):
+                        start_ts = pd.Timestamp(start_date)
+                    else:
+                        start_ts = pd.Timestamp(start_date)
+                        
+                    if hasattr(current_date, 'date'):
+                        current_ts = pd.Timestamp(current_date)
+                    else:
+                        current_ts = pd.Timestamp(current_date)
+                    
                     # Filter to requested date range
-                    filtered = df[(df.index >= start_date) & (df.index <= current_date)]
+                    try:
+                        filtered = df[(df.index >= start_ts) & (df.index <= current_ts)]
+                    except Exception as e:
+                        logger.error(f"Date filtering failed for {asset} {tf}: {e}")
+                        logger.error(f"  df.index type: {type(df.index[0])}")
+                        logger.error(f"  start_ts type: {type(start_ts)}")
+                        logger.error(f"  current_ts type: {type(current_ts)}")
+                        continue
                     if not filtered.empty:
                         result[tf] = filtered
         

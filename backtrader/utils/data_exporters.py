@@ -367,10 +367,8 @@ class PortfolioDataExporter:
         self.output_dir.mkdir(exist_ok=True)
         
         # Create filename prefix with same structure
-        tickers_str = '_'.join(tickers[:3])  # Limit to first 3 tickers for filename
-        if len(tickers) > 3:
-            tickers_str += f'_plus{len(tickers)-3}'
-        filename_prefix = f"backtest_{tickers_str}_{run_date}_from_{start_str}_to_{end_str}"
+        # Create clean filename prefix without ticker names
+        filename_prefix = f"backtest_{run_date}_from_{start_str}_to_{end_str}"
         
         export_files = {}
         

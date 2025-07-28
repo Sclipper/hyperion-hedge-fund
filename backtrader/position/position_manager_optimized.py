@@ -48,11 +48,20 @@ class PositionManagerOptimized(PositionManager):
             )
             
             if timeframe_data:
-                logger.debug(f"Using pre-loaded data for {asset}: {list(timeframe_data.keys())}")
+                logger.info(f"✓ Using pre-loaded data for {asset}: {list(timeframe_data.keys())}")
+                # Log data shapes for debugging
+                for tf, df in timeframe_data.items():
+                    logger.debug(f"  {asset} {tf}: {len(df)} records, {df.index[0]} to {df.index[-1]}")
             else:
-                logger.warning(f"No pre-loaded data for {asset}, falling back to download")
-                # Fall back to original method
-                return super()._score_single_asset(asset, current_date, regime, data_manager)
+                logger.error(f"❌ No pre-loaded data for {asset}, checking preloader status...")
+                logger.error(f"  Asset in preloader: {asset in self.data_preloader.preloaded_data}")
+                if asset in self.data_preloader.preloaded_data:
+                    available_tfs = list(self.data_preloader.preloaded_data[asset].keys())
+                    logger.error(f"  Available timeframes: {available_tfs}")
+                    logger.error(f"  Requested timeframes: {self.timeframes}")
+                logger.error(f"  Current date: {current_date}")
+                # Don't fall back - return None to highlight the issue
+                return None
         else:
             # No preloader, use original method
             return super()._score_single_asset(asset, current_date, regime, data_manager)

@@ -1,0 +1,16 @@
+date,asset,shares,price,market_value,weight_pct,score,bucket,days_held,is_core_asset
+2025-01-03,CME,21,231.64,4882.5,4.8726,0.0,Risk Assets,1,false
+2025-01-03,JPM,12,243.89,2919.36,2.9134,0.0,Risk Assets,1,false
+2025-01-03,TSLA,7,381.48,2873.08,2.8673,0.0,Risk Assets,1,false
+2025-01-06,CME,21,231.64,4742.22,4.7404,0.0,Risk Assets,1,false
+2025-01-06,JPM,12,243.89,2890.2,2.8891,0.0,Risk Assets,1,false
+2025-01-06,TSLA,7,381.48,2877.35,2.8763,0.0,Risk Assets,1,false
+2025-01-07,CME,21,231.64,4767.21,4.7685,0.0,Risk Assets,1,false
+2025-01-07,JPM,12,243.89,2918.04,2.9188,0.0,Risk Assets,1,false
+2025-01-07,TSLA,7,381.48,2760.52,2.7612,0.0,Risk Assets,1,false
+2025-01-08,CME,21,231.64,4815.3,4.8141,0.0,Risk Assets,1,false
+2025-01-08,JPM,12,243.89,2917.56,2.9168,0.0,Risk Assets,1,false
+2025-01-08,TSLA,7,381.48,2764.58,2.7639,0.0,Risk Assets,1,false
+2025-01-10,CME,21,231.64,4813.2,4.814,0.0,Risk Assets,1,false
+2025-01-10,JPM,12,243.89,2878.44,2.8789,0.0,Risk Assets,1,false
+2025-01-10,TSLA,7,381.48,2763.18,2.7637,0.0,Risk Assets,1,false
