@@ -1,0 +1,22 @@
+date,regime,confidence,stability,duration_days,active_buckets,portfolio_return_in_regime
+2022-02-02,REFLATION,0.0,0.0,6,"Risk Assets,High Beta,Cyclicals,International",-0.4292
+2022-02-08,DEFLATION,0.0,0.0,28,"Defensive Assets,Low Beta",-1.3674
+2022-03-08,INFLATION,0.0,0.0,91,"Defensive Assets,Low Beta",1.798
+2022-06-07,DEFLATION,0.0,0.0,31,"Defensive Assets,Low Beta",-2.067
+2022-07-08,INFLATION,0.0,0.0,33,"Defensive Assets,Low Beta",0.863
+2022-08-10,DEFLATION,0.0,0.0,27,"Defensive Assets,Low Beta",-2.798
+2022-09-06,INFLATION,0.0,0.0,7,"Defensive Assets,Low Beta",1.8729
+2022-09-13,DEFLATION,0.0,0.0,22,"Defensive Assets,Low Beta",-1.1501
+2022-10-05,INFLATION,0.0,0.0,58,"Defensive Assets,Low Beta",4.8849
+2022-12-02,DEFLATION,0.0,0.0,154,"Defensive Assets,Low Beta",-1.3572
+2023-05-05,INFLATION,0.0,0.0,34,"Defensive Assets,Low Beta",0.1445
+2023-06-08,REFLATION,0.0,0.0,139,"Risk Assets,High Beta,Cyclicals,International",0.0067
+2023-10-25,INFLATION,0.0,0.0,35,"Defensive Assets,Low Beta",1.8055
+2023-11-29,GOLDILOCKS,0.0,0.0,156,"Risk Assets,High Beta,Cyclicals",4.2311
+2024-05-03,REFLATION,0.0,0.0,39,"Risk Assets,High Beta,Cyclicals,International",1.9984
+2024-06-11,INFLATION,0.0,0.0,29,"Defensive Assets,Low Beta",0.1219
+2024-07-10,DEFLATION,0.0,0.0,43,"Defensive Assets,Low Beta",0.7525
+2024-08-22,GOLDILOCKS,0.0,0.0,104,"Risk Assets,High Beta,Cyclicals",6.335
+2024-12-04,REFLATION,0.0,0.0,65,"Risk Assets,High Beta,Cyclicals,International",2.3334
+2025-02-07,DEFLATION,0.0,0.0,117,"Defensive Assets,Low Beta",0.3376
+2025-06-04,GOLDILOCKS,0.0,0.0,51,"Risk Assets,High Beta,Cyclicals",4.3302

@@ -7,6 +7,7 @@ import os
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '../'))
 from position.position_manager import PositionManager
+from position.position_manager_optimized import PositionManagerOptimized
 from position.technical_analyzer import TechnicalAnalyzer
 from position.fundamental_analyzer import FundamentalAnalyzer
 
@@ -36,6 +37,7 @@ class RegimeStrategy(bt.Strategy):
         ('regime_detector', None),  # RegimeDetector instance
         ('asset_manager', None),    # AssetBucketManager instance
         ('data_manager', None),     # DataManager instance
+        ('data_preloader', None),   # DataPreloader instance for optimized performance
         
         # Core Asset Management Parameters (Module 5)
         ('enable_core_assets', False),
@@ -54,6 +56,7 @@ class RegimeStrategy(bt.Strategy):
         self.regime_detector = self.p.regime_detector
         self.asset_manager = self.p.asset_manager
         self.data_manager = self.p.data_manager
+        self.data_preloader = self.p.data_preloader
         
         # Initialize position management system
         try:
@@ -70,19 +73,36 @@ class RegimeStrategy(bt.Strategy):
         else:
             self.fundamental_analyzer = None
         
-        self.position_manager = PositionManager(
-            technical_analyzer=self.technical_analyzer,
-            fundamental_analyzer=self.fundamental_analyzer,
-            asset_manager=self.asset_manager,
-            rebalance_frequency=self.params.rebalance_frequency,
-            max_positions=self.params.max_assets_per_period,
-            min_score_threshold=self.params.position_min_score,
-            timeframes=self.params.timeframes,
-            enable_technical_analysis=self.params.enable_technical_analysis,
-            enable_fundamental_analysis=self.params.enable_fundamental_analysis,
-            technical_weight=self.params.technical_weight,
-            fundamental_weight=self.params.fundamental_weight
-        )
+        # Use optimized position manager if data_preloader is provided
+        if self.data_preloader:
+            self.position_manager = PositionManagerOptimized(
+                data_preloader=self.data_preloader,
+                technical_analyzer=self.technical_analyzer,
+                fundamental_analyzer=self.fundamental_analyzer,
+                asset_manager=self.asset_manager,
+                rebalance_frequency=self.params.rebalance_frequency,
+                max_positions=self.params.max_assets_per_period,
+                min_score_threshold=self.params.position_min_score,
+                timeframes=self.params.timeframes,
+                enable_technical_analysis=self.params.enable_technical_analysis,
+                enable_fundamental_analysis=self.params.enable_fundamental_analysis,
+                technical_weight=self.params.technical_weight,
+                fundamental_weight=self.params.fundamental_weight
+            )
+        else:
+            self.position_manager = PositionManager(
+                technical_analyzer=self.technical_analyzer,
+                fundamental_analyzer=self.fundamental_analyzer,
+                asset_manager=self.asset_manager,
+                rebalance_frequency=self.params.rebalance_frequency,
+                max_positions=self.params.max_assets_per_period,
+                min_score_threshold=self.params.position_min_score,
+                timeframes=self.params.timeframes,
+                enable_technical_analysis=self.params.enable_technical_analysis,
+                enable_fundamental_analysis=self.params.enable_fundamental_analysis,
+                technical_weight=self.params.technical_weight,
+                fundamental_weight=self.params.fundamental_weight
+            )
         
         self.current_regime = None
         self.current_regime_confidence = 0.0
