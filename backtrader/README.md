@@ -1,3 +1,4 @@
+HI claude
 # Professional Hedge Fund Trading System - Backtrader
 
 A sophisticated, institutional-grade backtesting and trading framework built on backtrader with advanced regime-aware portfolio management, comprehensive risk protection systems, and complete audit trails.
